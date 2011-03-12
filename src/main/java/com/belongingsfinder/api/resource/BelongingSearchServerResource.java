@@ -37,7 +37,7 @@ public class BelongingSearchServerResource extends ServerResource {
 		if (filter.getCategory() != null) {
 
 		}
-
+		return null;
 	}
 
 }
