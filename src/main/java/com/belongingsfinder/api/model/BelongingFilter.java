@@ -7,7 +7,7 @@ public class BelongingFilter implements Serializable {
 	private static final long serialVersionUID = 3031305247570478690L;
 
 	private String search;
-	private int results;
+	private int maxResults;
 	private int offset;
 	private BelongingModel.Type type;
 	private LatLon location;
@@ -24,12 +24,12 @@ public class BelongingFilter implements Serializable {
 		return location;
 	}
 
-	public int getOffset() {
-		return offset;
+	public int getMaxResults() {
+		return maxResults;
 	}
 
-	public int getResults() {
-		return results;
+	public int getOffset() {
+		return offset;
 	}
 
 	public String getSearch() {
@@ -48,12 +48,12 @@ public class BelongingFilter implements Serializable {
 		this.location = location;
 	}
 
-	public void setOffset(int offset) {
-		this.offset = offset;
+	public void setMaxResults(int maxResults) {
+		this.maxResults = maxResults;
 	}
 
-	public void setResults(int results) {
-		this.results = results;
+	public void setOffset(int offset) {
+		this.offset = offset;
 	}
 
 	public void setSearch(String search) {
