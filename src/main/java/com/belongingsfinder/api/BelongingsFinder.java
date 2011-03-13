@@ -1,8 +1,6 @@
 package com.belongingsfinder.api;
 
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.restlet.Application;
 import org.restlet.Component;
@@ -63,9 +61,6 @@ public class BelongingsFinder extends Application {
 	@Inject
 	private Set<Service> services;
 
-	@Inject
-	private Logger logger;
-
 	public static void main(String[] args) throws Exception {
 		Component c = new Component();
 		c.getServers().add(Protocol.HTTP, 8182);
@@ -79,9 +74,7 @@ public class BelongingsFinder extends Application {
 				new RestletModule(), new ServiceModule());
 		injector.injectMembers(this);
 
-		logger.log(Level.INFO, "Lucene Indexing Begin");
 		indexer.index();
-		logger.log(Level.INFO, "Lucene Indexing End");
 
 		registerServices(services);
 
