@@ -24,9 +24,11 @@ import com.belongingsfinder.api.modules.ServiceModule;
 import com.belongingsfinder.api.resource.BelongingModelCountServerResource;
 import com.belongingsfinder.api.resource.BelongingModelServerResource;
 import com.belongingsfinder.api.resource.BelongingModelsServerResource;
+import com.belongingsfinder.api.resource.BelongingSearchServerResource;
 import com.belongingsfinder.api.resource.CategoryModelServerResource;
 import com.belongingsfinder.api.resource.CategoryModelsServerResource;
 import com.belongingsfinder.api.resource.PagingBelongingModelServerResource;
+import com.belongingsfinder.api.resource.RandomBelongingModelServerResource;
 import com.belongingsfinder.api.resource.StuffServerResource;
 import com.belongingsfinder.api.util.SearchIndexer;
 import com.google.inject.Guice;
@@ -91,6 +93,10 @@ public class BelongingsFinder extends Application {
 				typeFilterFactory.createFilter(finderFactory.createFinder(BelongingModelCountServerResource.class)));
 		belongingsCount.getTemplate().getVariables().put("type", new Variable(Variable.TYPE_ALPHA));
 
+		TemplateRoute randomBelongings = apiv1.attach("/belongings/random/{number}",
+				finderFactory.createFinder(RandomBelongingModelServerResource.class));
+		randomBelongings.getTemplate().getVariables().put("number", new Variable(Variable.TYPE_DIGIT));
+
 		apiv1.attach("/belongings/id/{id}",
 				uuidFilterFactory.createFilter(finderFactory.createFinder(BelongingModelServerResource.class)));
 
@@ -99,6 +105,8 @@ public class BelongingsFinder extends Application {
 		belongingsPager.getTemplate().getVariables().put("number", new Variable(Variable.TYPE_DIGIT));
 		belongingsPager.getTemplate().getVariables().put("offset", new Variable(Variable.TYPE_DIGIT));
 		belongingsPager.getTemplate().getVariables().put("type", new Variable(Variable.TYPE_ALPHA));
+
+		apiv1.attach("/belongings/search", finderFactory.createFinder(BelongingSearchServerResource.class));
 
 		apiv1.attach("/category", finderFactory.createFinder(CategoryModelsServerResource.class));
 		apiv1.attach("/category/id/{id}",

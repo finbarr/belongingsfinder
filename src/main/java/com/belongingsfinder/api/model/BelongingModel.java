@@ -27,11 +27,15 @@ public class BelongingModel implements Model<BelongingModel>, Serializable {
 	// TODO column stuff to make this field much bigger
 	@Field(index = Index.TOKENIZED, store = Store.NO)
 	private String description;
+	// TODO location search
 	@Embedded
 	private LatLon location;
+	@Field(index = Index.UN_TOKENIZED, store = Store.YES)
 	@Enumerated(EnumType.STRING)
 	private Type type;
 	private String email;
+	// TODO change back to CategoryModel
+	@Field(index = Index.UN_TOKENIZED, store = Store.YES)
 	private String categoryId;
 	private Date lastUpdated;
 
