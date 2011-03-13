@@ -8,6 +8,8 @@ import org.restlet.Restlet;
 import org.restlet.data.Protocol;
 import org.restlet.routing.Router;
 import org.restlet.routing.Template;
+import org.restlet.routing.TemplateRoute;
+import org.restlet.routing.Variable;
 import org.restlet.service.Service;
 
 import com.belongingsfinder.api.framework.FilterFactory;
@@ -20,6 +22,7 @@ import com.belongingsfinder.api.resource.BelongingModelServerResource;
 import com.belongingsfinder.api.resource.BelongingModelsServerResource;
 import com.belongingsfinder.api.resource.CategoryModelServerResource;
 import com.belongingsfinder.api.resource.CategoryModelsServerResource;
+import com.belongingsfinder.api.resource.PagingBelongingModelServerResource;
 import com.belongingsfinder.api.resource.StuffServerResource;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
@@ -63,9 +66,19 @@ public class BelongingsFinder extends Application {
 
 		Router apiv1 = routerProvider.get();
 
-		apiv1.attach("/belongings", finderFactory.createFinder(BelongingModelsServerResource.class));
+		TemplateRoute belongings = apiv1.attach("/belongings/{number}",
+				finderFactory.createFinder(BelongingModelsServerResource.class));
+
+		belongings.getTemplate().getVariables().put("number", new Variable(Variable.TYPE_DIGIT, "0", false, false));
+
 		apiv1.attach("/belongings/id/{id}",
 				uuidFilterFactory.createFilter(finderFactory.createFinder(BelongingModelServerResource.class)));
+
+		TemplateRoute belongingPager = apiv1.attach("/belongings/{type}/{number}/{offset}",
+				finderFactory.createFinder(PagingBelongingModelServerResource.class));
+
+		belongingPager.getTemplate().getVariables().put("number", new Variable(Variable.TYPE_DIGIT));
+		belongingPager.getTemplate().getVariables().put("offset", new Variable(Variable.TYPE_DIGIT));
 
 		apiv1.attach("/category", finderFactory.createFinder(CategoryModelsServerResource.class));
 		apiv1.attach("/category/id/{id}",

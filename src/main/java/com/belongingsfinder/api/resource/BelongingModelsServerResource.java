@@ -33,6 +33,10 @@ public class BelongingModelsServerResource extends ServerResource {
 
 	@Get("json")
 	public List<BelongingModel> getBelongings() {
+		final int number = (Integer) getRequest().getAttributes().get("number");
+		if (number > 0) {
+			return modelDAO.retrieve(number);
+		}
 		return modelDAO.retrieveAll();
 	}
 

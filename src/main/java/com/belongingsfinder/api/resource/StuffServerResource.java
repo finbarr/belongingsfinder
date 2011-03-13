@@ -25,4 +25,5 @@ public class StuffServerResource extends ServerResource {
 		bm.setCategory(cm);
 		return bm;
 	}
+
 }

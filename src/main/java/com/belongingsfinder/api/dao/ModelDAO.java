@@ -31,6 +31,15 @@ public interface ModelDAO<T extends Model<T>> {
 	public boolean del(String id);
 
 	/**
+	 * Retrieve a number of model of type T
+	 * 
+	 * @param number
+	 *            how many
+	 * @return a list of models up to :number long
+	 */
+	public List<T> retrieve(int number);
+
+	/**
 	 * Retrieve a model of type T based on the id
 	 * 
 	 * @param id

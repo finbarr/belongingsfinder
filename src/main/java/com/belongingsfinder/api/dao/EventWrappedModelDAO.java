@@ -47,6 +47,11 @@ public class EventWrappedModelDAO<T extends Model<T>> implements ModelDAO<T> {
 		return deleted;
 	}
 
+	// not an interesting event
+	public List<T> retrieve(int number) {
+		return modelService.retrieve(number);
+	}
+
 	public T retrieve(String id) {
 		T model = modelService.retrieve(id);
 		eventBus.fireEvent(new ModelRetrievedEvent<T>(type, model));

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -52,6 +53,13 @@ public class JPAModelDAO<T extends Model<T>> implements ModelDAO<T> {
 	}
 
 	@Transactional
+	public List<T> retrieve(int number) {
+		TypedQuery<T> query = local.get().createQuery(createRetrievalQuery());
+		query.setMaxResults(number);
+		return query.getResultList();
+	}
+
+	@Transactional
 	public T retrieve(String id) {
 		// retrieve model
 		T model = retrieveInternal(id);
@@ -62,17 +70,21 @@ public class JPAModelDAO<T extends Model<T>> implements ModelDAO<T> {
 
 	@Transactional
 	public List<T> retrieveAll() {
-		EntityManager em = local.get();
-		CriteriaBuilder builder = em.getCriteriaBuilder();
-		CriteriaQuery<T> query = builder.createQuery(type);
-		Root<T> root = query.from(type);
-		query.select(root);
-		return em.createQuery(query).getResultList();
+		return local.get().createQuery(createRetrievalQuery()).getResultList();
 	}
 
 	@Transactional
 	public void update(T model) {
 		local.get().merge(model);
+	}
+
+	private CriteriaQuery<T> createRetrievalQuery() {
+		EntityManager em = local.get();
+		CriteriaBuilder builder = em.getCriteriaBuilder();
+		CriteriaQuery<T> query = builder.createQuery(type);
+		Root<T> root = query.from(type);
+		query.select(root);
+		return query;
 	}
 
 	private T retrieveInternal(String id) {
