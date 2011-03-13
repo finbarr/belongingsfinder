@@ -10,8 +10,13 @@ import javax.persistence.Enumerated;
 import javax.persistence.Id;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Store;
 
 @Entity
+@Indexed
 public class BelongingModel implements Model<BelongingModel>, Serializable {
 
 	private static final long serialVersionUID = 6587819556855066435L;
@@ -19,6 +24,8 @@ public class BelongingModel implements Model<BelongingModel>, Serializable {
 	@Id
 	private String id;
 	private String imageUrl;
+	// TODO column stuff to make this field much bigger
+	@Field(index = Index.TOKENIZED, store = Store.NO)
 	private String description;
 	@Embedded
 	private LatLon location;

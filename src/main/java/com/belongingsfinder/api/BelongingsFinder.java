@@ -1,6 +1,8 @@
 package com.belongingsfinder.api;
 
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.restlet.Application;
 import org.restlet.Component;
@@ -26,6 +28,7 @@ import com.belongingsfinder.api.resource.CategoryModelServerResource;
 import com.belongingsfinder.api.resource.CategoryModelsServerResource;
 import com.belongingsfinder.api.resource.PagingBelongingModelServerResource;
 import com.belongingsfinder.api.resource.StuffServerResource;
+import com.belongingsfinder.api.util.SearchIndexer;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
@@ -53,7 +56,13 @@ public class BelongingsFinder extends Application {
 	private FilterFactory typeFilterFactory;
 
 	@Inject
+	private SearchIndexer indexer;
+
+	@Inject
 	private Set<Service> services;
+
+	@Inject
+	private Logger logger;
 
 	public static void main(String[] args) throws Exception {
 		Component c = new Component();
@@ -67,6 +76,10 @@ public class BelongingsFinder extends Application {
 		Injector injector = Guice.createInjector(new AppModule(), new DAOModule(), new BelongingModelPagerModule(),
 				new RestletModule(), new ServiceModule());
 		injector.injectMembers(this);
+
+		logger.log(Level.INFO, "Lucene Indexing Begin");
+		indexer.index();
+		logger.log(Level.INFO, "Lucene Indexing End");
 
 		registerServices(services);
 
