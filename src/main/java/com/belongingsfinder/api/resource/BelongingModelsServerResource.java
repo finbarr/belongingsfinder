@@ -1,5 +1,6 @@
 package com.belongingsfinder.api.resource;
 
+import java.util.Date;
 import java.util.List;
 
 import org.restlet.data.Status;
@@ -24,6 +25,7 @@ public class BelongingModelsServerResource extends ServerResource {
 	@Post("json")
 	public String createBelonging(BelongingModel model) {
 		if (URIValidator.isValid(model.getImageUrl())) {
+			model.setLastUpdated(new Date());
 			return modelDAO.create(model);
 		} else {
 			getResponse().setStatus(Status.CLIENT_ERROR_PRECONDITION_FAILED, "Invalid image URI");
@@ -33,10 +35,6 @@ public class BelongingModelsServerResource extends ServerResource {
 
 	@Get("json")
 	public List<BelongingModel> getBelongings() {
-		final int number = (Integer) getRequest().getAttributes().get("number");
-		if (number > 0) {
-			return modelDAO.retrieve(number);
-		}
 		return modelDAO.retrieveAll();
 	}
 

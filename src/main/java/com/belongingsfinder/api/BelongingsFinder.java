@@ -15,10 +15,11 @@ import org.restlet.service.Service;
 import com.belongingsfinder.api.framework.FilterFactory;
 import com.belongingsfinder.api.framework.FinderFactory;
 import com.belongingsfinder.api.modules.AppModule;
+import com.belongingsfinder.api.modules.BelongingModelPagerModule;
 import com.belongingsfinder.api.modules.DAOModule;
-import com.belongingsfinder.api.modules.PagerModule;
 import com.belongingsfinder.api.modules.RestletModule;
 import com.belongingsfinder.api.modules.ServiceModule;
+import com.belongingsfinder.api.resource.BelongingModelCountServerResource;
 import com.belongingsfinder.api.resource.BelongingModelServerResource;
 import com.belongingsfinder.api.resource.BelongingModelsServerResource;
 import com.belongingsfinder.api.resource.CategoryModelServerResource;
@@ -63,7 +64,7 @@ public class BelongingsFinder extends Application {
 
 	@Override
 	public Restlet createInboundRoot() {
-		Injector injector = Guice.createInjector(new AppModule(), new DAOModule(), new PagerModule(),
+		Injector injector = Guice.createInjector(new AppModule(), new DAOModule(), new BelongingModelPagerModule(),
 				new RestletModule(), new ServiceModule());
 		injector.injectMembers(this);
 
@@ -71,9 +72,11 @@ public class BelongingsFinder extends Application {
 
 		Router apiv1 = routerProvider.get();
 
-		TemplateRoute belongings = apiv1.attach("/belongings/{number}",
-				finderFactory.createFinder(BelongingModelsServerResource.class));
-		belongings.getTemplate().getVariables().put("number", new Variable(Variable.TYPE_DIGIT, "0", false, false));
+		apiv1.attach("/belongings", finderFactory.createFinder(BelongingModelsServerResource.class));
+
+		TemplateRoute belongingsCount = apiv1.attach("/belongings/count/{type}",
+				typeFilterFactory.createFilter(finderFactory.createFinder(BelongingModelCountServerResource.class)));
+		belongingsCount.getTemplate().getVariables().put("type", new Variable(Variable.TYPE_ALPHA));
 
 		apiv1.attach("/belongings/id/{id}",
 				uuidFilterFactory.createFilter(finderFactory.createFinder(BelongingModelServerResource.class)));

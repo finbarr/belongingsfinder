@@ -24,8 +24,8 @@ public class PagingBelongingModelServerResource extends ServerResource {
 
 	@Get("json")
 	public List<BelongingModel> getBelongings() {
-		final int number = (Integer) getRequest().getAttributes().get("number");
-		final int offset = (Integer) getRequest().getAttributes().get("offset");
+		final int number = Integer.parseInt(getRequest().getAttributes().get("number").toString());
+		final int offset = Integer.parseInt(getRequest().getAttributes().get("offset").toString());
 		final String type = getRequest().getAttributes().get("type").toString();
 		if (type.equals("found")) {
 			return foundPager.retrieve(number, offset);

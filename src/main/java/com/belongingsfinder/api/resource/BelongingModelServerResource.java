@@ -1,5 +1,7 @@
 package com.belongingsfinder.api.resource;
 
+import java.util.Date;
+
 import org.restlet.data.Status;
 import org.restlet.resource.Delete;
 import org.restlet.resource.Get;
@@ -40,6 +42,7 @@ public class BelongingModelServerResource extends ServerResource {
 	public void updateBelonging(BelongingModel model) {
 		if (URIValidator.isValid(model.getImageUrl())) {
 			model.setId(getId());
+			model.setLastUpdated(new Date());
 			modelDAO.update(model);
 		} else {
 			getResponse().setStatus(Status.CLIENT_ERROR_PRECONDITION_FAILED, "Invalid image URI");

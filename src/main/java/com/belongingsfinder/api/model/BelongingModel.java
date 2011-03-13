@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
@@ -26,12 +25,11 @@ public class BelongingModel implements Model<BelongingModel>, Serializable {
 	@Enumerated(EnumType.STRING)
 	private Type type;
 	private String email;
-	@OneToMany
-	private CategoryModel category;
+	private String categoryId;
 	private Date lastUpdated;
 
-	public CategoryModel getCategory() {
-		return category;
+	public String getCategoryId() {
+		return categoryId;
 	}
 
 	public String getDescription() {
@@ -63,8 +61,8 @@ public class BelongingModel implements Model<BelongingModel>, Serializable {
 		return type;
 	}
 
-	public void setCategory(CategoryModel category) {
-		this.category = category;
+	public void setCategoryId(String categoryId) {
+		this.categoryId = categoryId;
 	}
 
 	public void setDescription(String description) {
@@ -97,7 +95,19 @@ public class BelongingModel implements Model<BelongingModel>, Serializable {
 	}
 
 	public enum Type {
-		LOST, FOUND
+
+		LOST("lost"), FOUND("found"), ALL("all");
+
+		private final String name;
+
+		private Type(String name) {
+			this.name = name;
+		}
+
+		public String getName() {
+			return name;
+		}
+
 	}
 
 }
