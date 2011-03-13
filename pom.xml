@@ -12,7 +12,7 @@
 <repository>
       <id>jboss-public-repository-group</id>
       <name>JBoss Public Repository Group</name>
-      <url>http://repository.jboss.org/nexus/content/groups/public/</url>
+      <url>http://repository.jboss.org/nexus/content/groups/public-jboss/</url>
       <layout>default</layout>
       <releases>
         <enabled>true</enabled>
@@ -73,26 +73,15 @@
   		<scope>compile</scope>
   	</dependency>
   	<dependency>
-  		<groupId>org.hibernate</groupId>
-  		<artifactId>hibernate-core</artifactId>
-  		<version>3.5.6-Final</version>
-  		<type>jar</type>
-  		<scope>compile</scope>
-  	</dependency>
-  	<dependency>
-  		<groupId>org.hibernate</groupId>
-  		<artifactId>hibernate-annotations</artifactId>
-  		<version>3.5.6-Final</version>
-  		<type>jar</type>
-  		<scope>compile</scope>
-  	</dependency>
-  	<dependency>
-  		<groupId>org.hibernate</groupId>
-  		<artifactId>hibernate-entitymanager</artifactId>
-  		<version>3.5.6-Final</version>
-  		<type>jar</type>
-  		<scope>compile</scope>
-  	</dependency>
+   <groupId>org.hibernate</groupId>
+   <artifactId>hibernate-search</artifactId>
+   <version>3.3.0.Final</version>
+</dependency>
+<dependency>
+   <groupId>org.hibernate</groupId>
+   <artifactId>hibernate-entitymanager</artifactId>
+   <version>3.6.0.Final</version>
+</dependency>
   	<dependency>
   		<groupId>mysql</groupId>
   		<artifactId>mysql-connector-java</artifactId>
@@ -119,7 +108,7 @@
     <pluginRepository>
       <id>jboss-public-repository-group</id>
       <name>JBoss Public Repository Group</name>
-      <url>http://repository.jboss.org/nexus/content/groups/public/</url>
+      <url>http://repository.jboss.org/nexus/content/groups/public-jboss/</url>
       <releases>
         <enabled>true</enabled>
       </releases>
