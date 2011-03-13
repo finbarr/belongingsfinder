@@ -16,6 +16,7 @@ import com.belongingsfinder.api.framework.FilterFactory;
 import com.belongingsfinder.api.framework.FinderFactory;
 import com.belongingsfinder.api.modules.AppModule;
 import com.belongingsfinder.api.modules.DAOModule;
+import com.belongingsfinder.api.modules.PagerModule;
 import com.belongingsfinder.api.modules.RestletModule;
 import com.belongingsfinder.api.modules.ServiceModule;
 import com.belongingsfinder.api.resource.BelongingModelServerResource;
@@ -47,6 +48,10 @@ public class BelongingsFinder extends Application {
 	private FilterFactory uuidFilterFactory;
 
 	@Inject
+	@Named("type")
+	private FilterFactory typeFilterFactory;
+
+	@Inject
 	private Set<Service> services;
 
 	public static void main(String[] args) throws Exception {
@@ -58,8 +63,8 @@ public class BelongingsFinder extends Application {
 
 	@Override
 	public Restlet createInboundRoot() {
-		Injector injector = Guice.createInjector(new AppModule(), new DAOModule(), new RestletModule(),
-				new ServiceModule());
+		Injector injector = Guice.createInjector(new AppModule(), new DAOModule(), new PagerModule(),
+				new RestletModule(), new ServiceModule());
 		injector.injectMembers(this);
 
 		registerServices(services);
@@ -68,17 +73,16 @@ public class BelongingsFinder extends Application {
 
 		TemplateRoute belongings = apiv1.attach("/belongings/{number}",
 				finderFactory.createFinder(BelongingModelsServerResource.class));
-
 		belongings.getTemplate().getVariables().put("number", new Variable(Variable.TYPE_DIGIT, "0", false, false));
 
 		apiv1.attach("/belongings/id/{id}",
 				uuidFilterFactory.createFilter(finderFactory.createFinder(BelongingModelServerResource.class)));
 
-		TemplateRoute belongingPager = apiv1.attach("/belongings/{type}/{number}/{offset}",
-				finderFactory.createFinder(PagingBelongingModelServerResource.class));
-
-		belongingPager.getTemplate().getVariables().put("number", new Variable(Variable.TYPE_DIGIT));
-		belongingPager.getTemplate().getVariables().put("offset", new Variable(Variable.TYPE_DIGIT));
+		TemplateRoute belongingsPager = apiv1.attach("/belongings/{type}/{number}/{offset}",
+				typeFilterFactory.createFilter(finderFactory.createFinder(PagingBelongingModelServerResource.class)));
+		belongingsPager.getTemplate().getVariables().put("number", new Variable(Variable.TYPE_DIGIT));
+		belongingsPager.getTemplate().getVariables().put("offset", new Variable(Variable.TYPE_DIGIT));
+		belongingsPager.getTemplate().getVariables().put("type", new Variable(Variable.TYPE_ALPHA));
 
 		apiv1.attach("/category", finderFactory.createFinder(CategoryModelsServerResource.class));
 		apiv1.attach("/category/id/{id}",
