@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import com.belongingsfinder.api.annotations.Transactional;
 import com.belongingsfinder.api.dao.ModelDAO;
@@ -60,7 +63,11 @@ public class JPAModelDAO<T extends Model<T>> implements ModelDAO<T> {
 	@Transactional
 	public List<T> retrieveAll() {
 		EntityManager em = local.get();
-		return em.createQuery(em.getCriteriaBuilder().createQuery(type)).getResultList();
+		CriteriaBuilder builder = em.getCriteriaBuilder();
+		CriteriaQuery<T> query = builder.createQuery(type);
+		Root<T> root = query.from(type);
+		query.select(root);
+		return em.createQuery(query).getResultList();
 	}
 
 	@Transactional

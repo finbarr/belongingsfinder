@@ -1,6 +1,9 @@
 package com.belongingsfinder.api.resource;
 
+import java.util.List;
+
 import org.restlet.data.Status;
+import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
 
@@ -26,6 +29,11 @@ public class BelongingModelsServerResource extends ServerResource {
 			getResponse().setStatus(Status.CLIENT_ERROR_PRECONDITION_FAILED, "Invalid image URI");
 			return null;
 		}
+	}
+
+	@Get("json")
+	public List<BelongingModel> getBelongings() {
+		return modelDAO.retrieveAll();
 	}
 
 }

@@ -18,7 +18,6 @@ import com.belongingsfinder.api.modules.RestletModule;
 import com.belongingsfinder.api.modules.ServiceModule;
 import com.belongingsfinder.api.resource.BelongingModelServerResource;
 import com.belongingsfinder.api.resource.BelongingModelsServerResource;
-import com.belongingsfinder.api.resource.CategoriesServerResource;
 import com.belongingsfinder.api.resource.CategoryModelServerResource;
 import com.belongingsfinder.api.resource.CategoryModelsServerResource;
 import com.belongingsfinder.api.resource.StuffServerResource;
@@ -65,14 +64,12 @@ public class BelongingsFinder extends Application {
 		Router apiv1 = routerProvider.get();
 
 		apiv1.attach("/belongings", finderFactory.createFinder(BelongingModelsServerResource.class));
-		apiv1.attach("/belongings/{id}",
+		apiv1.attach("/belongings/id/{id}",
 				uuidFilterFactory.createFilter(finderFactory.createFinder(BelongingModelServerResource.class)));
 
-		apiv1.attach("/category", finderFactory.createFinder(CategoryModelServerResource.class));
-		apiv1.attach("/category/{id}",
-				uuidFilterFactory.createFilter(finderFactory.createFinder(CategoryModelsServerResource.class)));
-
-		apiv1.attach("/categories", finderFactory.createFinder(CategoriesServerResource.class));
+		apiv1.attach("/category", finderFactory.createFinder(CategoryModelsServerResource.class));
+		apiv1.attach("/category/id/{id}",
+				uuidFilterFactory.createFilter(finderFactory.createFinder(CategoryModelServerResource.class)));
 
 		Router app = routerProvider.get();
 		app.attach(v1, apiv1, Template.MODE_STARTS_WITH);

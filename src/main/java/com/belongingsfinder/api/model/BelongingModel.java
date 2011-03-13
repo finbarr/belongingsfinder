@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
@@ -25,6 +26,7 @@ public class BelongingModel implements Model<BelongingModel>, Serializable {
 	@Enumerated(EnumType.STRING)
 	private Type type;
 	private String email;
+	@OneToMany
 	private CategoryModel category;
 	private Date lastUpdated;
 

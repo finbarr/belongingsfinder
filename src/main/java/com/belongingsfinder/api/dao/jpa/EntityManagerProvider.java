@@ -6,6 +6,7 @@ import javax.persistence.EntityManagerFactory;
 import org.hibernate.ejb.Ejb3Configuration;
 
 import com.belongingsfinder.api.model.BelongingModel;
+import com.belongingsfinder.api.model.CategoryModel;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
 
@@ -23,7 +24,8 @@ public class EntityManagerProvider implements Provider<EntityManager> {
 			synchronized (this) {
 				if (entityManagerFactory == null) {
 					entityManagerFactory = new Ejb3Configuration().addAnnotatedClass(BelongingModel.class)
-							.configure("/hibernate.cfg.xml").buildEntityManagerFactory();
+							.addAnnotatedClass(CategoryModel.class).configure("/hibernate.cfg.xml")
+							.buildEntityManagerFactory();
 				}
 			}
 		}

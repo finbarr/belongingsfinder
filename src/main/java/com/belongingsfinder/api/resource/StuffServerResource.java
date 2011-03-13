@@ -6,6 +6,7 @@ import org.restlet.resource.Get;
 import org.restlet.resource.ServerResource;
 
 import com.belongingsfinder.api.model.BelongingModel;
+import com.belongingsfinder.api.model.CategoryModel;
 import com.belongingsfinder.api.model.LatLon;
 
 public class StuffServerResource extends ServerResource {
@@ -18,7 +19,10 @@ public class StuffServerResource extends ServerResource {
 		bm.setLocation(new LatLon("-3,-4"));
 		bm.setDescription("Hello, Description!");
 		bm.setType(BelongingModel.Type.FOUND);
+		CategoryModel cm = new CategoryModel();
+		cm.setId(UUID.randomUUID().toString());
+		cm.setName("yoyoyo");
+		bm.setCategory(cm);
 		return bm;
 	}
-
 }
