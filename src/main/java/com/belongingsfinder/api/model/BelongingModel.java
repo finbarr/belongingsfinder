@@ -7,13 +7,23 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.hibernate.search.annotations.DateBridge;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.Resolution;
 import org.hibernate.search.annotations.Store;
+
+import com.sun.istack.internal.NotNull;
 
 @Entity
 @Indexed
@@ -24,23 +34,29 @@ public class BelongingModel implements Model<BelongingModel>, Serializable {
 	@Id
 	private String id;
 	private String imageUrl;
-	// TODO column stuff to make this field much bigger
 	@Field(index = Index.TOKENIZED, store = Store.NO)
+	@Lob
 	private String description;
 	// TODO location search
 	@Embedded
 	private LatLon location;
-	@Field(index = Index.UN_TOKENIZED, store = Store.YES)
+	@Field(index = Index.UN_TOKENIZED, store = Store.NO)
 	@Enumerated(EnumType.STRING)
+	@NotNull
 	private Type type;
+	@NotNull
 	private String email;
-	// TODO change back to CategoryModel
-	@Field(index = Index.UN_TOKENIZED, store = Store.YES)
-	private String categoryId;
+	@NotNull
+	@IndexedEmbedded
+	@ManyToOne(fetch = FetchType.EAGER)
+	private CategoryModel category;
+	@NotNull
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateBridge(resolution = Resolution.DAY)
 	private Date lastUpdated;
 
-	public String getCategoryId() {
-		return categoryId;
+	public CategoryModel getCategory() {
+		return category;
 	}
 
 	public String getDescription() {
@@ -72,8 +88,8 @@ public class BelongingModel implements Model<BelongingModel>, Serializable {
 		return type;
 	}
 
-	public void setCategoryId(String categoryId) {
-		this.categoryId = categoryId;
+	public void setCategory(CategoryModel category) {
+		this.category = category;
 	}
 
 	public void setDescription(String description) {

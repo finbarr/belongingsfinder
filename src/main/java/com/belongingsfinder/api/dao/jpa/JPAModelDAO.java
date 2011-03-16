@@ -32,7 +32,6 @@ public class JPAModelDAO<T extends Model<T>> implements ModelDAO<T> {
 
 	@Transactional
 	public String create(T model) {
-		// give new models a random id
 		model.setId(UUID.randomUUID().toString());
 		// obtain entitymanager and persist model
 		local.get().persist(model);

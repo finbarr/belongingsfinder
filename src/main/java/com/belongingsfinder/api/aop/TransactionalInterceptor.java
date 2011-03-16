@@ -44,6 +44,7 @@ public class TransactionalInterceptor implements MethodInterceptor {
 				}
 			}
 			// remove the entitymanager
+			// entityManager.close();
 			local.remove();
 		}
 		return result;
