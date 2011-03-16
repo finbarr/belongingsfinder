@@ -7,6 +7,10 @@ import org.restlet.routing.Filter;
 
 import com.belongingsfinder.api.model.BelongingModel;
 
+/**
+ * @author finbarr
+ * 
+ */
 public class BelongingTypeFilter extends Filter {
 
 	@Override

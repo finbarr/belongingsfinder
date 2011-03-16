@@ -14,6 +14,10 @@ import com.belongingsfinder.api.framework.UUIDFilterFactory;
 import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
 
+/**
+ * @author finbarr
+ * 
+ */
 public class RestletModule extends AbstractModule {
 
 	@Override

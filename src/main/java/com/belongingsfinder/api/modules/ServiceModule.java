@@ -9,6 +9,10 @@ import com.belongingsfinder.api.service.AsyncEventBusService;
 import com.google.inject.AbstractModule;
 import com.google.inject.multibindings.Multibinder;
 
+/**
+ * @author finbarr
+ * 
+ */
 public class ServiceModule extends AbstractModule {
 
 	@Override

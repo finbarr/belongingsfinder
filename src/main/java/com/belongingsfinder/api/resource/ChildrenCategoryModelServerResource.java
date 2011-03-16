@@ -10,6 +10,10 @@ import org.restlet.resource.ServerResource;
 import com.belongingsfinder.api.model.CategoryModel;
 import com.google.inject.Inject;
 
+/**
+ * @author finbarr
+ * 
+ */
 public class ChildrenCategoryModelServerResource extends ServerResource {
 
 	private final ThreadLocal<EntityManager> local;

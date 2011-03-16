@@ -36,6 +36,12 @@ import com.google.inject.Injector;
 import com.google.inject.Provider;
 import com.google.inject.name.Named;
 
+/**
+ * @author finbarr
+ * 
+ *         http://finbarrtaylor.com
+ * 
+ */
 public class BelongingsFinder extends Application {
 
 	@Inject

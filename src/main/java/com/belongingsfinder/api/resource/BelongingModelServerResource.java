@@ -13,6 +13,10 @@ import com.belongingsfinder.api.model.BelongingModel;
 import com.belongingsfinder.api.util.URIValidator;
 import com.google.inject.Inject;
 
+/**
+ * @author finbarr
+ * 
+ */
 public class BelongingModelServerResource extends ServerResource {
 
 	private final ModelDAO<BelongingModel> modelDAO;

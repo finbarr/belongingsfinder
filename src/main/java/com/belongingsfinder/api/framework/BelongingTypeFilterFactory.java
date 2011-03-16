@@ -7,6 +7,10 @@ import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
 
+/**
+ * @author finbarr
+ * 
+ */
 @Singleton
 public class BelongingTypeFilterFactory extends AbstractFilterFactory {
 

@@ -9,6 +9,10 @@ import org.hibernate.search.jpa.Search;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+/**
+ * @author finbarr
+ * 
+ */
 @Singleton
 public class SearchIndexer {
 
@@ -30,4 +34,5 @@ public class SearchIndexer {
 			e.printStackTrace();
 		}
 	}
+
 }

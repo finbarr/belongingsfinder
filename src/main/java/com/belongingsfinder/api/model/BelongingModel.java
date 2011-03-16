@@ -23,6 +23,10 @@ import org.hibernate.search.annotations.Store;
 
 import com.sun.istack.internal.NotNull;
 
+/**
+ * @author finbarr
+ * 
+ */
 @Entity
 @Indexed
 public class BelongingModel implements Model<BelongingModel>, Serializable {
@@ -35,8 +39,8 @@ public class BelongingModel implements Model<BelongingModel>, Serializable {
 	@Field(index = Index.TOKENIZED, store = Store.NO)
 	@Lob
 	private String description;
-	// TODO location search
 	@Embedded
+	@IndexedEmbedded
 	private LatLon location;
 	@Field(index = Index.UN_TOKENIZED, store = Store.NO)
 	@Enumerated(EnumType.STRING)

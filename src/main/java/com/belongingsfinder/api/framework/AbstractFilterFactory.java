@@ -6,6 +6,10 @@ import org.restlet.routing.Filter;
 
 import com.google.inject.Provider;
 
+/**
+ * @author finbarr
+ * 
+ */
 public abstract class AbstractFilterFactory implements FilterFactory {
 
 	private final Provider<Filter> filterProvider;

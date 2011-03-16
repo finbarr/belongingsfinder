@@ -8,6 +8,10 @@ import com.belongingsfinder.api.pager.ModelPager;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 
+/**
+ * @author finbarr
+ * 
+ */
 public class BelongingModelCountServerResource extends ServerResource {
 
 	private final ModelPager<BelongingModel> allPager;

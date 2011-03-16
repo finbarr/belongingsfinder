@@ -16,6 +16,10 @@ import com.belongingsfinder.api.model.BelongingModel;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+/**
+ * @author finbarr
+ * 
+ */
 @Singleton
 public class BelongingModelSearch {
 
@@ -26,7 +30,7 @@ public class BelongingModelSearch {
 		this.local = local;
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Transactional
 	public List<BelongingModel> search(BelongingFilter bf) {
 		FullTextEntityManager ftem = Search.getFullTextEntityManager(local.get());

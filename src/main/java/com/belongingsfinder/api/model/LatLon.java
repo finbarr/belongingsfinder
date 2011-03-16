@@ -4,6 +4,10 @@ import java.io.Serializable;
 
 import javax.persistence.Embeddable;
 
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Store;
+
 /**
  * @author Finbarr
  * 
@@ -12,7 +16,9 @@ import javax.persistence.Embeddable;
 public class LatLon implements Serializable {
 
 	private static final long serialVersionUID = -4728508792442337147L;
+	@Field(index = Index.UN_TOKENIZED, store = Store.NO)
 	private String lat;
+	@Field(index = Index.UN_TOKENIZED, store = Store.NO)
 	private String lon;
 
 	public LatLon() {

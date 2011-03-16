@@ -10,6 +10,10 @@ import com.belongingsfinder.api.model.BelongingModel;
 import com.belongingsfinder.api.search.BelongingModelSearch;
 import com.google.inject.Inject;
 
+/**
+ * @author finbarr
+ * 
+ */
 public class BelongingSearchServerResource extends ServerResource {
 
 	private final BelongingModelSearch search;

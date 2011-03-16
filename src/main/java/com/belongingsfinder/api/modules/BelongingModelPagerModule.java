@@ -10,6 +10,10 @@ import com.google.inject.PrivateModule;
 import com.google.inject.name.Names;
 import com.google.inject.util.Types;
 
+/**
+ * @author finbarr
+ * 
+ */
 public class BelongingModelPagerModule extends AbstractModule {
 
 	@Override

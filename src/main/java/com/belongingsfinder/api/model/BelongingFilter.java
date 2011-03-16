@@ -2,6 +2,10 @@ package com.belongingsfinder.api.model;
 
 import java.io.Serializable;
 
+/**
+ * @author finbarr
+ * 
+ */
 public class BelongingFilter implements Serializable {
 
 	private static final long serialVersionUID = 3031305247570478690L;

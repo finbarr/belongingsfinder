@@ -12,6 +12,10 @@ import com.belongingsfinder.api.annotations.Transactional;
 import com.belongingsfinder.api.model.BelongingModel;
 import com.google.inject.Inject;
 
+/**
+ * @author finbarr
+ * 
+ */
 public class RandomBelongingModelServerResource extends ServerResource {
 
 	private final ThreadLocal<EntityManager> local;

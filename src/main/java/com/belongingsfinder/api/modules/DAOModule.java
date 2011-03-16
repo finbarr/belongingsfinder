@@ -24,6 +24,10 @@ import com.google.inject.TypeLiteral;
 import com.google.inject.matcher.Matchers;
 import com.google.inject.util.Types;
 
+/**
+ * @author finbarr
+ * 
+ */
 public class DAOModule extends AbstractModule {
 
 	@SuppressWarnings("unchecked")

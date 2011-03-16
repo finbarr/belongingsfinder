@@ -6,6 +6,10 @@ import java.util.concurrent.Executors;
 import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
 
+/**
+ * @author finbarr
+ * 
+ */
 public class AppModule extends AbstractModule {
 
 	@Override

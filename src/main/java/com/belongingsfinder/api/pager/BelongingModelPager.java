@@ -13,6 +13,10 @@ import com.google.inject.Singleton;
 
 // This class could easily be generic
 
+/**
+ * @author finbarr
+ * 
+ */
 @Singleton
 public class BelongingModelPager implements ModelPager<BelongingModel> {
 

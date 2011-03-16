@@ -14,6 +14,10 @@ import com.belongingsfinder.api.model.CategoryModel;
 import com.belongingsfinder.api.search.CategoryModelSearch;
 import com.google.inject.Inject;
 
+/**
+ * @author finbarr
+ * 
+ */
 public class CategoryModelsServerResource extends ServerResource {
 
 	private final ThreadLocal<EntityManager> local;

@@ -17,18 +17,14 @@ import com.google.inject.Singleton;
 @Singleton
 public class EntityManagerProvider implements Provider<EntityManager> {
 
-	private volatile EntityManagerFactory entityManagerFactory;
+	private final EntityManagerFactory entityManagerFactory;
+
+	public EntityManagerProvider() {
+		entityManagerFactory = new Ejb3Configuration().addAnnotatedClass(BelongingModel.class)
+				.addAnnotatedClass(CategoryModel.class).configure("/hibernate.cfg.xml").buildEntityManagerFactory();
+	}
 
 	public EntityManager get() {
-		if (entityManagerFactory == null) {
-			synchronized (this) {
-				if (entityManagerFactory == null) {
-					entityManagerFactory = new Ejb3Configuration().addAnnotatedClass(BelongingModel.class)
-							.addAnnotatedClass(CategoryModel.class).configure("/hibernate.cfg.xml")
-							.buildEntityManagerFactory();
-				}
-			}
-		}
 		return entityManagerFactory.createEntityManager();
 	}
 

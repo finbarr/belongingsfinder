@@ -10,6 +10,10 @@ import com.belongingsfinder.api.event.events.ModelUpdatedEvent;
 import com.belongingsfinder.api.model.BelongingModel;
 import com.google.inject.Inject;
 
+/**
+ * @author finbarr
+ * 
+ */
 public class BelongingModelMatchingService extends Service {
 
 	private final EventBus eventBus;

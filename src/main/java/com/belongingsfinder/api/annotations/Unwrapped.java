@@ -5,6 +5,10 @@ import java.lang.annotation.RetentionPolicy;
 
 import com.google.inject.BindingAnnotation;
 
+/**
+ * @author finbarr
+ * 
+ */
 @Retention(RetentionPolicy.RUNTIME)
 @BindingAnnotation
 public @interface Unwrapped {

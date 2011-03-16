@@ -6,6 +6,10 @@ import javax.persistence.Query;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+/**
+ * @author finbarr
+ * 
+ */
 @Singleton
 public class CategoryModelSearch {
 

@@ -11,6 +11,10 @@ import com.belongingsfinder.api.model.CategoryModel;
 import com.belongingsfinder.api.model.LatLon;
 import com.google.inject.Inject;
 
+/**
+ * @author finbarr
+ * 
+ */
 public class StuffServerResource extends ServerResource {
 
 	@Inject

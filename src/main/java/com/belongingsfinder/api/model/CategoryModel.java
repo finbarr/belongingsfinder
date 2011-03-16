@@ -16,6 +16,10 @@ import org.hibernate.search.annotations.Store;
 
 import com.sun.istack.internal.NotNull;
 
+/**
+ * @author finbarr
+ * 
+ */
 @Entity
 public class CategoryModel implements Model<CategoryModel>, Serializable {
 
