@@ -26,6 +26,7 @@ public class BelongingModelSearch {
 		this.local = local;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Transactional
 	public List<BelongingModel> search(BelongingFilter bf) {
 		FullTextEntityManager ftem = Search.getFullTextEntityManager(local.get());

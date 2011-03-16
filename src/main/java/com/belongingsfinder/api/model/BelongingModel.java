@@ -15,12 +15,10 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
-import org.hibernate.search.annotations.DateBridge;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
-import org.hibernate.search.annotations.Resolution;
 import org.hibernate.search.annotations.Store;
 
 import com.sun.istack.internal.NotNull;
@@ -52,7 +50,6 @@ public class BelongingModel implements Model<BelongingModel>, Serializable {
 	private CategoryModel category;
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateBridge(resolution = Resolution.DAY)
 	private Date lastUpdated;
 
 	public CategoryModel getCategory() {

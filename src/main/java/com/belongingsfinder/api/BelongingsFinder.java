@@ -25,6 +25,7 @@ import com.belongingsfinder.api.resource.BelongingModelsServerResource;
 import com.belongingsfinder.api.resource.BelongingSearchServerResource;
 import com.belongingsfinder.api.resource.CategoryModelServerResource;
 import com.belongingsfinder.api.resource.CategoryModelsServerResource;
+import com.belongingsfinder.api.resource.ChildrenCategoryModelServerResource;
 import com.belongingsfinder.api.resource.PagingBelongingModelServerResource;
 import com.belongingsfinder.api.resource.RandomBelongingModelServerResource;
 import com.belongingsfinder.api.resource.StuffServerResource;
@@ -104,6 +105,8 @@ public class BelongingsFinder extends Application {
 		apiv1.attach("/category", finderFactory.createFinder(CategoryModelsServerResource.class));
 		apiv1.attach("/category/id/{id}",
 				uuidFilterFactory.createFilter(finderFactory.createFinder(CategoryModelServerResource.class)));
+		apiv1.attach("/category/children/{id}",
+				uuidFilterFactory.createFilter(finderFactory.createFinder(ChildrenCategoryModelServerResource.class)));
 
 		Router app = routerProvider.get();
 		app.attach(v1, apiv1, Template.MODE_STARTS_WITH);

@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.search.annotations.Field;
@@ -39,6 +40,7 @@ public class CategoryModel implements Model<CategoryModel>, Serializable {
 		return name;
 	}
 
+	@JsonIgnore
 	public CategoryModel getParent() {
 		return parent;
 	}
@@ -51,6 +53,7 @@ public class CategoryModel implements Model<CategoryModel>, Serializable {
 		this.name = name;
 	}
 
+	@JsonIgnore
 	public void setParent(CategoryModel parent) {
 		this.parent = parent;
 	}
