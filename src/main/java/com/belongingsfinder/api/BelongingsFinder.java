@@ -87,14 +87,14 @@ public class BelongingsFinder extends Application {
 
 		Router apiv1 = routerProvider.get();
 
-		apiv1.attach("/belongings", finderFactory.createFinder(BelongingModelsServerResource.class));
+		apiv1.attach("/belongings", BelongingModelsServerResource.class);
 
 		TemplateRoute belongingsCount = apiv1.attach("/belongings/count/{type}",
 				typeFilterFactory.createFilter(finderFactory.createFinder(BelongingModelCountServerResource.class)));
 		belongingsCount.getTemplate().getVariables().put("type", new Variable(Variable.TYPE_ALPHA));
 
 		TemplateRoute randomBelongings = apiv1.attach("/belongings/random/{number}",
-				finderFactory.createFinder(RandomBelongingModelServerResource.class));
+				RandomBelongingModelServerResource.class);
 		randomBelongings.getTemplate().getVariables().put("number", new Variable(Variable.TYPE_DIGIT));
 
 		apiv1.attach("/belongings/id/{id}",
@@ -106,9 +106,9 @@ public class BelongingsFinder extends Application {
 		belongingsPager.getTemplate().getVariables().put("offset", new Variable(Variable.TYPE_DIGIT));
 		belongingsPager.getTemplate().getVariables().put("type", new Variable(Variable.TYPE_ALPHA));
 
-		apiv1.attach("/belongings/search", finderFactory.createFinder(BelongingSearchServerResource.class));
+		apiv1.attach("/belongings/search", BelongingSearchServerResource.class);
 
-		apiv1.attach("/category", finderFactory.createFinder(CategoryModelsServerResource.class));
+		apiv1.attach("/category", CategoryModelsServerResource.class);
 		apiv1.attach("/category/id/{id}",
 				uuidFilterFactory.createFilter(finderFactory.createFinder(CategoryModelServerResource.class)));
 		apiv1.attach("/category/children/{id}",
