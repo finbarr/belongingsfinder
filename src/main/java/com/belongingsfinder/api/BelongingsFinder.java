@@ -14,11 +14,7 @@ import org.restlet.service.Service;
 
 import com.belongingsfinder.api.framework.FilterFactory;
 import com.belongingsfinder.api.framework.FinderFactory;
-import com.belongingsfinder.api.modules.AppModule;
-import com.belongingsfinder.api.modules.BelongingModelPagerModule;
-import com.belongingsfinder.api.modules.DAOModule;
-import com.belongingsfinder.api.modules.RestletModule;
-import com.belongingsfinder.api.modules.ServiceModule;
+import com.belongingsfinder.api.modules.BelongingsFinderModules;
 import com.belongingsfinder.api.resource.BelongingModelCountServerResource;
 import com.belongingsfinder.api.resource.BelongingModelServerResource;
 import com.belongingsfinder.api.resource.BelongingModelsServerResource;
@@ -26,17 +22,17 @@ import com.belongingsfinder.api.resource.BelongingSearchServerResource;
 import com.belongingsfinder.api.resource.CategoryModelServerResource;
 import com.belongingsfinder.api.resource.CategoryModelsServerResource;
 import com.belongingsfinder.api.resource.ChildrenCategoryModelServerResource;
+import com.belongingsfinder.api.resource.MobileBelongingModelServerResource;
 import com.belongingsfinder.api.resource.PagingBelongingModelServerResource;
 import com.belongingsfinder.api.resource.RandomBelongingModelServerResource;
 import com.belongingsfinder.api.resource.StuffServerResource;
-import com.belongingsfinder.api.util.SearchIndexer;
+import com.belongingsfinder.api.search.SearchIndexer;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Provider;
 import com.google.inject.name.Named;
 import com.google.inject.persist.PersistService;
-import com.google.inject.persist.jpa.JpaPersistModule;
 
 /**
  * @author finbarr
@@ -111,6 +107,8 @@ public class BelongingsFinder extends Application {
 		apiv1.attach("/category/children/{id}",
 				uuidFilterFactory.createFilter(finderFactory.createFinder(ChildrenCategoryModelServerResource.class)));
 
+		apiv1.attach("/mobile", MobileBelongingModelServerResource.class);
+
 		Router app = routerProvider.get();
 		app.attach(v1, apiv1, Template.MODE_STARTS_WITH);
 		app.attach("/stuff", StuffServerResource.class);
@@ -120,8 +118,7 @@ public class BelongingsFinder extends Application {
 
 	@Override
 	public synchronized void start() throws Exception {
-		Injector injector = Guice.createInjector(new AppModule(), new DAOModule(), new BelongingModelPagerModule(),
-				new RestletModule(), new ServiceModule(), new JpaPersistModule("belongingsfinder"));
+		Injector injector = Guice.createInjector(new BelongingsFinderModules("belongingsfinder"));
 		injector.injectMembers(this);
 		persistService.start();
 		indexer.index();

@@ -45,7 +45,7 @@ public class BelongingModel implements Model<BelongingModel>, Serializable {
 	@Field(index = Index.UN_TOKENIZED, store = Store.NO)
 	@Enumerated(EnumType.STRING)
 	@NotNull
-	private Type type;
+	private BelongingType type;
 	@NotNull
 	private String email;
 	@NotNull
@@ -85,7 +85,7 @@ public class BelongingModel implements Model<BelongingModel>, Serializable {
 		return location;
 	}
 
-	public Type getType() {
+	public BelongingType getType() {
 		return type;
 	}
 
@@ -118,17 +118,34 @@ public class BelongingModel implements Model<BelongingModel>, Serializable {
 		this.location = location;
 	}
 
-	public void setType(Type type) {
+	public void setType(BelongingType type) {
 		this.type = type;
 	}
 
-	public enum Type {
+	public enum BelongingField {
+
+		DESCRIPTION("description"), LOCATION("location"), TYPE("type"), EMAIL("email"), IMAGE("image"), CATEGORY(
+				"category");
+
+		private final String name;
+
+		private BelongingField(String name) {
+			this.name = name;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+	}
+
+	public enum BelongingType {
 
 		LOST("lost"), FOUND("found"), ALL("all");
 
 		private final String name;
 
-		private Type(String name) {
+		private BelongingType(String name) {
 			this.name = name;
 		}
 

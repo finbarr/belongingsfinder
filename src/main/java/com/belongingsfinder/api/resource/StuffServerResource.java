@@ -22,7 +22,7 @@ public class StuffServerResource extends ServerResource {
 		bm.setImageUrl("http://google.co.uk");
 		bm.setLocation(new LatLon("-3,-4"));
 		bm.setDescription("Hello, Description!");
-		bm.setType(BelongingModel.Type.FOUND);
+		bm.setType(BelongingModel.BelongingType.FOUND);
 		CategoryModel cm = new CategoryModel();
 		cm.setName("category-name");
 		cm.setId(UUID.randomUUID().toString());

@@ -12,7 +12,7 @@ public class BelongingFilter implements Serializable {
 
 	private int maxResults;
 	private int offset;
-	private BelongingModel.Type type;
+	private BelongingModel.BelongingType type;
 	private LatLon location;
 	private String categoryId;
 	private String terms;
@@ -40,7 +40,7 @@ public class BelongingFilter implements Serializable {
 		return terms;
 	}
 
-	public BelongingModel.Type getType() {
+	public BelongingModel.BelongingType getType() {
 		return type;
 	}
 
@@ -64,7 +64,7 @@ public class BelongingFilter implements Serializable {
 		this.terms = terms;
 	}
 
-	public void setType(BelongingModel.Type type) {
+	public void setType(BelongingModel.BelongingType type) {
 		this.type = type;
 	}
 
