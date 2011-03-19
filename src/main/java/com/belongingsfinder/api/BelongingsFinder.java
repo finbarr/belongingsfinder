@@ -14,6 +14,7 @@ import org.restlet.service.Service;
 
 import com.belongingsfinder.api.framework.FilterFactory;
 import com.belongingsfinder.api.framework.FinderFactory;
+import com.belongingsfinder.api.modules.AWSModule.BucketName;
 import com.belongingsfinder.api.modules.BelongingsFinderModules;
 import com.belongingsfinder.api.resource.BelongingModelCountServerResource;
 import com.belongingsfinder.api.resource.BelongingModelServerResource;
@@ -118,7 +119,7 @@ public class BelongingsFinder extends Application {
 
 	@Override
 	public synchronized void start() throws Exception {
-		Injector injector = Guice.createInjector(new BelongingsFinderModules("belongingsfinder"));
+		Injector injector = Guice.createInjector(new BelongingsFinderModules("belongingsfinder", BucketName.TEST));
 		injector.injectMembers(this);
 		persistService.start();
 		indexer.index();
