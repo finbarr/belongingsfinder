@@ -9,6 +9,7 @@ import org.restlet.resource.ServerResource;
 
 import com.belongingsfinder.api.model.CategoryModel;
 import com.google.inject.Inject;
+import com.google.inject.Provider;
 
 /**
  * @author finbarr
@@ -16,17 +17,17 @@ import com.google.inject.Inject;
  */
 public class ChildrenCategoryModelServerResource extends ServerResource {
 
-	private final ThreadLocal<EntityManager> local;
+	private final Provider<EntityManager> provider;
 
 	@Inject
-	public ChildrenCategoryModelServerResource(ThreadLocal<EntityManager> local) {
-		this.local = local;
+	public ChildrenCategoryModelServerResource(Provider<EntityManager> provider) {
+		this.provider = provider;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Get("json")
 	public List<CategoryModel> getChildren() {
-		return local
+		return provider
 				.get()
 				.createQuery(
 						"select category from CategoryModel as category where category.parent.id = :id order by category.name asc")

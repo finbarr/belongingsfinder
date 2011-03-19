@@ -10,7 +10,6 @@ import com.belongingsfinder.api.event.events.ModelRetrievedEvent;
 import com.belongingsfinder.api.event.events.ModelUpdatedEvent;
 import com.belongingsfinder.api.model.Model;
 import com.google.inject.Inject;
-import com.google.inject.Singleton;
 
 /**
  * @author finbarr
@@ -18,7 +17,6 @@ import com.google.inject.Singleton;
  * @param <T>
  *            Model of type T
  */
-@Singleton
 public class EventWrappedModelDAO<T extends Model<T>> implements ModelDAO<T> {
 
 	private final EventBus eventBus;

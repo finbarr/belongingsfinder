@@ -5,11 +5,12 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import com.belongingsfinder.api.annotations.Transactional;
 import com.belongingsfinder.api.model.BelongingModel;
 import com.belongingsfinder.api.model.BelongingModel.Type;
 import com.google.inject.Inject;
+import com.google.inject.Provider;
 import com.google.inject.Singleton;
+import com.google.inject.persist.Transactional;
 
 // This class could easily be generic
 
@@ -21,12 +22,12 @@ import com.google.inject.Singleton;
 public class BelongingModelPager implements ModelPager<BelongingModel> {
 
 	private final Type type;
-	private final ThreadLocal<EntityManager> local;
+	private final Provider<EntityManager> provider;
 
 	@Inject
-	public BelongingModelPager(Type type, ThreadLocal<EntityManager> local) {
+	public BelongingModelPager(Type type, Provider<EntityManager> provider) {
 		this.type = type;
-		this.local = local;
+		this.provider = provider;
 	}
 
 	@Transactional
@@ -35,7 +36,7 @@ public class BelongingModelPager implements ModelPager<BelongingModel> {
 		if (!type.equals(BelongingModel.Type.ALL)) {
 			query += " where b.type = :type";
 		}
-		Query q = local.get().createQuery(query);
+		Query q = provider.get().createQuery(query);
 		if (!type.equals(BelongingModel.Type.ALL)) {
 			q.setParameter("type", type);
 		}
@@ -45,7 +46,7 @@ public class BelongingModelPager implements ModelPager<BelongingModel> {
 	@SuppressWarnings("unchecked")
 	@Transactional
 	public List<BelongingModel> retrieve(int number, int offset) {
-		Query q = local.get().createQuery(
+		Query q = provider.get().createQuery(
 				"select b from BelongingModel b where b.type = :type order by b.lastUpdated desc");
 		q.setParameter("type", type);
 		q.setMaxResults(number);

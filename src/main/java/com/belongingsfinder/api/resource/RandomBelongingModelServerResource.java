@@ -8,9 +8,10 @@ import javax.persistence.Query;
 import org.restlet.resource.Get;
 import org.restlet.resource.ServerResource;
 
-import com.belongingsfinder.api.annotations.Transactional;
 import com.belongingsfinder.api.model.BelongingModel;
 import com.google.inject.Inject;
+import com.google.inject.Provider;
+import com.google.inject.persist.Transactional;
 
 /**
  * @author finbarr
@@ -18,11 +19,11 @@ import com.google.inject.Inject;
  */
 public class RandomBelongingModelServerResource extends ServerResource {
 
-	private final ThreadLocal<EntityManager> local;
+	private final Provider<EntityManager> provider;
 
 	@Inject
-	public RandomBelongingModelServerResource(ThreadLocal<EntityManager> local) {
-		this.local = local;
+	public RandomBelongingModelServerResource(Provider<EntityManager> provider) {
+		this.provider = provider;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -30,7 +31,7 @@ public class RandomBelongingModelServerResource extends ServerResource {
 	@Transactional
 	public List<BelongingModel> getRandomBelongings() {
 		final int number = Integer.parseInt(getRequest().getAttributes().get("number").toString());
-		Query q = local.get().createQuery(
+		Query q = provider.get().createQuery(
 				"select b from BelongingModel as b where b.imageUrl is not null order by rand()");
 		q.setMaxResults(number);
 		return q.getResultList();

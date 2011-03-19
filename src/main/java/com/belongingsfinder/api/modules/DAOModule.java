@@ -2,16 +2,9 @@ package com.belongingsfinder.api.modules;
 
 import java.lang.annotation.Annotation;
 
-import javax.persistence.EntityManager;
-
-import com.belongingsfinder.api.annotations.Transactional;
 import com.belongingsfinder.api.annotations.Unwrapped;
-import com.belongingsfinder.api.aop.GuiceMethodInterceptor;
-import com.belongingsfinder.api.aop.TransactionalInterceptor;
 import com.belongingsfinder.api.dao.EventWrappedModelDAO;
 import com.belongingsfinder.api.dao.ModelDAO;
-import com.belongingsfinder.api.dao.jpa.EntityManagerProvider;
-import com.belongingsfinder.api.dao.jpa.EntityManagerThreadLocal;
 import com.belongingsfinder.api.dao.jpa.JPAModelDAO;
 import com.belongingsfinder.api.model.BelongingModel;
 import com.belongingsfinder.api.model.CategoryModel;
@@ -19,9 +12,6 @@ import com.belongingsfinder.api.model.Model;
 import com.google.inject.AbstractModule;
 import com.google.inject.Key;
 import com.google.inject.PrivateModule;
-import com.google.inject.Singleton;
-import com.google.inject.TypeLiteral;
-import com.google.inject.matcher.Matchers;
 import com.google.inject.util.Types;
 
 /**
@@ -50,12 +40,6 @@ public class DAOModule extends AbstractModule {
 	protected void configure() {
 		bindModelDAOs(BelongingModel.class, JPAModelDAO.class);
 		bindModelDAOs(CategoryModel.class, JPAModelDAO.class);
-		bind(new TypeLiteral<ThreadLocal<EntityManager>>() {
-		}).to(EntityManagerThreadLocal.class);
-		bind(EntityManager.class).toProvider(EntityManagerProvider.class);
-		requestStaticInjection(GuiceMethodInterceptor.class);
-		bindInterceptor(Matchers.any(), Matchers.annotatedWith(Transactional.class), new GuiceMethodInterceptor(
-				TransactionalInterceptor.class));
 	}
 
 	@SuppressWarnings("unchecked")
@@ -64,11 +48,9 @@ public class DAOModule extends AbstractModule {
 			@Override
 			protected void configure() {
 				bind((Key<Class<T>>) Key.get(Types.newParameterizedType(Class.class, t))).toInstance(t);
-				bind(DAOModule.annotatedModelDAO(t, Unwrapped.class)).to(DAOModule.specificModelDAO(t, m)).in(
-						Singleton.class);
+				bind(DAOModule.annotatedModelDAO(t, Unwrapped.class)).to(DAOModule.specificModelDAO(t, m));
 				expose(DAOModule.annotatedModelDAO(t, Unwrapped.class));
-				bind(DAOModule.modelDAO(t)).to(DAOModule.specificModelDAO(t, EventWrappedModelDAO.class)).in(
-						Singleton.class);
+				bind(DAOModule.modelDAO(t)).to(DAOModule.specificModelDAO(t, EventWrappedModelDAO.class));
 				expose(DAOModule.modelDAO(t));
 			}
 		});

@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import org.hibernate.search.jpa.Search;
 
 import com.google.inject.Inject;
+import com.google.inject.Provider;
 import com.google.inject.Singleton;
 
 /**
@@ -17,17 +18,17 @@ import com.google.inject.Singleton;
 public class SearchIndexer {
 
 	private final Semaphore lock = new Semaphore(1);
-	private final ThreadLocal<EntityManager> local;
+	private final Provider<EntityManager> provider;
 
 	@Inject
-	public SearchIndexer(ThreadLocal<EntityManager> local) {
-		this.local = local;
+	public SearchIndexer(Provider<EntityManager> provider) {
+		this.provider = provider;
 	}
 
 	public void index() {
 		try {
 			if (lock.tryAcquire(1)) {
-				Search.getFullTextEntityManager(local.get()).createIndexer().startAndWait();
+				Search.getFullTextEntityManager(provider.get()).createIndexer().startAndWait();
 				// deliberately do not release the lock
 			}
 		} catch (InterruptedException e) {

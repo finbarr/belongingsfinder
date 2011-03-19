@@ -35,6 +35,8 @@ import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Provider;
 import com.google.inject.name.Named;
+import com.google.inject.persist.PersistService;
+import com.google.inject.persist.jpa.JpaPersistModule;
 
 /**
  * @author finbarr
@@ -63,6 +65,9 @@ public class BelongingsFinder extends Application {
 	private FilterFactory typeFilterFactory;
 
 	@Inject
+	private PersistService persistService;
+
+	@Inject
 	private SearchIndexer indexer;
 
 	@Inject
@@ -77,14 +82,6 @@ public class BelongingsFinder extends Application {
 
 	@Override
 	public Restlet createInboundRoot() {
-		Injector injector = Guice.createInjector(new AppModule(), new DAOModule(), new BelongingModelPagerModule(),
-				new RestletModule(), new ServiceModule());
-		injector.injectMembers(this);
-
-		indexer.index();
-
-		registerServices(services);
-
 		Router apiv1 = routerProvider.get();
 
 		apiv1.attach("/belongings", BelongingModelsServerResource.class);
@@ -119,6 +116,23 @@ public class BelongingsFinder extends Application {
 		app.attach("/stuff", StuffServerResource.class);
 
 		return app;
+	}
+
+	@Override
+	public synchronized void start() throws Exception {
+		Injector injector = Guice.createInjector(new AppModule(), new DAOModule(), new BelongingModelPagerModule(),
+				new RestletModule(), new ServiceModule(), new JpaPersistModule("belongingsfinder"));
+		injector.injectMembers(this);
+		persistService.start();
+		indexer.index();
+		registerServices(services);
+		super.start();
+	}
+
+	@Override
+	public synchronized void stop() throws Exception {
+		persistService.stop();
+		super.stop();
 	}
 
 	private void registerServices(Set<Service> services) {

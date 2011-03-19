@@ -10,11 +10,12 @@ import org.hibernate.search.jpa.Search;
 import org.hibernate.search.query.dsl.BooleanJunction;
 import org.hibernate.search.query.dsl.QueryBuilder;
 
-import com.belongingsfinder.api.annotations.Transactional;
 import com.belongingsfinder.api.model.BelongingFilter;
 import com.belongingsfinder.api.model.BelongingModel;
 import com.google.inject.Inject;
+import com.google.inject.Provider;
 import com.google.inject.Singleton;
+import com.google.inject.persist.Transactional;
 
 /**
  * @author finbarr
@@ -23,17 +24,17 @@ import com.google.inject.Singleton;
 @Singleton
 public class BelongingModelSearch {
 
-	private final ThreadLocal<EntityManager> local;
+	private final Provider<EntityManager> provider;
 
 	@Inject
-	public BelongingModelSearch(ThreadLocal<EntityManager> local) {
-		this.local = local;
+	public BelongingModelSearch(Provider<EntityManager> provider) {
+		this.provider = provider;
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Transactional
 	public List<BelongingModel> search(BelongingFilter bf) {
-		FullTextEntityManager ftem = Search.getFullTextEntityManager(local.get());
+		FullTextEntityManager ftem = Search.getFullTextEntityManager(provider.get());
 		QueryBuilder qb = ftem.getSearchFactory().buildQueryBuilder().forEntity(BelongingModel.class).get();
 		BooleanJunction<BooleanJunction> junc = qb.bool();
 		junc.should(qb.keyword().onField("description").matching(bf.getTerms()).createQuery());

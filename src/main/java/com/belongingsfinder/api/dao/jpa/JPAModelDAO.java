@@ -9,10 +9,11 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
-import com.belongingsfinder.api.annotations.Transactional;
 import com.belongingsfinder.api.dao.ModelDAO;
 import com.belongingsfinder.api.model.Model;
 import com.google.inject.Inject;
+import com.google.inject.Provider;
+import com.google.inject.persist.Transactional;
 
 /**
  * @author Finbarr
@@ -22,19 +23,19 @@ import com.google.inject.Inject;
 public class JPAModelDAO<T extends Model<T>> implements ModelDAO<T> {
 
 	private final Class<T> type;
-	private final ThreadLocal<EntityManager> local;
+	private final Provider<EntityManager> provider;
 
 	@Inject
-	public JPAModelDAO(Class<T> type, ThreadLocal<EntityManager> local) {
+	public JPAModelDAO(Class<T> type, Provider<EntityManager> provider) {
 		this.type = type;
-		this.local = local;
+		this.provider = provider;
 	}
 
 	@Transactional
 	public String create(T model) {
 		model.setId(UUID.randomUUID().toString());
 		// obtain entitymanager and persist model
-		local.get().persist(model);
+		provider.get().persist(model);
 		// return the id
 		return model.getId();
 	}
@@ -45,7 +46,7 @@ public class JPAModelDAO<T extends Model<T>> implements ModelDAO<T> {
 		T model = retrieveInternal(id);
 		if (model != null) {
 			// obtain entitymanager and remove
-			local.get().remove(model);
+			provider.get().remove(model);
 			return true;
 		}
 		return false;
@@ -53,7 +54,7 @@ public class JPAModelDAO<T extends Model<T>> implements ModelDAO<T> {
 
 	@Transactional
 	public List<T> retrieve(int number) {
-		TypedQuery<T> query = local.get().createQuery(createRetrievalQuery());
+		TypedQuery<T> query = provider.get().createQuery(createRetrievalQuery());
 		query.setMaxResults(number);
 		return query.getResultList();
 	}
@@ -63,22 +64,22 @@ public class JPAModelDAO<T extends Model<T>> implements ModelDAO<T> {
 		// retrieve model
 		T model = retrieveInternal(id);
 		// detach from entitymanager
-		local.get().detach(model);
+		provider.get().detach(model);
 		return model;
 	}
 
 	@Transactional
 	public List<T> retrieveAll() {
-		return local.get().createQuery(createRetrievalQuery()).getResultList();
+		return provider.get().createQuery(createRetrievalQuery()).getResultList();
 	}
 
 	@Transactional
 	public void update(T model) {
-		local.get().merge(model);
+		provider.get().merge(model);
 	}
 
 	private CriteriaQuery<T> createRetrievalQuery() {
-		EntityManager em = local.get();
+		EntityManager em = provider.get();
 		CriteriaBuilder builder = em.getCriteriaBuilder();
 		CriteriaQuery<T> query = builder.createQuery(type);
 		Root<T> root = query.from(type);
@@ -88,6 +89,6 @@ public class JPAModelDAO<T extends Model<T>> implements ModelDAO<T> {
 
 	private T retrieveInternal(String id) {
 		// obtain entitymanager and attempt to find entity of type with id
-		return local.get().find(type, id);
+		return provider.get().find(type, id);
 	}
 }

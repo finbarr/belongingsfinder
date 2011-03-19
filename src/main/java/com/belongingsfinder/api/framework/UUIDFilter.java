@@ -9,7 +9,7 @@ import org.restlet.data.Status;
 import org.restlet.routing.Filter;
 
 import com.google.inject.Inject;
-import com.google.inject.internal.Nullable;
+import com.sun.istack.internal.Nullable;
 
 /**
  * @author Finbarr

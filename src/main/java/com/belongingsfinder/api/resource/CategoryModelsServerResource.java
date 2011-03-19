@@ -13,6 +13,8 @@ import com.belongingsfinder.api.dao.ModelDAO;
 import com.belongingsfinder.api.model.CategoryModel;
 import com.belongingsfinder.api.search.CategoryModelSearch;
 import com.google.inject.Inject;
+import com.google.inject.Provider;
+import com.google.inject.persist.Transactional;
 
 /**
  * @author finbarr
@@ -20,19 +22,20 @@ import com.google.inject.Inject;
  */
 public class CategoryModelsServerResource extends ServerResource {
 
-	private final ThreadLocal<EntityManager> local;
+	private final Provider<EntityManager> provider;
 	private final ModelDAO<CategoryModel> modelDAO;
 	private final CategoryModelSearch search;
 
 	@Inject
-	public CategoryModelsServerResource(ThreadLocal<EntityManager> local, ModelDAO<CategoryModel> modelDAO,
+	public CategoryModelsServerResource(Provider<EntityManager> provider, ModelDAO<CategoryModel> modelDAO,
 			CategoryModelSearch search) {
-		this.local = local;
+		this.provider = provider;
 		this.modelDAO = modelDAO;
 		this.search = search;
 	}
 
 	@Post("json")
+	@Transactional
 	public String createCategory(CategoryModel model) {
 		if (search.categoryExists(model.getName())) {
 			getResponse().setStatus(Status.CLIENT_ERROR_PRECONDITION_FAILED,
@@ -44,8 +47,9 @@ public class CategoryModelsServerResource extends ServerResource {
 
 	@SuppressWarnings("unchecked")
 	@Get("json")
+	@Transactional
 	public List<CategoryModel> getRootCategories() {
-		return local
+		return provider
 				.get()
 				.createQuery(
 						"select category from CategoryModel as category where category.parent is null order by category.name asc")
