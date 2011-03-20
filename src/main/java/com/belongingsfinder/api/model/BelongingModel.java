@@ -15,12 +15,14 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.Store;
 
+import com.belongingsfinder.api.aws.S3File;
 import com.sun.istack.internal.NotNull;
 
 /**
@@ -35,7 +37,8 @@ public class BelongingModel implements Model<BelongingModel>, Serializable {
 
 	@Id
 	private String id;
-	private String imageUrl;
+	@Embedded
+	private S3File image;
 	@Field(index = Index.TOKENIZED, store = Store.NO)
 	@Lob
 	private String description;
@@ -72,8 +75,14 @@ public class BelongingModel implements Model<BelongingModel>, Serializable {
 		return id;
 	}
 
+	@JsonIgnore
+	public S3File getImage() {
+		return image;
+	}
+
+	@JsonProperty("imageUrl")
 	public String getImageUrl() {
-		return imageUrl;
+		return image == null ? null : image.getAWSUrl();
 	}
 
 	@JsonIgnore
@@ -105,8 +114,14 @@ public class BelongingModel implements Model<BelongingModel>, Serializable {
 		this.id = id;
 	}
 
+	@JsonIgnore
+	public void setImage(S3File image) {
+		this.image = image;
+	}
+
+	@JsonProperty("imageUrl")
 	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
+		image = new S3File(imageUrl);
 	}
 
 	@JsonIgnore
@@ -135,6 +150,20 @@ public class BelongingModel implements Model<BelongingModel>, Serializable {
 
 		public String getName() {
 			return name;
+		}
+
+	}
+
+	public static class BelongingModelVerifier implements ModelVerifier<BelongingModel> {
+
+		@Override
+		public boolean verify(BelongingModel model) {
+			return model != null
+					&& model.getCategory() != null
+					&& model.getType() != null
+					&& model.getEmail() != null
+					&& (model.getType() == BelongingModel.BelongingType.FOUND && model.getImage() != null || model
+							.getType() == BelongingModel.BelongingType.LOST && model.getDescription() != null);
 		}
 
 	}

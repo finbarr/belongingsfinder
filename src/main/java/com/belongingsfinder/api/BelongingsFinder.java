@@ -12,6 +12,7 @@ import org.restlet.routing.TemplateRoute;
 import org.restlet.routing.Variable;
 import org.restlet.service.Service;
 
+import com.amazonaws.services.s3.model.Region;
 import com.belongingsfinder.api.framework.FilterFactory;
 import com.belongingsfinder.api.framework.FinderFactory;
 import com.belongingsfinder.api.modules.AWSModule.BucketName;
@@ -70,10 +71,18 @@ public class BelongingsFinder extends Application {
 	@Inject
 	private Set<Service> services;
 
+	private final Region region;
+	private final BucketName bucket;
+
+	public BelongingsFinder(Region region, BucketName bucket) {
+		this.region = region;
+		this.bucket = bucket;
+	}
+
 	public static void main(String[] args) throws Exception {
 		Component c = new Component();
 		c.getServers().add(Protocol.HTTP, 8182);
-		c.getDefaultHost().attach(new BelongingsFinder());
+		c.getDefaultHost().attach(new BelongingsFinder(Region.US_West, BucketName.TEST));
 		c.start();
 	}
 
@@ -119,7 +128,7 @@ public class BelongingsFinder extends Application {
 
 	@Override
 	public synchronized void start() throws Exception {
-		Injector injector = Guice.createInjector(new BelongingsFinderModules("belongingsfinder", BucketName.TEST));
+		Injector injector = Guice.createInjector(new BelongingsFinderModules("belongingsfinder", bucket, region));
 		injector.injectMembers(this);
 		persistService.start();
 		indexer.index();

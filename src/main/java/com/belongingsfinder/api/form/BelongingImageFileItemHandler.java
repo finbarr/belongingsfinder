@@ -9,8 +9,10 @@ import org.restlet.data.MediaType;
 
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.belongingsfinder.api.aws.S3File;
 import com.belongingsfinder.api.aws.S3Store;
 import com.belongingsfinder.api.model.BelongingModel;
+import com.belongingsfinder.api.model.ModelVerifier;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 
@@ -18,11 +20,14 @@ public class BelongingImageFileItemHandler implements FileItemHandler<BelongingM
 
 	private final S3Store store;
 	private final Map<String, MediaType> images;
+	private final ModelVerifier<BelongingModel> verifier;
 
 	@Inject
-	private BelongingImageFileItemHandler(S3Store store, @Named("images") Map<String, MediaType> images) {
+	private BelongingImageFileItemHandler(S3Store store, @Named("images") Map<String, MediaType> images,
+			ModelVerifier<BelongingModel> verifier) {
 		this.store = store;
 		this.images = images;
+		this.verifier = verifier;
 	}
 
 	@Override
@@ -41,6 +46,11 @@ public class BelongingImageFileItemHandler implements FileItemHandler<BelongingM
 		ByteArrayInputStream bis = new ByteArrayInputStream(b);
 		String ext = images.get(fileItem.getContentType()).equals(MediaType.IMAGE_JPEG) ? ".jpeg" : ".png";
 		String key = UUID.randomUUID().toString() + ext;
-		store.store(key, bis, omd, CannedAccessControlList.PublicRead);
+		// dirty hack
+		model.setImage(new S3File());
+		if (verifier.verify(model)) {
+			model.setImage(store.store(key, bis, omd, CannedAccessControlList.PublicRead));
+		}
 	}
+
 }
