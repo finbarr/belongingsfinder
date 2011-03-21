@@ -58,9 +58,9 @@ public class MobileBelongingModelServerResource extends ServerResource {
 					FileItem fileItem = iterator.next();
 					if (fileItem.getFieldName() != null) {
 						if (handlers.containsKey(fileItem.getFieldName())
-								&& !fileItem.getFieldName().equals(BelongingModel.BelongingField.IMAGE.getName())) {
+								&& !fileItem.getFieldName().equals(BelongingModel.BelongingField.IMAGE.toString())) {
 							handlers.get(fileItem.getFieldName()).handle(fileItem, model);
-						} else if (fileItem.getFieldName().equals(BelongingModel.BelongingField.IMAGE.getName())) {
+						} else if (fileItem.getFieldName().equals(BelongingModel.BelongingField.IMAGE.toString())) {
 							image = fileItem;
 						} else {
 							logger.log(Level.INFO, "No FileItemHandler bound for " + fileItem.getName());

@@ -17,7 +17,7 @@ public class BelongingTypeFilter extends Filter {
 	protected int beforeHandle(Request request, Response response) {
 		final String type = request.getAttributes().get("type").toString();
 		for (BelongingModel.BelongingType t : BelongingModel.BelongingType.values()) {
-			if (t.getName().equals(type)) {
+			if (t.toString().equals(type)) {
 				return Filter.CONTINUE;
 			}
 		}

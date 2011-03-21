@@ -29,7 +29,7 @@ public class BelongingModelPagerModule extends AbstractModule {
 			protected void configure() {
 				Key<ModelPager<BelongingModel>> key = (Key<ModelPager<BelongingModel>>) Key.get(
 						com.google.inject.util.Types.newParameterizedType(ModelPager.class, BelongingModel.class),
-						Names.named(type.getName()));
+						Names.named(type.toString()));
 				bind(key).to(BelongingModelPager.class);
 				bind(BelongingModel.BelongingType.class).toInstance(type);
 				expose(key);

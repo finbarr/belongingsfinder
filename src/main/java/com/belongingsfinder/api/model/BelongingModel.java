@@ -14,15 +14,27 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.apache.solr.analysis.CJKTokenizerFactory;
+import org.apache.solr.analysis.LowerCaseFilterFactory;
+import org.apache.solr.analysis.SnowballPorterFilterFactory;
+import org.apache.solr.analysis.StandardTokenizerFactory;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.hibernate.search.analyzer.Discriminator;
+import org.hibernate.search.annotations.AnalyzerDef;
+import org.hibernate.search.annotations.AnalyzerDefs;
+import org.hibernate.search.annotations.AnalyzerDiscriminator;
 import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.Parameter;
+import org.hibernate.search.annotations.TokenFilterDef;
+import org.hibernate.search.annotations.TokenizerDef;
 
 import com.belongingsfinder.api.aws.S3File;
+import com.belongingsfinder.api.model.BelongingModel.BelongingModelLanguageDiscriminator;
 import com.sun.istack.internal.NotNull;
 
 /**
@@ -31,6 +43,12 @@ import com.sun.istack.internal.NotNull;
  */
 @Entity
 @Indexed
+@AnalyzerDefs({
+		@AnalyzerDef(name = "en", tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class), filters = {
+				@TokenFilterDef(factory = LowerCaseFilterFactory.class),
+				@TokenFilterDef(factory = SnowballPorterFilterFactory.class, params = { @Parameter(name = "language", value = "English") }) }),
+		@AnalyzerDef(name = "jp", tokenizer = @TokenizerDef(factory = CJKTokenizerFactory.class)) })
+@AnalyzerDiscriminator(impl = BelongingModelLanguageDiscriminator.class)
 public class BelongingModel implements Model<BelongingModel>, Serializable {
 
 	private static final long serialVersionUID = 6587819556855066435L;
@@ -59,6 +77,8 @@ public class BelongingModel implements Model<BelongingModel>, Serializable {
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastUpdated;
+	@Enumerated(EnumType.STRING)
+	private BelongingLang lang;
 
 	public CategoryModel getCategory() {
 		return category;
@@ -84,6 +104,10 @@ public class BelongingModel implements Model<BelongingModel>, Serializable {
 	@JsonProperty("imageUrl")
 	public String getImageUrl() {
 		return image == null ? null : image.getAWSUrl();
+	}
+
+	public BelongingLang getLang() {
+		return lang;
 	}
 
 	@JsonIgnore
@@ -125,6 +149,10 @@ public class BelongingModel implements Model<BelongingModel>, Serializable {
 		image = new S3File(imageUrl);
 	}
 
+	public void setLang(BelongingLang lang) {
+		this.lang = lang;
+	}
+
 	@JsonIgnore
 	public void setLastUpdated(Date lastUpdated) {
 		this.lastUpdated = lastUpdated;
@@ -149,8 +177,39 @@ public class BelongingModel implements Model<BelongingModel>, Serializable {
 			this.name = name;
 		}
 
-		public String getName() {
+		@Override
+		public String toString() {
 			return name;
+		}
+
+	}
+
+	public enum BelongingLang {
+
+		EN("en"), JP("jp");
+
+		private final String lang;
+
+		private BelongingLang(String lang) {
+			this.lang = lang;
+		}
+
+		@Override
+		public String toString() {
+			return lang;
+		}
+
+	}
+
+	public static class BelongingModelLanguageDiscriminator implements Discriminator {
+
+		@Override
+		public String getAnalyzerDefinitionName(Object value, Object entity, String field) {
+			if (entity instanceof BelongingModel) {
+				BelongingModel bm = (BelongingModel) entity;
+				return bm.getLang().toString();
+			}
+			return null;
 		}
 
 	}
@@ -179,7 +238,8 @@ public class BelongingModel implements Model<BelongingModel>, Serializable {
 			this.name = name;
 		}
 
-		public String getName() {
+		@Override
+		public String toString() {
 			return name;
 		}
 

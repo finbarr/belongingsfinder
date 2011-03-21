@@ -24,12 +24,12 @@ public class FileItemHandlerModule extends AbstractModule {
 				new TypeLiteral<String>() {
 				}, new TypeLiteral<FileItemHandler<BelongingModel>>() {
 				});
-		binder.addBinding(BelongingField.DESCRIPTION.getName()).to(BelongingDescriptionFieldFileItemHandler.class);
-		binder.addBinding(BelongingField.LOCATION.getName()).to(BelongingLocationFieldFileItemHandler.class);
-		binder.addBinding(BelongingField.EMAIL.getName()).to(BelongingEmailFieldFileItemHandler.class);
-		binder.addBinding(BelongingField.CATEGORY.getName()).to(BelongingCategoryFieldFileItemHandler.class);
-		binder.addBinding(BelongingField.IMAGE.getName()).to(BelongingImageFileItemHandler.class);
-		binder.addBinding(BelongingField.TYPE.getName()).to(BelongingTypeFieldFileItemHandler.class);
+		binder.addBinding(BelongingField.DESCRIPTION.toString()).to(BelongingDescriptionFieldFileItemHandler.class);
+		binder.addBinding(BelongingField.LOCATION.toString()).to(BelongingLocationFieldFileItemHandler.class);
+		binder.addBinding(BelongingField.EMAIL.toString()).to(BelongingEmailFieldFileItemHandler.class);
+		binder.addBinding(BelongingField.CATEGORY.toString()).to(BelongingCategoryFieldFileItemHandler.class);
+		binder.addBinding(BelongingField.IMAGE.toString()).to(BelongingImageFileItemHandler.class);
+		binder.addBinding(BelongingField.TYPE.toString()).to(BelongingTypeFieldFileItemHandler.class);
 		MapBinder<String, MediaType> imageTypes = MapBinder.newMapBinder(binder(), String.class, MediaType.class,
 				Names.named("images"));
 		mediaType(imageTypes, MediaType.IMAGE_JPEG);
