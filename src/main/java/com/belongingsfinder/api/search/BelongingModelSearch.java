@@ -3,9 +3,9 @@ package com.belongingsfinder.api.search;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 
 import org.hibernate.search.jpa.FullTextEntityManager;
+import org.hibernate.search.jpa.FullTextQuery;
 import org.hibernate.search.jpa.Search;
 import org.hibernate.search.query.dsl.BooleanJunction;
 import org.hibernate.search.query.dsl.QueryBuilder;
@@ -42,10 +42,11 @@ public class BelongingModelSearch {
 			junc.must(qb.keyword().onField("type").matching(bf.getType()).createQuery());
 		}
 		if (bf.getCategoryId() != null) {
-			junc.must(qb.keyword().onField("categoryId").matching(bf.getCategoryId()).createQuery());
+			junc.must(qb.keyword().onField("category.id").matching(bf.getCategoryId()).createQuery());
 		}
 		// TODO location stuff
-		Query q = ftem.createFullTextQuery(junc.createQuery(), BelongingModel.class);
+		// bounding box and range query
+		FullTextQuery q = ftem.createFullTextQuery(junc.createQuery(), BelongingModel.class);
 		if (bf.getMaxResults() > 0) {
 			q.setMaxResults(bf.getMaxResults());
 		}

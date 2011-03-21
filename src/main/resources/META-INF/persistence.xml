@@ -27,6 +27,20 @@
       		<property name="hibernate.format_sql" value="true"/>
 			<!-- 
 			<property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+			hibernate.search.[default|<indexname>].exclusive_index_use =false|true
+			hibernate.search.default.locking_strategy = single
+			hibernate.search.analyzer
+			
+			
+			
+			hibernate.search.worker.execution	sync: synchronous execution (default)
+												async: asynchronous execution
+
+			hibernate.search.worker.thread_pool.size	Defines the number of threads in the pool for asynchronous execution. Defaults to 1.
+			hibernate.search.worker.buffer_queue.max	Defines the maximal number of work queue if the thread poll is starved. Useful only for asynchronous execution. Default to infinite. If the limit is reached, the work is done by the main thread.
+			
+			
+			
 			 -->
 		</properties>	
 	</persistence-unit>

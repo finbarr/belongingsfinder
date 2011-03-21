@@ -12,7 +12,6 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
-import org.hibernate.search.annotations.Store;
 
 import com.sun.istack.internal.NotNull;
 
@@ -26,7 +25,7 @@ public class CategoryModel implements Model<CategoryModel>, Serializable {
 	private static final long serialVersionUID = -4520507504770029807L;
 
 	@Id
-	@Field(index = Index.UN_TOKENIZED, store = Store.NO)
+	@Field(index = Index.UN_TOKENIZED)
 	private String id;
 	@NotNull
 	@Column(unique = true)

@@ -16,11 +16,11 @@ import javax.persistence.TemporalType;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
-import org.hibernate.search.annotations.Store;
 
 import com.belongingsfinder.api.aws.S3File;
 import com.sun.istack.internal.NotNull;
@@ -36,16 +36,17 @@ public class BelongingModel implements Model<BelongingModel>, Serializable {
 	private static final long serialVersionUID = 6587819556855066435L;
 
 	@Id
+	@DocumentId
 	private String id;
 	@Embedded
 	private S3File image;
-	@Field(index = Index.TOKENIZED, store = Store.NO)
+	@Field
 	@Lob
 	private String description;
 	@Embedded
 	@IndexedEmbedded
 	private LatLon location;
-	@Field(index = Index.UN_TOKENIZED, store = Store.NO)
+	@Field(index = Index.UN_TOKENIZED)
 	@Enumerated(EnumType.STRING)
 	@NotNull
 	private BelongingType type;

@@ -1,12 +1,13 @@
 package com.belongingsfinder.api.model;
 
 import java.io.Serializable;
+import java.util.StringTokenizer;
 
 import javax.persistence.Embeddable;
 
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
-import org.hibernate.search.annotations.Store;
+import org.hibernate.search.annotations.NumericField;
 
 /**
  * @author Finbarr
@@ -16,23 +17,25 @@ import org.hibernate.search.annotations.Store;
 public class LatLon implements Serializable {
 
 	private static final long serialVersionUID = -4728508792442337147L;
-	@Field(index = Index.UN_TOKENIZED, store = Store.NO)
-	private String lat;
-	@Field(index = Index.UN_TOKENIZED, store = Store.NO)
-	private String lon;
+	@Field(index = Index.UN_TOKENIZED)
+	@NumericField
+	private double lat;
+	@Field(index = Index.UN_TOKENIZED)
+	@NumericField
+	private double lon;
 
 	public LatLon() {
 	}
 
-	public LatLon(String both) {
-		String[] parts = both.split(",");
-		lat = parts[0].trim();
-		lon = parts[1].trim();
-	}
-
-	public LatLon(String lat, String lon) {
+	public LatLon(double lat, double lon) {
 		this.lat = lat;
 		this.lon = lon;
+	}
+
+	public LatLon(String both) {
+		StringTokenizer st = new StringTokenizer(both, ", ");
+		lat = Double.parseDouble(st.nextToken());
+		lon = Double.parseDouble(st.nextToken());
 	}
 
 	@Override
@@ -44,11 +47,11 @@ public class LatLon implements Serializable {
 		return false;
 	}
 
-	public String getLat() {
+	public double getLat() {
 		return lat;
 	}
 
-	public String getLon() {
+	public double getLon() {
 		return lon;
 	}
 
@@ -57,11 +60,11 @@ public class LatLon implements Serializable {
 		return toString().hashCode();
 	}
 
-	public void setLat(String lat) {
+	public void setLat(double lat) {
 		this.lat = lat;
 	}
 
-	public void setLon(String lon) {
+	public void setLon(double lon) {
 		this.lon = lon;
 	}
 
