@@ -2,11 +2,14 @@ package com.belongingsfinder.api.model;
 
 import java.io.Serializable;
 
+import com.belongingsfinder.api.i18n.HasLanguage;
+import com.belongingsfinder.api.i18n.Language;
+
 /**
  * @author finbarr
  * 
  */
-public class BelongingFilter implements Serializable {
+public class BelongingSearchRequest implements HasLanguage, Serializable {
 
 	private static final long serialVersionUID = 3031305247570478690L;
 
@@ -16,12 +19,14 @@ public class BelongingFilter implements Serializable {
 	private LatLon location;
 	private String categoryId;
 	private String terms;
-
-	public BelongingFilter() {
-	}
+	private Language language;
 
 	public String getCategoryId() {
 		return categoryId;
+	}
+
+	public Language getLanguage() {
+		return language;
 	}
 
 	public LatLon getLocation() {
@@ -46,6 +51,10 @@ public class BelongingFilter implements Serializable {
 
 	public void setCategoryId(String categoryId) {
 		this.categoryId = categoryId;
+	}
+
+	public void setLanguage(Language language) {
+		this.language = language;
 	}
 
 	public void setLocation(LatLon location) {

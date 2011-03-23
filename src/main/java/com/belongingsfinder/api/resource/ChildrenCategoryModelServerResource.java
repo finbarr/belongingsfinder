@@ -1,7 +1,9 @@
 package com.belongingsfinder.api.resource;
 
+import java.util.LinkedList;
 import java.util.List;
 
+import org.restlet.data.Status;
 import org.restlet.resource.Get;
 import org.restlet.resource.ServerResource;
 
@@ -25,7 +27,11 @@ public class ChildrenCategoryModelServerResource extends ServerResource {
 	@Get("json")
 	public List<CategoryModel> getChildren() {
 		CategoryModel cm = categoryDAO.retrieve(getId());
-		return cm == null ? null : cm.getChildren();
+		if (cm == null) {
+			getResponse().setStatus(Status.CLIENT_ERROR_NOT_FOUND, "No such category");
+			return null;
+		}
+		return cm.getChildren() == null ? new LinkedList<CategoryModel>() : cm.getChildren();
 	}
 
 	private String getId() {

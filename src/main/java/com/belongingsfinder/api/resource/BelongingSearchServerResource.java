@@ -5,7 +5,7 @@ import java.util.List;
 import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
 
-import com.belongingsfinder.api.model.BelongingFilter;
+import com.belongingsfinder.api.model.BelongingSearchRequest;
 import com.belongingsfinder.api.model.BelongingModel;
 import com.belongingsfinder.api.search.BelongingModelSearch;
 import com.google.inject.Inject;
@@ -24,8 +24,8 @@ public class BelongingSearchServerResource extends ServerResource {
 	}
 
 	@Post("json")
-	public List<BelongingModel> findBelongings(BelongingFilter filter) {
-		return search.search(filter);
+	public List<BelongingModel> findBelongings(BelongingSearchRequest request) {
+		return search.search(request);
 	}
 
 }

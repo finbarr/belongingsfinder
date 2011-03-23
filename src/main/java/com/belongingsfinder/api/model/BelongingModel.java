@@ -22,18 +22,22 @@ import org.apache.solr.analysis.PorterStemFilterFactory;
 import org.apache.solr.analysis.StandardTokenizerFactory;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.search.analyzer.Discriminator;
 import org.hibernate.search.annotations.AnalyzerDef;
 import org.hibernate.search.annotations.AnalyzerDefs;
 import org.hibernate.search.annotations.AnalyzerDiscriminator;
+import org.hibernate.search.annotations.ClassBridge;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.Store;
 import org.hibernate.search.annotations.TokenFilterDef;
 import org.hibernate.search.annotations.TokenizerDef;
 
-import com.belongingsfinder.api.model.BelongingModel.BelongingModelLanguageDiscriminator;
+import com.belongingsfinder.api.i18n.HasLanguage;
+import com.belongingsfinder.api.i18n.Language;
+import com.belongingsfinder.api.search.LanguageBridge;
+import com.belongingsfinder.api.search.LanguageDiscriminator;
 import com.sun.istack.internal.NotNull;
 
 /**
@@ -47,8 +51,9 @@ import com.sun.istack.internal.NotNull;
 				@TokenFilterDef(factory = LowerCaseFilterFactory.class),
 				@TokenFilterDef(factory = PorterStemFilterFactory.class) }),
 		@AnalyzerDef(name = "jp", tokenizer = @TokenizerDef(factory = CJKTokenizerFactory.class)) })
-@AnalyzerDiscriminator(impl = BelongingModelLanguageDiscriminator.class)
-public class BelongingModel implements Model<BelongingModel>, Serializable {
+@AnalyzerDiscriminator(impl = LanguageDiscriminator.class)
+@ClassBridge(name = "description", index = Index.TOKENIZED, store = Store.NO, impl = LanguageBridge.class)
+public class BelongingModel implements Model<BelongingModel>, HasLanguage, Serializable {
 
 	private static final long serialVersionUID = 6587819556855066435L;
 
@@ -58,7 +63,6 @@ public class BelongingModel implements Model<BelongingModel>, Serializable {
 	private String id;
 	@OneToMany
 	private List<S3FileModel> images;
-	@Field
 	@Lob
 	private String description;
 	@Embedded
@@ -77,8 +81,9 @@ public class BelongingModel implements Model<BelongingModel>, Serializable {
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastUpdated;
+	@NotNull
 	@Enumerated(EnumType.STRING)
-	private BelongingLang lang;
+	private Language language;
 
 	public CategoryModel getCategory() {
 		return category;
@@ -100,8 +105,8 @@ public class BelongingModel implements Model<BelongingModel>, Serializable {
 		return images;
 	}
 
-	public BelongingLang getLang() {
-		return lang;
+	public Language getLanguage() {
+		return language;
 	}
 
 	@JsonIgnore
@@ -137,8 +142,8 @@ public class BelongingModel implements Model<BelongingModel>, Serializable {
 		this.images = images;
 	}
 
-	public void setLang(BelongingLang lang) {
-		this.lang = lang;
+	public void setLanguage(Language language) {
+		this.language = language;
 	}
 
 	@JsonIgnore
@@ -168,36 +173,6 @@ public class BelongingModel implements Model<BelongingModel>, Serializable {
 		@Override
 		public String toString() {
 			return name;
-		}
-
-	}
-
-	public enum BelongingLang {
-
-		EN("en"), JP("jp");
-
-		private final String lang;
-
-		private BelongingLang(String lang) {
-			this.lang = lang;
-		}
-
-		@Override
-		public String toString() {
-			return lang;
-		}
-
-	}
-
-	public static class BelongingModelLanguageDiscriminator implements Discriminator {
-
-		@Override
-		public String getAnalyzerDefinitionName(Object value, Object entity, String field) {
-			if (entity instanceof BelongingModel) {
-				BelongingModel bm = (BelongingModel) entity;
-				return bm.getLang().toString();
-			}
-			return null;
 		}
 
 	}

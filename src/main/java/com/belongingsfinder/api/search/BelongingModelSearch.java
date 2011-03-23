@@ -10,8 +10,8 @@ import org.hibernate.search.jpa.Search;
 import org.hibernate.search.query.dsl.BooleanJunction;
 import org.hibernate.search.query.dsl.QueryBuilder;
 
-import com.belongingsfinder.api.model.BelongingFilter;
 import com.belongingsfinder.api.model.BelongingModel;
+import com.belongingsfinder.api.model.BelongingSearchRequest;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
@@ -33,25 +33,27 @@ public class BelongingModelSearch {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Transactional
-	public List<BelongingModel> search(BelongingFilter bf) {
+	public List<BelongingModel> search(BelongingSearchRequest request) {
 		FullTextEntityManager ftem = Search.getFullTextEntityManager(provider.get());
-		QueryBuilder qb = ftem.getSearchFactory().buildQueryBuilder().forEntity(BelongingModel.class).get();
+		QueryBuilder qb = ftem.getSearchFactory().buildQueryBuilder().forEntity(BelongingModel.class)
+				.overridesForField("description_en", "en").overridesForField("description_jp", "jp").get();
 		BooleanJunction<BooleanJunction> junc = qb.bool();
-		junc.should(qb.keyword().onField("description").matching(bf.getTerms()).createQuery());
-		if (bf.getType() != null) {
-			junc.must(qb.keyword().onField("type").matching(bf.getType()).createQuery());
+		junc.should(qb.keyword().onField("description_" + request.getLanguage().toString())
+				.matching(request.getTerms()).createQuery());
+		if (request.getType() != null) {
+			junc.must(qb.keyword().onField("type").matching(request.getType()).createQuery());
 		}
-		if (bf.getCategoryId() != null) {
-			junc.must(qb.keyword().onField("category.id").matching(bf.getCategoryId()).createQuery());
+		if (request.getCategoryId() != null) {
+			junc.must(qb.keyword().onField("category.id").matching(request.getCategoryId()).createQuery());
 		}
 		// TODO location stuff
 		// bounding box and range query
 		FullTextQuery q = ftem.createFullTextQuery(junc.createQuery(), BelongingModel.class);
-		if (bf.getMaxResults() > 0) {
-			q.setMaxResults(bf.getMaxResults());
+		if (request.getMaxResults() > 0) {
+			q.setMaxResults(request.getMaxResults());
 		}
-		if (bf.getOffset() > 0) {
-			q.setFirstResult(bf.getOffset());
+		if (request.getOffset() > 0) {
+			q.setFirstResult(request.getOffset());
 		}
 		return q.getResultList();
 	}

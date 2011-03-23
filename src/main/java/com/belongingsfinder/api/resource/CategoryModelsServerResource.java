@@ -39,7 +39,7 @@ public class CategoryModelsServerResource extends ServerResource {
 	public String createCategory(CategoryModel model) {
 		if (search.categoryExists(model.getName())) {
 			getResponse().setStatus(Status.CLIENT_ERROR_PRECONDITION_FAILED,
-					"Category " + model.getName() + " already exists");
+					new StringBuilder("Category ").append(model.getName()).append(" already exists").toString());
 			return null;
 		}
 		return modelDAO.create(model);
