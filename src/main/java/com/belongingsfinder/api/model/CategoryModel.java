@@ -6,8 +6,10 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -34,9 +36,10 @@ public class CategoryModel implements Model<CategoryModel>, Serializable {
 	@NotNull
 	@Column(unique = true)
 	private String name;
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "parent", fetch = FetchType.EAGER)
 	private List<CategoryModel> children;
-	private boolean isChild;
+	@ManyToOne
+	private CategoryModel parent;
 
 	public List<CategoryModel> getChildren() {
 		return children;
@@ -51,8 +54,8 @@ public class CategoryModel implements Model<CategoryModel>, Serializable {
 	}
 
 	@JsonIgnore
-	public boolean isChild() {
-		return isChild;
+	public CategoryModel getParent() {
+		return parent;
 	}
 
 	public void setChildren(List<CategoryModel> children) {
@@ -63,13 +66,13 @@ public class CategoryModel implements Model<CategoryModel>, Serializable {
 		this.id = id;
 	}
 
-	@JsonIgnore
-	public void setIsChild(boolean isChild) {
-		this.isChild = isChild;
-	}
-
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@JsonIgnore
+	public void setParent(CategoryModel parent) {
+		this.parent = parent;
 	}
 
 }

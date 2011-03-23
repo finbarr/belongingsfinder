@@ -38,6 +38,7 @@ public class StuffServerResource extends ServerResource {
 	private CategoryModel c(String name, CategoryModel parent) {
 		CategoryModel cm = new CategoryModel();
 		cm.setName(name);
+		cm.setParent(parent);
 		return cm;
 	}
 }

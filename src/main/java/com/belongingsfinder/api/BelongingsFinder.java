@@ -111,10 +111,10 @@ public class BelongingsFinder extends Application {
 
 		apiv1.attach("/belongings/search", BelongingSearchServerResource.class);
 
-		apiv1.attach("/category", CategoryModelsServerResource.class);
-		apiv1.attach("/category/id/{id}",
+		apiv1.attach("/categories", CategoryModelsServerResource.class);
+		apiv1.attach("/categories/id/{id}",
 				uuidFilterFactory.createFilter(finderFactory.createFinder(CategoryModelServerResource.class)));
-		apiv1.attach("/category/children/{id}",
+		apiv1.attach("/categories/children/{id}",
 				uuidFilterFactory.createFilter(finderFactory.createFinder(ChildrenCategoryModelServerResource.class)));
 
 		apiv1.attach("/mobile", MobileBelongingModelServerResource.class);
