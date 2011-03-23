@@ -1,6 +1,8 @@
 package com.belongingsfinder.api;
 
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.restlet.Application;
 import org.restlet.Component;
@@ -17,6 +19,7 @@ import com.belongingsfinder.api.framework.FilterFactory;
 import com.belongingsfinder.api.framework.FinderFactory;
 import com.belongingsfinder.api.modules.AWSModule.BucketName;
 import com.belongingsfinder.api.modules.BelongingsFinderModules;
+import com.belongingsfinder.api.modules.DAOModule.PersistenceUnit;
 import com.belongingsfinder.api.resource.BelongingModelCountServerResource;
 import com.belongingsfinder.api.resource.BelongingModelServerResource;
 import com.belongingsfinder.api.resource.BelongingModelsServerResource;
@@ -71,18 +74,24 @@ public class BelongingsFinder extends Application {
 	@Inject
 	private Set<Service> services;
 
-	private final Region region;
-	private final BucketName bucket;
+	@Inject
+	private Logger logger;
 
-	public BelongingsFinder(Region region, BucketName bucket) {
-		this.region = region;
-		this.bucket = bucket;
+	/* Live environment */
+	public BelongingsFinder() {
+		this(Region.US_West, BucketName.LIVE, PersistenceUnit.BF);
+		logger.log(Level.INFO, "LIVE environment settings enabled");
 	}
 
+	public BelongingsFinder(Region region, BucketName bucket, PersistenceUnit persistence) {
+		inject(region, bucket, persistence);
+	}
+
+	/* Local development only */
 	public static void main(String[] args) throws Exception {
 		Component c = new Component();
 		c.getServers().add(Protocol.HTTP, 8182);
-		c.getDefaultHost().attach(new BelongingsFinder(Region.US_West, BucketName.TEST));
+		c.getDefaultHost().attach(new BelongingsFinder(Region.US_West, BucketName.TEST, PersistenceUnit.BF));
 		c.start();
 	}
 
@@ -128,18 +137,23 @@ public class BelongingsFinder extends Application {
 
 	@Override
 	public synchronized void start() throws Exception {
-		Injector injector = Guice.createInjector(new BelongingsFinderModules("belongingsfinder", bucket, region));
-		injector.injectMembers(this);
 		persistService.start();
 		indexer.index();
 		registerServices(services);
 		super.start();
+		logger.log(Level.INFO, "BelongingsFinder started");
 	}
 
 	@Override
 	public synchronized void stop() throws Exception {
 		persistService.stop();
 		super.stop();
+		logger.log(Level.INFO, "BelongingsFinder stopped");
+	}
+
+	private void inject(Region region, BucketName bucket, PersistenceUnit persistence) {
+		Injector injector = Guice.createInjector(new BelongingsFinderModules(persistence, bucket, region));
+		injector.injectMembers(this);
 	}
 
 	private void registerServices(Set<Service> services) {

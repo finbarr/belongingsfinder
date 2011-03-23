@@ -12,7 +12,6 @@ public class LanguageDiscriminator implements Discriminator {
 			HasLanguage h = (HasLanguage) entity;
 			return h.getLanguage().toString();
 		}
-		return null;
+		throw new IllegalStateException("LanguageDiscriminator can only be used on HasLanguage instances!");
 	}
-
 }

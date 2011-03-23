@@ -16,7 +16,7 @@ public class LanguageBridge implements FieldBridge {
 			String fieldName = new StringBuilder(name).append("_").append(language.toString()).toString();
 			luceneOptions.addFieldToDocument(fieldName, value.toString(), document);
 		} else {
-			throw new IllegalStateException("LanguageBridge can only be used for HasLanguage instances!");
+			throw new IllegalStateException("LanguageBridge can only be used on HasLanguage instances!");
 		}
 	}
 

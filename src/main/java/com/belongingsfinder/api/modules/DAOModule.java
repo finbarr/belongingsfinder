@@ -58,4 +58,21 @@ public class DAOModule extends AbstractModule {
 		});
 	}
 
+	public enum PersistenceUnit {
+
+		BF("belongingsfinder");
+
+		private final String name;
+
+		private PersistenceUnit(String name) {
+			this.name = name;
+		}
+
+		@Override
+		public String toString() {
+			return name;
+		}
+
+	}
+
 }
