@@ -60,7 +60,7 @@ public class DAOModule extends AbstractModule {
 
 	public enum PersistenceUnit {
 
-		BF("belongingsfinder");
+		DEV("belongingsfinder-dev"), LIVE("belongingsfinder-live");
 
 		private final String name;
 

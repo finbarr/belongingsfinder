@@ -35,7 +35,6 @@ public class CategoryModelsServerResource extends ServerResource {
 	}
 
 	@Post("json")
-	@Transactional
 	public String createCategory(CategoryModel model) {
 		if (search.categoryExists(model.getName())) {
 			getResponse().setStatus(Status.CLIENT_ERROR_PRECONDITION_FAILED,

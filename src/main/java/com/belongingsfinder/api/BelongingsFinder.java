@@ -30,7 +30,6 @@ import com.belongingsfinder.api.resource.ChildrenCategoryModelServerResource;
 import com.belongingsfinder.api.resource.MobileBelongingModelServerResource;
 import com.belongingsfinder.api.resource.PagingBelongingModelServerResource;
 import com.belongingsfinder.api.resource.RandomBelongingModelServerResource;
-import com.belongingsfinder.api.resource.StuffServerResource;
 import com.belongingsfinder.api.search.SearchIndexer;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
@@ -79,7 +78,7 @@ public class BelongingsFinder extends Application {
 
 	/* Live environment */
 	public BelongingsFinder() {
-		this(Region.US_West, BucketName.LIVE, PersistenceUnit.BF);
+		this(Region.US_West, BucketName.LIVE, PersistenceUnit.LIVE);
 		logger.log(Level.INFO, "LIVE environment settings enabled");
 	}
 
@@ -91,7 +90,7 @@ public class BelongingsFinder extends Application {
 	public static void main(String[] args) throws Exception {
 		Component c = new Component();
 		c.getServers().add(Protocol.HTTP, 8182);
-		c.getDefaultHost().attach(new BelongingsFinder(Region.US_West, BucketName.TEST, PersistenceUnit.BF));
+		c.getDefaultHost().attach(new BelongingsFinder(Region.US_West, BucketName.DEV, PersistenceUnit.DEV));
 		c.start();
 	}
 
@@ -99,18 +98,48 @@ public class BelongingsFinder extends Application {
 	public Restlet createInboundRoot() {
 		Router apiv1 = routerProvider.get();
 
+		/*
+		 * GET retrieve all belongings
+		 * POST create new belongings
+		 * 
+		 * belongings
+		 */
 		apiv1.attach("/belongings", BelongingModelsServerResource.class);
 
+		/*
+		 * GET retrieve count of belongings :TYPE
+		 * 
+		 * belongings/count/:TYPE
+		 */
 		TemplateRoute belongingsCount = apiv1.attach("/belongings/count/{type}",
 				typeFilterFactory.createFilter(finderFactory.createFinder(BelongingModelCountServerResource.class)));
 		belongingsCount.getTemplate().getVariables().put("type", new Variable(Variable.TYPE_ALPHA));
+
+		/*
+		 * GET retrieve random belongings :N
+		 * 
+		 * belongings/random/:N
+		 */
 
 		TemplateRoute randomBelongings = apiv1.attach("/belongings/random/{number}",
 				RandomBelongingModelServerResource.class);
 		randomBelongings.getTemplate().getVariables().put("number", new Variable(Variable.TYPE_DIGIT));
 
+		/*
+		 * GET retrieve belonging :ID
+		 * DELETE delete belonging :ID
+		 * PUT update belonging :ID
+		 * 
+		 * belongings/id/:ID
+		 */
 		apiv1.attach("/belongings/id/{id}",
 				uuidFilterFactory.createFilter(finderFactory.createFinder(BelongingModelServerResource.class)));
+
+		/*
+		 * GET retrieve a page of belongings :TYPE :NUMBER :OFFSET
+		 * 
+		 * belongings/:TYPE/:NUMBER/:OFFSET
+		 */
 
 		TemplateRoute belongingsPager = apiv1.attach("/belongings/{type}/{number}/{offset}",
 				typeFilterFactory.createFilter(finderFactory.createFinder(PagingBelongingModelServerResource.class)));
@@ -118,19 +147,60 @@ public class BelongingsFinder extends Application {
 		belongingsPager.getTemplate().getVariables().put("offset", new Variable(Variable.TYPE_DIGIT));
 		belongingsPager.getTemplate().getVariables().put("type", new Variable(Variable.TYPE_ALPHA));
 
+		/*
+		 * POST execute a search on belongings
+		 * 
+		 * belongings/search
+		 */
+
 		apiv1.attach("/belongings/search", BelongingSearchServerResource.class);
 
+		/*
+		 * POST create a new category
+		 * GET retrieve root categories
+		 * 
+		 * categories
+		 */
+
 		apiv1.attach("/categories", CategoryModelsServerResource.class);
+
+		/*
+		 * GET retrieve category :ID
+		 * DELETE delete category :ID
+		 * PUT update category :ID
+		 * 
+		 * categories/id/:ID
+		 */
+
 		apiv1.attach("/categories/id/{id}",
 				uuidFilterFactory.createFilter(finderFactory.createFinder(CategoryModelServerResource.class)));
+
+		/*
+		 * GET retrieve the children of category :ID
+		 * 
+		 * categories/children/:ID
+		 */
+
 		apiv1.attach("/categories/children/{id}",
 				uuidFilterFactory.createFilter(finderFactory.createFinder(ChildrenCategoryModelServerResource.class)));
+
+		/*
+		 * POST form submission for new belongings
+		 * 
+		 * mobile
+		 */
 
 		apiv1.attach("/mobile", MobileBelongingModelServerResource.class);
 
 		Router app = routerProvider.get();
+
+		/*
+		 * attach api to version 1
+		 */
+
 		app.attach(v1, apiv1, Template.MODE_STARTS_WITH);
-		app.attach("/stuff", StuffServerResource.class);
+
+		// app.attach("/stuff", StuffServerResource.class);
 
 		return app;
 	}
