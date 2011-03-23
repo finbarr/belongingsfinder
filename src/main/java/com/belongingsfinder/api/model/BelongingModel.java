@@ -2,38 +2,37 @@ package com.belongingsfinder.api.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.apache.solr.analysis.CJKTokenizerFactory;
 import org.apache.solr.analysis.LowerCaseFilterFactory;
-import org.apache.solr.analysis.SnowballPorterFilterFactory;
+import org.apache.solr.analysis.PorterStemFilterFactory;
 import org.apache.solr.analysis.StandardTokenizerFactory;
 import org.codehaus.jackson.annotate.JsonIgnore;
-import org.codehaus.jackson.annotate.JsonProperty;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.search.analyzer.Discriminator;
 import org.hibernate.search.annotations.AnalyzerDef;
 import org.hibernate.search.annotations.AnalyzerDefs;
 import org.hibernate.search.annotations.AnalyzerDiscriminator;
-import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
-import org.hibernate.search.annotations.Parameter;
 import org.hibernate.search.annotations.TokenFilterDef;
 import org.hibernate.search.annotations.TokenizerDef;
 
-import com.belongingsfinder.api.aws.S3File;
 import com.belongingsfinder.api.model.BelongingModel.BelongingModelLanguageDiscriminator;
 import com.sun.istack.internal.NotNull;
 
@@ -46,7 +45,7 @@ import com.sun.istack.internal.NotNull;
 @AnalyzerDefs({
 		@AnalyzerDef(name = "en", tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class), filters = {
 				@TokenFilterDef(factory = LowerCaseFilterFactory.class),
-				@TokenFilterDef(factory = SnowballPorterFilterFactory.class, params = { @Parameter(name = "language", value = "English") }) }),
+				@TokenFilterDef(factory = PorterStemFilterFactory.class) }),
 		@AnalyzerDef(name = "jp", tokenizer = @TokenizerDef(factory = CJKTokenizerFactory.class)) })
 @AnalyzerDiscriminator(impl = BelongingModelLanguageDiscriminator.class)
 public class BelongingModel implements Model<BelongingModel>, Serializable {
@@ -54,10 +53,11 @@ public class BelongingModel implements Model<BelongingModel>, Serializable {
 	private static final long serialVersionUID = 6587819556855066435L;
 
 	@Id
-	@DocumentId
+	@GeneratedValue(generator = "bf-uuid")
+	@GenericGenerator(name = "bf-uuid", strategy = "com.belongingsfinder.api.dao.jpa.UUIDIdentifierGenerator")
 	private String id;
-	@Embedded
-	private S3File image;
+	@OneToMany
+	private List<S3FileModel> images;
 	@Field
 	@Lob
 	private String description;
@@ -72,7 +72,7 @@ public class BelongingModel implements Model<BelongingModel>, Serializable {
 	private String email;
 	@NotNull
 	@IndexedEmbedded
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne
 	private CategoryModel category;
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
@@ -96,14 +96,8 @@ public class BelongingModel implements Model<BelongingModel>, Serializable {
 		return id;
 	}
 
-	@JsonIgnore
-	public S3File getImage() {
-		return image;
-	}
-
-	@JsonProperty("imageUrl")
-	public String getImageUrl() {
-		return image == null ? null : image.getAWSUrl();
+	public List<S3FileModel> getImages() {
+		return images;
 	}
 
 	public BelongingLang getLang() {
@@ -139,14 +133,8 @@ public class BelongingModel implements Model<BelongingModel>, Serializable {
 		this.id = id;
 	}
 
-	@JsonIgnore
-	public void setImage(S3File image) {
-		this.image = image;
-	}
-
-	@JsonProperty("imageUrl")
-	public void setImageUrl(String imageUrl) {
-		image = new S3File(imageUrl);
+	public void setImages(List<S3FileModel> images) {
+		this.images = images;
 	}
 
 	public void setLang(BelongingLang lang) {
@@ -222,8 +210,9 @@ public class BelongingModel implements Model<BelongingModel>, Serializable {
 					&& model.getCategory() != null
 					&& model.getType() != null
 					&& model.getEmail() != null
-					&& (model.getType() == BelongingModel.BelongingType.FOUND && model.getImage() != null || model
-							.getType() == BelongingModel.BelongingType.LOST && model.getDescription() != null);
+					&& (model.getType() == BelongingModel.BelongingType.FOUND && model.getImages() != null
+							&& !model.getImages().isEmpty() || model.getType() == BelongingModel.BelongingType.LOST
+							&& model.getDescription() != null);
 		}
 
 	}

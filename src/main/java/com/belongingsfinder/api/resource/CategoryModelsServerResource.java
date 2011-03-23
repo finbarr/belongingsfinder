@@ -52,7 +52,7 @@ public class CategoryModelsServerResource extends ServerResource {
 		return provider
 				.get()
 				.createQuery(
-						"select category from CategoryModel as category where category.parent is null order by category.name asc")
+						"select category from CategoryModel as category where category.isChild = false order by category.name asc")
 				.getResultList();
 	}
 

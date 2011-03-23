@@ -3,14 +3,13 @@ package com.belongingsfinder.api.resource;
 import java.util.Date;
 import java.util.List;
 
-import org.restlet.data.Status;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
 
 import com.belongingsfinder.api.dao.ModelDAO;
 import com.belongingsfinder.api.model.BelongingModel;
-import com.belongingsfinder.api.util.URIValidator;
+import com.belongingsfinder.api.model.BelongingModel.BelongingLang;
 import com.google.inject.Inject;
 
 /**
@@ -28,13 +27,12 @@ public class BelongingModelsServerResource extends ServerResource {
 
 	@Post("json")
 	public String createBelonging(BelongingModel model) {
-		if (URIValidator.isValid(model.getImageUrl())) {
-			model.setLastUpdated(new Date());
-			return modelDAO.create(model);
-		} else {
-			getResponse().setStatus(Status.CLIENT_ERROR_PRECONDITION_FAILED, "Invalid image URI");
-			return null;
+		if (model.getLang() == null) {
+			// TODO use Google translate to detect
+			model.setLang(BelongingLang.JP);
 		}
+		model.setLastUpdated(new Date());
+		return modelDAO.create(model);
 	}
 
 	@Get("json")

@@ -9,6 +9,7 @@ import com.belongingsfinder.api.dao.jpa.JPAModelDAO;
 import com.belongingsfinder.api.model.BelongingModel;
 import com.belongingsfinder.api.model.CategoryModel;
 import com.belongingsfinder.api.model.Model;
+import com.belongingsfinder.api.model.S3FileModel;
 import com.google.inject.AbstractModule;
 import com.google.inject.Key;
 import com.google.inject.PrivateModule;
@@ -40,6 +41,7 @@ public class DAOModule extends AbstractModule {
 	protected void configure() {
 		bindModelDAOs(BelongingModel.class, JPAModelDAO.class);
 		bindModelDAOs(CategoryModel.class, JPAModelDAO.class);
+		bindModelDAOs(S3FileModel.class, JPAModelDAO.class);
 	}
 
 	@SuppressWarnings("unchecked")

@@ -1,7 +1,6 @@
 package com.belongingsfinder.api.dao.jpa;
 
 import java.util.List;
-import java.util.UUID;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -33,19 +32,14 @@ public class JPAModelDAO<T extends Model<T>> implements ModelDAO<T> {
 
 	@Transactional
 	public String create(T model) {
-		model.setId(UUID.randomUUID().toString());
-		// obtain entitymanager and persist model
 		provider.get().persist(model);
-		// return the id
 		return model.getId();
 	}
 
 	@Transactional
 	public boolean del(String id) {
-		// if model exists
 		T model = retrieveInternal(id);
 		if (model != null) {
-			// obtain entitymanager and remove
 			provider.get().remove(model);
 			return true;
 		}
@@ -61,9 +55,7 @@ public class JPAModelDAO<T extends Model<T>> implements ModelDAO<T> {
 
 	@Transactional
 	public T retrieve(String id) {
-		// retrieve model
 		T model = retrieveInternal(id);
-		// detach from entitymanager
 		provider.get().detach(model);
 		return model;
 	}
@@ -87,8 +79,9 @@ public class JPAModelDAO<T extends Model<T>> implements ModelDAO<T> {
 		return query;
 	}
 
+	// TODO get rid of this and use query directly instead
 	private T retrieveInternal(String id) {
-		// obtain entitymanager and attempt to find entity of type with id
 		return provider.get().find(type, id);
 	}
+
 }

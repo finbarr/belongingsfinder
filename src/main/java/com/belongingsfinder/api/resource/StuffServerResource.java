@@ -1,13 +1,14 @@
 package com.belongingsfinder.api.resource;
 
-import java.util.UUID;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.restlet.resource.Get;
 import org.restlet.resource.ServerResource;
 
-import com.belongingsfinder.api.model.BelongingModel;
+import com.belongingsfinder.api.dao.ModelDAO;
 import com.belongingsfinder.api.model.CategoryModel;
-import com.belongingsfinder.api.model.LatLon;
+import com.google.inject.Inject;
 
 /**
  * @author finbarr
@@ -15,19 +16,28 @@ import com.belongingsfinder.api.model.LatLon;
  */
 public class StuffServerResource extends ServerResource {
 
+	@Inject
+	private ModelDAO<CategoryModel> dao;
+
 	@Get("json")
-	public BelongingModel getModel() {
-		BelongingModel bm = new BelongingModel();
-		bm.setId(UUID.randomUUID().toString());
-		bm.setImageUrl("http://google.co.uk");
-		bm.setLocation(new LatLon("-3,-4"));
-		bm.setDescription("Hello, Description!");
-		bm.setType(BelongingModel.BelongingType.FOUND);
+	public CategoryModel getModel() {
 		CategoryModel cm = new CategoryModel();
-		cm.setName("category-name");
-		cm.setId(UUID.randomUUID().toString());
-		bm.setCategory(cm);
-		return bm;
+		cm.setName("parent");
+		List<CategoryModel> children = new LinkedList<CategoryModel>();
+		children.add(c("a", cm));
+		children.add(c("b", cm));
+		children.add(c("c", cm));
+		children.add(c("d", cm));
+		cm.setChildren(children);
+		dao.create(cm);
+		cm.getChildren().get(0).setName("updated");
+		dao.update(cm);
+		return cm;
 	}
 
+	private CategoryModel c(String name, CategoryModel parent) {
+		CategoryModel cm = new CategoryModel();
+		cm.setName(name);
+		return cm;
+	}
 }

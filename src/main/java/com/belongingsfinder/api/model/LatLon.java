@@ -70,7 +70,7 @@ public class LatLon implements Serializable {
 
 	@Override
 	public String toString() {
-		return lat + "," + lon;
+		return new StringBuilder(Double.toString(lat)).append(",").append(Double.toString(lon)).toString();
 	}
 
 }

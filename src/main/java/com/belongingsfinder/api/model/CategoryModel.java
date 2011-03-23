@@ -1,15 +1,17 @@
 package com.belongingsfinder.api.model;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 
@@ -25,15 +27,20 @@ public class CategoryModel implements Model<CategoryModel>, Serializable {
 	private static final long serialVersionUID = -4520507504770029807L;
 
 	@Id
+	@GeneratedValue(generator = "bf-uuid")
+	@GenericGenerator(name = "bf-uuid", strategy = "com.belongingsfinder.api.dao.jpa.UUIDIdentifierGenerator")
 	@Field(index = Index.UN_TOKENIZED)
 	private String id;
 	@NotNull
 	@Column(unique = true)
 	private String name;
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<CategoryModel> children;
+	private boolean isChild;
 
-	@OnDelete(action = OnDeleteAction.CASCADE)
-	@ManyToOne
-	private CategoryModel parent;
+	public List<CategoryModel> getChildren() {
+		return children;
+	}
 
 	public String getId() {
 		return id;
@@ -44,21 +51,25 @@ public class CategoryModel implements Model<CategoryModel>, Serializable {
 	}
 
 	@JsonIgnore
-	public CategoryModel getParent() {
-		return parent;
+	public boolean isChild() {
+		return isChild;
+	}
+
+	public void setChildren(List<CategoryModel> children) {
+		this.children = children;
 	}
 
 	public void setId(String id) {
 		this.id = id;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	@JsonIgnore
+	public void setIsChild(boolean isChild) {
+		this.isChild = isChild;
 	}
 
-	@JsonIgnore
-	public void setParent(CategoryModel parent) {
-		this.parent = parent;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

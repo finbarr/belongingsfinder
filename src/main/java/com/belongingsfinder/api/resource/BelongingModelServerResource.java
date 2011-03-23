@@ -10,7 +10,6 @@ import org.restlet.resource.ServerResource;
 
 import com.belongingsfinder.api.dao.ModelDAO;
 import com.belongingsfinder.api.model.BelongingModel;
-import com.belongingsfinder.api.util.URIValidator;
 import com.google.inject.Inject;
 
 /**
@@ -44,13 +43,9 @@ public class BelongingModelServerResource extends ServerResource {
 
 	@Put("json")
 	public void updateBelonging(BelongingModel model) {
-		if (URIValidator.isValid(model.getImageUrl())) {
-			model.setId(getId());
-			model.setLastUpdated(new Date());
-			modelDAO.update(model);
-		} else {
-			getResponse().setStatus(Status.CLIENT_ERROR_PRECONDITION_FAILED, "Invalid image URI");
-		}
+		model.setId(getId());
+		model.setLastUpdated(new Date());
+		modelDAO.update(model);
 	}
 
 	private String getId() {

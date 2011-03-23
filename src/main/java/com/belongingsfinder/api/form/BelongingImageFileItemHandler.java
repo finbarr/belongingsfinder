@@ -1,6 +1,8 @@
 package com.belongingsfinder.api.form;
 
 import java.io.ByteArrayInputStream;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -9,10 +11,10 @@ import org.restlet.data.MediaType;
 
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.belongingsfinder.api.aws.S3File;
 import com.belongingsfinder.api.aws.S3Store;
 import com.belongingsfinder.api.model.BelongingModel;
 import com.belongingsfinder.api.model.ModelVerifier;
+import com.belongingsfinder.api.model.S3FileModel;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 
@@ -46,10 +48,14 @@ public class BelongingImageFileItemHandler implements FileItemHandler<BelongingM
 		ByteArrayInputStream bis = new ByteArrayInputStream(b);
 		String ext = images.get(fileItem.getContentType()).equals(MediaType.IMAGE_JPEG) ? ".jpeg" : ".png";
 		String key = UUID.randomUUID().toString() + ext;
-		// dirty hack
-		model.setImage(new S3File());
+		// dirty hack ahead
+		List<S3FileModel> images = new LinkedList<S3FileModel>();
+		images.add(new S3FileModel());
+		model.setImages(images);
 		if (verifier.verify(model)) {
-			model.setImage(store.store(key, bis, omd, CannedAccessControlList.PublicRead));
+			images.clear();
+			// end dirty hack
+			images.add(store.store(key, bis, omd, CannedAccessControlList.PublicRead));
 		}
 	}
 

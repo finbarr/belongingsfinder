@@ -9,6 +9,7 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.Region;
+import com.belongingsfinder.api.model.S3FileModel;
 import com.belongingsfinder.api.modules.AWSModule.BucketName;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -28,15 +29,15 @@ public class S3Store {
 	}
 
 	public void delete(String key) {
-		client.deleteObject(bucket.getName(), key);
+		client.deleteObject(bucket.toString(), key);
 	}
 
-	public S3File store(String key, InputStream inputStream, ObjectMetadata meta, CannedAccessControlList access)
+	public S3FileModel store(String key, InputStream inputStream, ObjectMetadata meta, CannedAccessControlList access)
 			throws AmazonClientException, AmazonServiceException {
-		PutObjectRequest request = new PutObjectRequest(bucket.getName(), key, inputStream, meta);
+		PutObjectRequest request = new PutObjectRequest(bucket.toString(), key, inputStream, meta);
 		request.setCannedAcl(access);
 		client.putObject(request);
-		return new S3File(bucket, key, region);
+		return new S3FileModel(bucket, key, region);
 	}
 
 }

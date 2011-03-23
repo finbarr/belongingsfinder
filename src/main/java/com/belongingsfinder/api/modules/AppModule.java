@@ -15,6 +15,7 @@ public class AppModule extends AbstractModule {
 	@Override
 	protected void configure() {
 		bind(String.class).annotatedWith(Names.named("v1")).toInstance("/1.0");
+		// TODO clean this up on startup
 		bind(String.class).annotatedWith(Names.named("temp")).toInstance("/bf-temp");
 		bind(ExecutorService.class).toInstance(Executors.newCachedThreadPool());
 	}

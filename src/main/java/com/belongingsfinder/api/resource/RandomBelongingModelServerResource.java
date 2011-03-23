@@ -32,7 +32,7 @@ public class RandomBelongingModelServerResource extends ServerResource {
 	public List<BelongingModel> getRandomBelongings() {
 		final int number = Integer.parseInt(getRequest().getAttributes().get("number").toString());
 		Query q = provider.get().createQuery(
-				"select b from BelongingModel as b where b.imageUrl is not null order by rand()");
+				"select b from BelongingModel as b where b.images is not null order by rand()");
 		q.setMaxResults(number);
 		return q.getResultList();
 	}
