@@ -3,7 +3,6 @@ package com.belongingsfinder.api.dao.jpa;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -39,11 +38,12 @@ public class JPAModelDAO<T extends Model<T>> implements ModelDAO<T> {
 
 	@Transactional
 	public boolean del(String id) {
-		Query q = provider.get().createQuery(
-				new StringBuilder("delete from ").append(type.getClass().getName()).append(" where id = :id limit 1")
-						.toString());
-		q.setParameter("id", id);
-		return q.executeUpdate() == 1;
+		T model = retrieveInternal(id);
+		if (model != null) {
+			provider.get().remove(model);
+			return true;
+		}
+		return false;
 	}
 
 	@Transactional
@@ -55,7 +55,7 @@ public class JPAModelDAO<T extends Model<T>> implements ModelDAO<T> {
 
 	@Transactional
 	public T retrieve(String id) {
-		T model = provider.get().find(type, id);
+		T model = retrieveInternal(id);
 		provider.get().detach(model);
 		return model;
 	}
@@ -79,4 +79,7 @@ public class JPAModelDAO<T extends Model<T>> implements ModelDAO<T> {
 		return query;
 	}
 
+	private T retrieveInternal(String id) {
+		return provider.get().find(type, id);
+	}
 }

@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -13,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -65,8 +65,8 @@ public class BelongingModel implements Model<BelongingModel>, HasLanguage, Seria
 	private List<S3FileModel> images;
 	@Lob
 	private String description;
-	@Embedded
 	@IndexedEmbedded
+	@OneToOne
 	private LatLon location;
 	@Field(index = Index.UN_TOKENIZED)
 	@Enumerated(EnumType.STRING)
