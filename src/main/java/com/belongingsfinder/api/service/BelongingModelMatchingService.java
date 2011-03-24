@@ -14,6 +14,7 @@ import com.google.inject.Inject;
  * @author finbarr
  * 
  */
+// TODO implement auto matching and add this to ServiceModule
 public class BelongingModelMatchingService extends Service {
 
 	private final EventBus eventBus;

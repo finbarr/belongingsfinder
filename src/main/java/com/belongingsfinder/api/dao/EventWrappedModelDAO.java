@@ -45,7 +45,7 @@ public class EventWrappedModelDAO<T extends Model<T>> implements ModelDAO<T> {
 		return deleted;
 	}
 
-	// not an interesting event
+	// TODO add event for this
 	public List<T> retrieve(int number) {
 		return modelService.retrieve(number);
 	}
@@ -56,7 +56,7 @@ public class EventWrappedModelDAO<T extends Model<T>> implements ModelDAO<T> {
 		return model;
 	}
 
-	// not an interesting event
+	// TODO add event for this
 	public List<T> retrieveAll() {
 		return modelService.retrieveAll();
 	}

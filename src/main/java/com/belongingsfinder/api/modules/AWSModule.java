@@ -36,7 +36,7 @@ public class AWSModule extends AbstractModule {
 
 	public enum BucketName {
 
-		LIVE("belongingsfinder-live"), DEV("belongingsfinder-test");
+		LIVE("belongingsfinder-live"), DEV("belongingsfinder-dev");
 
 		private final String name;
 

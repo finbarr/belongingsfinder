@@ -80,11 +80,13 @@ public class BelongingsFinder extends Application {
 	/* Live environment */
 	public BelongingsFinder() {
 		this(Region.US_West, BucketName.LIVE, PersistenceUnit.LIVE);
-		logger.log(Level.INFO, "LIVE environment settings enabled");
 	}
 
 	public BelongingsFinder(Region region, BucketName bucket, PersistenceUnit persistence) {
 		inject(region, bucket, persistence);
+		logger.log(Level.INFO,
+				new StringBuilder("Region:").append(region.toString()).append(" Bucket:").append(bucket.toString())
+						.append(" Persistence:").append(persistence.toString()).toString());
 	}
 
 	/* Local development only */
