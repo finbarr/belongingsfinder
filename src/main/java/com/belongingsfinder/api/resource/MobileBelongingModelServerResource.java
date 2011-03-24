@@ -15,32 +15,27 @@ import org.restlet.data.Status;
 import org.restlet.ext.fileupload.RestletFileUpload;
 import org.restlet.representation.Representation;
 import org.restlet.resource.Post;
-import org.restlet.resource.ServerResource;
 
 import com.belongingsfinder.api.dao.ModelDAO;
 import com.belongingsfinder.api.form.FileItemHandler;
 import com.belongingsfinder.api.form.FileItemHandler.FileItemHandlerException;
 import com.belongingsfinder.api.model.BelongingModel;
-import com.belongingsfinder.api.model.ModelVerifier;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 
-public class MobileBelongingModelServerResource extends ServerResource {
+public class MobileBelongingModelServerResource extends ValidatedServerResource {
 
 	private final String temp;
 	private final Map<String, FileItemHandler<BelongingModel>> handlers;
 	private final Logger logger;
-	private final ModelVerifier<BelongingModel> verifier;
 	private final ModelDAO<BelongingModel> belongingDAO;
 
 	@Inject
 	public MobileBelongingModelServerResource(@Named("temp") String temp,
-			Map<String, FileItemHandler<BelongingModel>> handlers, Logger logger,
-			ModelVerifier<BelongingModel> verifier, ModelDAO<BelongingModel> belongingDAO) {
+			Map<String, FileItemHandler<BelongingModel>> handlers, Logger logger, ModelDAO<BelongingModel> belongingDAO) {
 		this.temp = temp;
 		this.handlers = handlers;
 		this.logger = logger;
-		this.verifier = verifier;
 		this.belongingDAO = belongingDAO;
 	}
 
@@ -70,12 +65,8 @@ public class MobileBelongingModelServerResource extends ServerResource {
 				if (image != null) {
 					handlers.get(image.getFieldName()).handle(image, model);
 				}
-				if (verifier.verify(model)) {
-					model.setLastUpdated(new Date());
-					belongingDAO.create(model);
-				} else {
-					getResponse().setStatus(Status.CLIENT_ERROR_BAD_REQUEST);
-				}
+				model.setLastUpdated(new Date());
+				belongingDAO.create(model);
 			} catch (FileUploadException e) {
 				getResponse().setStatus(Status.SERVER_ERROR_INTERNAL, "file upload exception");
 			} catch (FileItemHandlerException e) {

@@ -3,11 +3,9 @@ package com.belongingsfinder.api.model;
 import java.io.Serializable;
 import java.util.StringTokenizer;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.Embeddable;
+import javax.validation.constraints.NotNull;
 
-import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.NumericField;
@@ -16,23 +14,24 @@ import org.hibernate.search.annotations.NumericField;
  * @author Finbarr
  * 
  */
-@Entity
+@Embeddable
 public class LatLon implements Serializable {
 
 	private static final long serialVersionUID = -4728508792442337147L;
 
-	@Id
-	@GeneratedValue(generator = "bf-uuid")
-	@GenericGenerator(name = "bf-uuid", strategy = "com.belongingsfinder.api.dao.jpa.UUIDIdentifierGenerator")
-	private String id;
 	@Field(index = Index.UN_TOKENIZED)
 	@NumericField
-	private double lat;
+	@NotNull
+	private Double lat;
 	@Field(index = Index.UN_TOKENIZED)
 	@NumericField
-	private double lon;
+	@NotNull
+	private Double lon;
 
-	public LatLon(double lat, double lon) {
+	public LatLon() {
+	}
+
+	public LatLon(Double lat, Double lon) {
 		this.lat = lat;
 		this.lon = lon;
 	}
@@ -52,15 +51,11 @@ public class LatLon implements Serializable {
 		return false;
 	}
 
-	public String getId() {
-		return id;
-	}
-
-	public double getLat() {
+	public Double getLat() {
 		return lat;
 	}
 
-	public double getLon() {
+	public Double getLon() {
 		return lon;
 	}
 
@@ -69,21 +64,17 @@ public class LatLon implements Serializable {
 		return toString().hashCode();
 	}
 
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public void setLat(double lat) {
+	public void setLat(Double lat) {
 		this.lat = lat;
 	}
 
-	public void setLon(double lon) {
+	public void setLon(Double lon) {
 		this.lon = lon;
 	}
 
 	@Override
 	public String toString() {
-		return new StringBuilder(Double.toString(lat)).append(",").append(Double.toString(lon)).toString();
+		return new StringBuilder(lat.toString()).append(",").append(lon.toString()).toString();
 	}
 
 }

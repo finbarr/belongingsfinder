@@ -1,11 +1,9 @@
 package com.belongingsfinder.api.resource;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Set;
 
 import org.restlet.data.Status;
 import org.restlet.resource.Get;
-import org.restlet.resource.ServerResource;
 
 import com.belongingsfinder.api.dao.ModelDAO;
 import com.belongingsfinder.api.model.CategoryModel;
@@ -15,7 +13,7 @@ import com.google.inject.Inject;
  * @author finbarr
  * 
  */
-public class ChildrenCategoryModelServerResource extends ServerResource {
+public class ChildrenCategoryModelServerResource extends ValidatedServerResource {
 
 	private final ModelDAO<CategoryModel> categoryDAO;
 
@@ -25,13 +23,13 @@ public class ChildrenCategoryModelServerResource extends ServerResource {
 	}
 
 	@Get("json")
-	public List<CategoryModel> getChildren() {
+	public Set<CategoryModel> getChildren() {
 		CategoryModel cm = categoryDAO.retrieve(getId());
 		if (cm == null) {
 			getResponse().setStatus(Status.CLIENT_ERROR_NOT_FOUND, "No such category");
 			return null;
 		}
-		return cm.getChildren() == null ? new LinkedList<CategoryModel>() : cm.getChildren();
+		return cm.getChildren();
 	}
 
 	private String getId() {

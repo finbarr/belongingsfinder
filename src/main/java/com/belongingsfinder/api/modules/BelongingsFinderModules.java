@@ -26,7 +26,6 @@ public class BelongingsFinderModules extends AbstractModule {
 		install(new DAOModule());
 		install(new FileItemHandlerModule());
 		install(new JpaPersistModule(persistenceUnit.toString()));
-		install(new ModelModule());
 		install(new RestletModule());
 		install(new ServiceModule());
 	}

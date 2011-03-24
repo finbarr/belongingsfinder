@@ -2,6 +2,13 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
              version="2.0">
+	
+	
+	
+	<!-- DEV DEV DEV DEV DEV -->
+	
+	
+	
 	<persistence-unit name="belongingsfinder-dev" transaction-type="RESOURCE_LOCAL">
 		<class>com.belongingsfinder.api.model.BelongingModel</class>
 		<class>com.belongingsfinder.api.model.CategoryModel</class>
@@ -30,10 +37,10 @@
       		<!-- miscellaneous -->
 			<property name="hibernate.show_sql" value="true"/>
       		<property name="hibernate.format_sql" value="true"/>
+			<property name="hibernate.hbm2ddl.auto" value="create-drop"/>
 			<!-- 
       		<property name="hibernate.cache.use_query_cache" value="true">
 			hibernate.jdbc.batch_size 20
-			<property name="hibernate.hbm2ddl.auto" value="create-drop"/>
 			
 			hibernate.search.worker.execution	sync: synchronous execution (default)
 												async: asynchronous execution
@@ -42,6 +49,13 @@
 			 -->
 		</properties>	
 	</persistence-unit>
+	
+	
+	
+	<!-- LIVE LIVE LIVE LIVE LIVE LIVE -->
+	
+	
+	
 	<persistence-unit name="belongingsfinder-live" transaction-type="RESOURCE_LOCAL">
 		<class>com.belongingsfinder.api.model.BelongingModel</class>
 		<class>com.belongingsfinder.api.model.CategoryModel</class>
@@ -69,17 +83,6 @@
       		<property name="hibernate.cache.use_second_level_cache" value="true"/>
       		<!-- miscellaneous -->
 			<!-- 
-			<property name="hibernate.show_sql" value="true"/>
-      		<property name="hibernate.format_sql" value="true"/>
-      		
-      		<property name="hibernate.cache.use_query_cache" value="true">
-			hibernate.jdbc.batch_size 20
-			<property name="hibernate.hbm2ddl.auto" value="create-drop"/>
-			
-			hibernate.search.worker.execution	sync: synchronous execution (default)
-												async: asynchronous execution
-			hibernate.search.worker.thread_pool.size	Defines the number of threads in the pool for asynchronous execution. Defaults to 1.
-			hibernate.search.worker.buffer_queue.max	Defines the maximal number of work queue if the thread poll is starved. Useful only for asynchronous execution. Default to infinite. If the limit is reached, the work is done by the main thread.
 			 -->
 		</properties>	
 	</persistence-unit>

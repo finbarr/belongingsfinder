@@ -1,7 +1,7 @@
 package com.belongingsfinder.api.model;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.Valid;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.Cache;
@@ -18,6 +19,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import com.sun.istack.internal.NotNull;
 
@@ -36,15 +38,18 @@ public class CategoryModel implements Model<CategoryModel>, Serializable {
 	@GenericGenerator(name = "bf-uuid", strategy = "com.belongingsfinder.api.dao.jpa.UUIDIdentifierGenerator")
 	@Field(index = Index.UN_TOKENIZED)
 	private String id;
-	@NotNull
 	@Column(unique = true)
+	@NotNull
+	@NotEmpty
 	private String name;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "parent", fetch = FetchType.EAGER)
-	private List<CategoryModel> children;
+	@Valid
+	private Set<CategoryModel> children;
 	@ManyToOne
+	// @Valid would this cause infinite recursion?
 	private CategoryModel parent;
 
-	public List<CategoryModel> getChildren() {
+	public Set<CategoryModel> getChildren() {
 		return children;
 	}
 
@@ -61,7 +66,7 @@ public class CategoryModel implements Model<CategoryModel>, Serializable {
 		return parent;
 	}
 
-	public void setChildren(List<CategoryModel> children) {
+	public void setChildren(Set<CategoryModel> children) {
 		this.children = children;
 	}
 

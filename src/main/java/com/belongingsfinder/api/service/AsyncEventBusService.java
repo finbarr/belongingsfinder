@@ -28,13 +28,9 @@ import com.google.inject.Singleton;
 public class AsyncEventBusService extends Service implements EventBus {
 
 	private final Map<Class<? extends Event>, Set<EventHandler<? extends Event>>> handlers;
-
 	private final BlockingQueue<Runnable> queue;
-
 	private final Thread asyncEventBusThread;
-
 	private final ExecutorService executorService;
-
 	private final Logger logger;
 
 	@Inject
@@ -49,9 +45,6 @@ public class AsyncEventBusService extends Service implements EventBus {
 
 	@SuppressWarnings("unchecked")
 	public <E extends Event> void fireEvent(final E event) {
-		if (logger != null) {
-			logger.log(Level.INFO, event.getClass().getSimpleName() + " : " + event.getTime());
-		}
 		if (handlers.containsKey(event.getClass())) {
 			final List<EventHandler<E>> h = new ArrayList<EventHandler<E>>();
 			for (final EventHandler<? extends Event> handler : handlers.get(event.getClass())) {
@@ -68,12 +61,16 @@ public class AsyncEventBusService extends Service implements EventBus {
 					Collections.newSetFromMap(new ConcurrentHashMap<EventHandler<? extends Event>, Boolean>()));
 		}
 		handlers.get(eventType).add(handler);
+		logger.log(Level.INFO,
+				new StringBuilder("Handler registered for ").append(handler.getEventClass().getSimpleName())
+						.append(" ").append(handler.getClass().getSimpleName()).toString());
 	}
 
 	@Override
 	public synchronized void start() throws Exception {
 		asyncEventBusThread.start();
 		super.start();
+		logger.log(Level.INFO, "EventBus started");
 	}
 
 	@Override
@@ -81,6 +78,7 @@ public class AsyncEventBusService extends Service implements EventBus {
 		asyncEventBusThread.interrupt();
 		asyncEventBusThread.join();
 		super.stop();
+		logger.log(Level.INFO, "EventBus stopped");
 	}
 
 	public void unregisterHandler(EventHandler<? extends Event> handler) {
@@ -91,6 +89,10 @@ public class AsyncEventBusService extends Service implements EventBus {
 				handlers.remove(eventType);
 			}
 		}
+		logger.log(
+				Level.INFO,
+				new StringBuilder("Handler unregistered for ").append(handler.getEventClass().getSimpleName())
+						.append(" ").append(handler.getClass().getSimpleName()).toString());
 	}
 
 	private class AsyncEventBusRunnable implements Runnable {

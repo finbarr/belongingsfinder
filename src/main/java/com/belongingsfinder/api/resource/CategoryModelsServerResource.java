@@ -7,7 +7,6 @@ import javax.persistence.EntityManager;
 import org.restlet.data.Status;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
-import org.restlet.resource.ServerResource;
 
 import com.belongingsfinder.api.dao.ModelDAO;
 import com.belongingsfinder.api.model.CategoryModel;
@@ -20,7 +19,7 @@ import com.google.inject.persist.Transactional;
  * @author finbarr
  * 
  */
-public class CategoryModelsServerResource extends ServerResource {
+public class CategoryModelsServerResource extends ValidatedServerResource {
 
 	private final Provider<EntityManager> provider;
 	private final ModelDAO<CategoryModel> modelDAO;

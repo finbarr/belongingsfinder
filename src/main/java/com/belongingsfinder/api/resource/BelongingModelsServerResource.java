@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
-import org.restlet.resource.ServerResource;
 
 import com.belongingsfinder.api.dao.ModelDAO;
 import com.belongingsfinder.api.model.BelongingModel;
@@ -15,7 +14,7 @@ import com.google.inject.Inject;
  * @author finbarr
  * 
  */
-public class BelongingModelsServerResource extends ServerResource {
+public class BelongingModelsServerResource extends ValidatedServerResource {
 
 	private final ModelDAO<BelongingModel> modelDAO;
 

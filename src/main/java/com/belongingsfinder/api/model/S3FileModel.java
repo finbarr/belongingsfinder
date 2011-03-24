@@ -7,8 +7,11 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import com.amazonaws.services.s3.model.Region;
 import com.belongingsfinder.api.modules.AWSModule.BucketName;
@@ -25,9 +28,13 @@ public class S3FileModel implements Model<S3FileModel>, Serializable {
 	@GenericGenerator(name = "bf-uuid", strategy = "com.belongingsfinder.api.dao.jpa.UUIDIdentifierGenerator")
 	private String id;
 	@Enumerated(EnumType.STRING)
+	@NotNull
 	private BucketName bucket;
+	@NotNull
+	@NotEmpty
 	private String filePath;
 	@Enumerated(EnumType.STRING)
+	@NotNull
 	private Region region;
 
 	public S3FileModel() {
@@ -39,19 +46,17 @@ public class S3FileModel implements Model<S3FileModel>, Serializable {
 		this.region = region;
 	}
 
-	public S3FileModel(String imageUrl) {
-		throw new IllegalStateException("urgently need to fix this");
-	}
-
 	public String getAWSUrl() {
 		return new StringBuilder(S3FileModel.http).append(bucket.toString()).append(".").append(region.toString())
 				.append(S3FileModel.s3).append(filePath).toString();
 	}
 
+	@JsonIgnore
 	public BucketName getBucket() {
 		return bucket;
 	}
 
+	@JsonIgnore
 	public String getFilePath() {
 		return filePath;
 	}
@@ -60,6 +65,7 @@ public class S3FileModel implements Model<S3FileModel>, Serializable {
 		return id;
 	}
 
+	@JsonIgnore
 	public Region getRegion() {
 		return region;
 	}

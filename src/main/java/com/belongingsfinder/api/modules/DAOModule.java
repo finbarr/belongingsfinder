@@ -2,6 +2,9 @@ package com.belongingsfinder.api.modules;
 
 import java.lang.annotation.Annotation;
 
+import javax.validation.Validation;
+import javax.validation.Validator;
+
 import com.belongingsfinder.api.annotations.Unwrapped;
 import com.belongingsfinder.api.dao.EventWrappedModelDAO;
 import com.belongingsfinder.api.dao.ModelDAO;
@@ -39,6 +42,7 @@ public class DAOModule extends AbstractModule {
 	@SuppressWarnings("unchecked")
 	@Override
 	protected void configure() {
+		bind(Validator.class).toInstance(Validation.buildDefaultValidatorFactory().getValidator());
 		bindModelDAOs(BelongingModel.class, JPAModelDAO.class);
 		bindModelDAOs(CategoryModel.class, JPAModelDAO.class);
 		bindModelDAOs(S3FileModel.class, JPAModelDAO.class);

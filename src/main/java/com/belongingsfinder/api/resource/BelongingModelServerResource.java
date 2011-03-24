@@ -6,7 +6,6 @@ import org.restlet.data.Status;
 import org.restlet.resource.Delete;
 import org.restlet.resource.Get;
 import org.restlet.resource.Put;
-import org.restlet.resource.ServerResource;
 
 import com.belongingsfinder.api.dao.ModelDAO;
 import com.belongingsfinder.api.model.BelongingModel;
@@ -16,7 +15,7 @@ import com.google.inject.Inject;
  * @author finbarr
  * 
  */
-public class BelongingModelServerResource extends ServerResource {
+public class BelongingModelServerResource extends ValidatedServerResource {
 
 	private final ModelDAO<BelongingModel> modelDAO;
 

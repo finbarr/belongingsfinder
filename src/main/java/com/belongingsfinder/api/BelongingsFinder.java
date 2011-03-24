@@ -30,6 +30,7 @@ import com.belongingsfinder.api.resource.ChildrenCategoryModelServerResource;
 import com.belongingsfinder.api.resource.MobileBelongingModelServerResource;
 import com.belongingsfinder.api.resource.PagingBelongingModelServerResource;
 import com.belongingsfinder.api.resource.RandomBelongingModelServerResource;
+import com.belongingsfinder.api.resource.StuffServerResource;
 import com.belongingsfinder.api.search.SearchIndexer;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
@@ -200,7 +201,7 @@ public class BelongingsFinder extends Application {
 
 		app.attach(v1, apiv1, Template.MODE_STARTS_WITH);
 
-		// app.attach("/stuff", StuffServerResource.class);
+		app.attach("/stuff", StuffServerResource.class);
 
 		return app;
 	}

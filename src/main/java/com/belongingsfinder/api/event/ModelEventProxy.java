@@ -28,7 +28,6 @@ import com.google.inject.Singleton;
 public class ModelEventProxy implements EventBus {
 
 	private final Map<Class<? extends ModelEvent<?>>, Map<Class<? extends Model<?>>, Set<EventHandler<?>>>> proxy;
-
 	private final Logger logger;
 	private final EventBus eventBus;
 
@@ -41,6 +40,7 @@ public class ModelEventProxy implements EventBus {
 		eventBus.registerHandler(createProxyHandler(ModelDeletedEvent.class));
 		eventBus.registerHandler(createProxyHandler(ModelRetrievedEvent.class));
 		eventBus.registerHandler(createProxyHandler(ModelUpdatedEvent.class));
+		logger.log(Level.INFO, "ModelEventProxy registration complete");
 	}
 
 	public <E extends Event> void fireEvent(E event) {
