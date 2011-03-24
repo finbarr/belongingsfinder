@@ -1,17 +1,16 @@
 package com.belongingsfinder.api.search;
 
-import java.util.List;
-
 import javax.persistence.EntityManager;
 
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.FullTextQuery;
 import org.hibernate.search.jpa.Search;
 import org.hibernate.search.query.dsl.BooleanJunction;
+import org.hibernate.search.query.dsl.EntityContext;
 import org.hibernate.search.query.dsl.QueryBuilder;
 
+import com.belongingsfinder.api.i18n.Language;
 import com.belongingsfinder.api.model.BelongingModel;
-import com.belongingsfinder.api.model.BelongingSearchRequest;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
@@ -33,10 +32,13 @@ public class BelongingModelSearch {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Transactional
-	public List<BelongingModel> search(BelongingSearchRequest request) {
+	public BelongingSearchResult search(BelongingSearchRequest request) {
 		FullTextEntityManager ftem = Search.getFullTextEntityManager(provider.get());
-		QueryBuilder qb = ftem.getSearchFactory().buildQueryBuilder().forEntity(BelongingModel.class)
-				.overridesForField("description_en", "en").overridesForField("description_jp", "jp").get();
+		EntityContext context = ftem.getSearchFactory().buildQueryBuilder().forEntity(BelongingModel.class);
+		for (Language language : Language.values()) {
+			context.overridesForField("description_" + language.toString(), language.toString());
+		}
+		QueryBuilder qb = context.get();
 		BooleanJunction<BooleanJunction> junc = qb.bool();
 		junc.should(qb.keyword().onField("description_" + request.getLanguage().toString())
 				.matching(request.getTerms()).createQuery());
@@ -47,7 +49,6 @@ public class BelongingModelSearch {
 			junc.must(qb.keyword().onField("category.id").matching(request.getCategoryId()).createQuery());
 		}
 		// TODO location stuff
-		// bounding box and range query
 		FullTextQuery q = ftem.createFullTextQuery(junc.createQuery(), BelongingModel.class);
 		if (request.getMaxResults() > 0) {
 			q.setMaxResults(request.getMaxResults());
@@ -55,7 +56,7 @@ public class BelongingModelSearch {
 		if (request.getOffset() > 0) {
 			q.setFirstResult(request.getOffset());
 		}
-		return q.getResultList();
+		return new BelongingSearchResult(q.getResultSize(), q.getResultList());
 	}
 
 }

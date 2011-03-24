@@ -1,9 +1,12 @@
-package com.belongingsfinder.api.model;
+package com.belongingsfinder.api.search;
 
 import java.io.Serializable;
 
 import com.belongingsfinder.api.i18n.HasLanguage;
 import com.belongingsfinder.api.i18n.Language;
+import com.belongingsfinder.api.model.BelongingModel;
+import com.belongingsfinder.api.model.LatLon;
+import com.belongingsfinder.api.model.BelongingModel.BelongingType;
 
 /**
  * @author finbarr

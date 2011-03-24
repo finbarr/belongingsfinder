@@ -1,14 +1,12 @@
 package com.belongingsfinder.api.resource;
 
-import java.util.List;
-
 import org.restlet.data.Status;
 import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
 
-import com.belongingsfinder.api.model.BelongingModel;
-import com.belongingsfinder.api.model.BelongingSearchRequest;
 import com.belongingsfinder.api.search.BelongingModelSearch;
+import com.belongingsfinder.api.search.BelongingSearchRequest;
+import com.belongingsfinder.api.search.BelongingSearchResult;
 import com.google.inject.Inject;
 
 /**
@@ -25,7 +23,7 @@ public class BelongingSearchServerResource extends ServerResource {
 	}
 
 	@Post("json")
-	public List<BelongingModel> findBelongings(BelongingSearchRequest request) {
+	public BelongingSearchResult findBelongings(BelongingSearchRequest request) {
 		if (request.getLanguage() == null || request.getTerms() == null || request.getTerms().length() == 0) {
 			getResponse().setStatus(Status.CLIENT_ERROR_UNPROCESSABLE_ENTITY, "Invalid search request");
 			return null;
