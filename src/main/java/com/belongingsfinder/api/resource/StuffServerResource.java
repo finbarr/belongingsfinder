@@ -56,6 +56,7 @@ public class StuffServerResource extends ValidatedServerResource {
 		b.setCategory(cm);
 		b.setEmail("f@fbar.org");
 		b.setLanguage(Language.EN);
+		b.setDescription("hello, world");
 		b.setLastUpdated(new Date());
 		b.setType(BelongingType.LOST);
 		b.setImages(images);

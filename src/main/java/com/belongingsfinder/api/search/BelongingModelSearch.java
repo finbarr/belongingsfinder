@@ -49,6 +49,9 @@ public class BelongingModelSearch {
 			junc.must(qb.keyword().onField("category.id").matching(request.getCategoryId()).createQuery());
 		}
 		// TODO location stuff
+		// TODO filters
+		// TODO configure to be more efficient e.g. ram index storage
+		// TODO experiment with storing the fields
 		FullTextQuery q = ftem.createFullTextQuery(junc.createQuery(), BelongingModel.class);
 		if (request.getMaxResults() > 0) {
 			q.setMaxResults(request.getMaxResults());

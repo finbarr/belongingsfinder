@@ -9,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -46,17 +45,15 @@ public class S3FileModel implements Model<S3FileModel>, Serializable {
 		this.region = region;
 	}
 
-	public String getAWSUrl() {
+	public String getUrl() {
 		return new StringBuilder(S3FileModel.http).append(bucket.toString()).append(".").append(region.toString())
 				.append(S3FileModel.s3).append(filePath).toString();
 	}
 
-	@JsonIgnore
 	public BucketName getBucket() {
 		return bucket;
 	}
 
-	@JsonIgnore
 	public String getFilePath() {
 		return filePath;
 	}
@@ -65,7 +62,6 @@ public class S3FileModel implements Model<S3FileModel>, Serializable {
 		return id;
 	}
 
-	@JsonIgnore
 	public Region getRegion() {
 		return region;
 	}

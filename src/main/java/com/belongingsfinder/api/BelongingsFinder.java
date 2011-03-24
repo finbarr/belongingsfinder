@@ -123,7 +123,6 @@ public class BelongingsFinder extends Application {
 		 * 
 		 * belongings/random/:N
 		 */
-
 		TemplateRoute randomBelongings = apiv1.attach("/belongings/random/{number}",
 				RandomBelongingModelServerResource.class);
 		randomBelongings.getTemplate().getVariables().put("number", new Variable(Variable.TYPE_DIGIT));
@@ -143,7 +142,6 @@ public class BelongingsFinder extends Application {
 		 * 
 		 * belongings/:TYPE/:NUMBER/:OFFSET
 		 */
-
 		TemplateRoute belongingsPager = apiv1.attach("/belongings/{type}/{number}/{offset}",
 				typeFilterFactory.createFilter(finderFactory.createFinder(PagingBelongingModelServerResource.class)));
 		belongingsPager.getTemplate().getVariables().put("number", new Variable(Variable.TYPE_DIGIT));
@@ -155,7 +153,6 @@ public class BelongingsFinder extends Application {
 		 * 
 		 * belongings/search
 		 */
-
 		apiv1.attach("/belongings/search", BelongingSearchServerResource.class);
 
 		/*
@@ -164,7 +161,6 @@ public class BelongingsFinder extends Application {
 		 * 
 		 * categories
 		 */
-
 		apiv1.attach("/categories", CategoryModelsServerResource.class);
 
 		/*
@@ -174,7 +170,6 @@ public class BelongingsFinder extends Application {
 		 * 
 		 * categories/id/:ID
 		 */
-
 		apiv1.attach("/categories/id/{id}",
 				uuidFilterFactory.createFilter(finderFactory.createFinder(CategoryModelServerResource.class)));
 
@@ -183,7 +178,6 @@ public class BelongingsFinder extends Application {
 		 * 
 		 * categories/children/:ID
 		 */
-
 		apiv1.attach("/categories/children/{id}",
 				uuidFilterFactory.createFilter(finderFactory.createFinder(ChildrenCategoryModelServerResource.class)));
 
@@ -192,7 +186,6 @@ public class BelongingsFinder extends Application {
 		 * 
 		 * mobile
 		 */
-
 		apiv1.attach("/mobile", MobileBelongingModelServerResource.class);
 
 		Router app = routerProvider.get();
@@ -200,7 +193,6 @@ public class BelongingsFinder extends Application {
 		/*
 		 * attach api to version 1
 		 */
-
 		app.attach(v1, apiv1, Template.MODE_STARTS_WITH);
 
 		app.attach("/stuff", StuffServerResource.class);
