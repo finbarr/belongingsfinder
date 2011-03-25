@@ -4,13 +4,9 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
-import org.restlet.data.Status;
 import org.restlet.resource.Get;
-import org.restlet.resource.Post;
 
-import com.belongingsfinder.api.dao.ModelDAO;
 import com.belongingsfinder.api.model.CategoryModel;
-import com.belongingsfinder.api.search.CategoryModelSearch;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.persist.Transactional;
@@ -22,26 +18,31 @@ import com.google.inject.persist.Transactional;
 public class CategoryModelsServerResource extends ValidatedServerResource {
 
 	private final Provider<EntityManager> provider;
-	private final ModelDAO<CategoryModel> modelDAO;
-	private final CategoryModelSearch search;
+
+	// private final ModelDAO<CategoryModel> modelDAO;
+	// private final CategoryModelSearch search;
 
 	@Inject
-	public CategoryModelsServerResource(Provider<EntityManager> provider, ModelDAO<CategoryModel> modelDAO,
-			CategoryModelSearch search) {
+	public CategoryModelsServerResource(Provider<EntityManager> provider/*
+																		 * , ModelDAO<CategoryModel> modelDAO,
+																		 * CategoryModelSearch search
+																		 */) {
 		this.provider = provider;
-		this.modelDAO = modelDAO;
-		this.search = search;
+		// this.modelDAO = modelDAO;
+		// this.search = search;
 	}
 
-	@Post("json")
-	public String createCategory(CategoryModel model) {
-		if (search.categoryExists(model.getName())) {
-			getResponse().setStatus(Status.CLIENT_ERROR_PRECONDITION_FAILED,
-					new StringBuilder("Category ").append(model.getName()).append(" already exists").toString());
-			return null;
-		}
-		return modelDAO.create(model);
-	}
+	/*
+	 * @Post("json")
+	 * public String createCategory(CategoryModel model) {
+	 * if (search.categoryExists(model.getName())) {
+	 * getResponse().setStatus(Status.CLIENT_ERROR_PRECONDITION_FAILED,
+	 * new StringBuilder("Category ").append(model.getName()).append(" already exists").toString());
+	 * return null;
+	 * }
+	 * return modelDAO.create(model);
+	 * }
+	 */
 
 	@SuppressWarnings("unchecked")
 	@Get("json")

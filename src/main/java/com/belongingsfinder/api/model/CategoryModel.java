@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -38,7 +37,6 @@ public class CategoryModel implements Model<CategoryModel>, Serializable {
 	@GenericGenerator(name = "bf-uuid", strategy = "com.belongingsfinder.api.dao.jpa.UUIDIdentifierGenerator")
 	@Field(index = Index.UN_TOKENIZED)
 	private String id;
-	@Column(unique = true)
 	@NotNull
 	@NotEmpty
 	private String name;

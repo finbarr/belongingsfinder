@@ -29,6 +29,7 @@ import com.belongingsfinder.api.resource.CategoryModelsServerResource;
 import com.belongingsfinder.api.resource.ChildrenCategoryModelServerResource;
 import com.belongingsfinder.api.resource.MobileBelongingModelServerResource;
 import com.belongingsfinder.api.resource.PagingBelongingModelServerResource;
+import com.belongingsfinder.api.resource.PingServerResource;
 import com.belongingsfinder.api.resource.RandomBelongingModelServerResource;
 import com.belongingsfinder.api.resource.StuffServerResource;
 import com.belongingsfinder.api.search.SearchIndexer;
@@ -92,7 +93,8 @@ public class BelongingsFinder extends Application {
 	/* Local development only */
 	public static void main(String[] args) throws Exception {
 		Component c = new Component();
-		c.getServers().add(Protocol.HTTP, 8182);
+		int port = args.length > 0 ? Integer.parseInt(args[0]) : 8182;
+		c.getServers().add(Protocol.HTTP, port);
 		c.getDefaultHost().attach(new BelongingsFinder(Region.US_West, BucketName.DEV, PersistenceUnit.DEV));
 		c.start();
 	}
@@ -196,6 +198,8 @@ public class BelongingsFinder extends Application {
 		app.attach(v1, apiv1, Template.MODE_STARTS_WITH);
 
 		app.attach("/stuff", StuffServerResource.class);
+
+		app.attach("/ping", PingServerResource.class);
 
 		return app;
 	}
