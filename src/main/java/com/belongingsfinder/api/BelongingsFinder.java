@@ -31,6 +31,7 @@ import com.belongingsfinder.api.resource.MobileBelongingModelServerResource;
 import com.belongingsfinder.api.resource.PagingBelongingModelServerResource;
 import com.belongingsfinder.api.resource.PingServerResource;
 import com.belongingsfinder.api.resource.RandomBelongingModelServerResource;
+import com.belongingsfinder.api.resource.RootServerResource;
 import com.belongingsfinder.api.resource.StuffServerResource;
 import com.belongingsfinder.api.search.SearchIndexer;
 import com.google.inject.Guice;
@@ -200,6 +201,8 @@ public class BelongingsFinder extends Application {
 		app.attach("/stuff", StuffServerResource.class);
 
 		app.attach("/ping", PingServerResource.class);
+
+		app.attach("/", RootServerResource.class);
 
 		return app;
 	}

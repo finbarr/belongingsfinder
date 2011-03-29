@@ -12,6 +12,7 @@ import org.restlet.data.MediaType;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.belongingsfinder.api.aws.S3Store;
+import com.belongingsfinder.api.dao.ModelDAO;
 import com.belongingsfinder.api.model.BelongingModel;
 import com.belongingsfinder.api.model.S3FileModel;
 import com.google.inject.Inject;
@@ -21,11 +22,14 @@ public class BelongingImageFileItemHandler implements FileItemHandler<BelongingM
 
 	private final S3Store store;
 	private final Map<String, MediaType> images;
+	private final ModelDAO<S3FileModel> sdao;
 
 	@Inject
-	private BelongingImageFileItemHandler(S3Store store, @Named("images") Map<String, MediaType> images) {
+	private BelongingImageFileItemHandler(S3Store store, @Named("images") Map<String, MediaType> images,
+			ModelDAO<S3FileModel> sdao) {
 		this.store = store;
 		this.images = images;
+		this.sdao = sdao;
 	}
 
 	@Override
@@ -45,7 +49,10 @@ public class BelongingImageFileItemHandler implements FileItemHandler<BelongingM
 		String ext = images.get(fileItem.getContentType()).equals(MediaType.IMAGE_JPEG) ? ".jpeg" : ".png";
 		String key = UUID.randomUUID().toString() + ext;
 		Set<S3FileModel> images = new HashSet<S3FileModel>();
-		images.add(store.store(key, bis, omd, CannedAccessControlList.PublicRead));
+		S3FileModel s = store.store(key, bis, omd, CannedAccessControlList.PublicRead);
+		sdao.create(s);
+		images.add(s);
+		model.setImages(images);
 	}
 
 }

@@ -13,6 +13,7 @@ public class ValidatedServerResource extends ServerResource {
 	protected void doCatch(Throwable throwable) {
 		if (throwable instanceof ResourceException && throwable.getCause() instanceof RollbackException
 				&& throwable.getCause().getCause() instanceof ConstraintViolationException) {
+			throwable.printStackTrace();
 			getResponse().setStatus(Status.CLIENT_ERROR_UNPROCESSABLE_ENTITY, "Invalid entity");
 		} else {
 			super.doCatch(throwable);

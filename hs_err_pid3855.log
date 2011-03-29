@@ -1,0 +1,443 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007f9b74f21b4b, pid=3855, tid=140305559455488
+#
+# JRE version: 6.0_24-b07
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (19.1-b02 mixed mode linux-amd64 compressed oops)
+# Problematic frame:
+# V  [libjvm.so+0x41fb4b]
+#
+# If you would like to submit a bug report, please visit:
+#   http://java.sun.com/webapps/bugreport/crash.jsp
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00000000420f8000):  JavaThread "JDWP Transport Listener: dt_socket" daemon [_thread_in_vm, id=3871, stack(0x00007f9b6ef80000,0x00007f9b6f081000)]
+
+siginfo:si_signo=SIGSEGV: si_errno=0, si_code=1 (SEGV_MAPERR), si_addr=0x0000000000000008
+
+Registers:
+RAX=0x000000000000000c, RBX=0x00000000420f8d28, RCX=0x0000000000000014, RDX=0x0000000000000000
+RSP=0x00007f9b6f07f720, RBP=0x00007f9b6f07f720, RSI=0x0000000000000000, RDI=0x00000000ec400dc8
+R8 =0x0000000000000000, R9 =0x00007f9b7549f0d0, R10=0x0000000000000010, R11=0x00007f9b754bb080
+R12=0x00000000423cad78, R13=0x00000000420f8950, R14=0x0000000000000000, R15=0x00007f9b6f07f750
+RIP=0x00007f9b74f21b4b, EFL=0x0000000000010202, CSGSFS=0x0000000000000033, ERR=0x0000000000000004
+  TRAPNO=0x000000000000000e
+
+Register to memory mapping:
+
+RAX=0x000000000000000c
+0x000000000000000c is pointing to unknown location
+
+RBX=0x00000000420f8d28
+0x00000000420f8d28 is pointing to unknown location
+
+RCX=0x0000000000000014
+0x0000000000000014 is pointing to unknown location
+
+RDX=0x0000000000000000
+0x0000000000000000 is pointing to unknown location
+
+RSP=0x00007f9b6f07f720
+0x00007f9b6f07f720 is pointing into the stack for thread: 0x00000000420f8000
+"JDWP Transport Listener: dt_socket" daemon prio=10 tid=0x00000000420f8000 nid=0xf1f runnable [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+RBP=0x00007f9b6f07f720
+0x00007f9b6f07f720 is pointing into the stack for thread: 0x00000000420f8000
+"JDWP Transport Listener: dt_socket" daemon prio=10 tid=0x00000000420f8000 nid=0xf1f runnable [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+RSI=0x0000000000000000
+0x0000000000000000 is pointing to unknown location
+
+RDI=0x00000000ec400dc8
+
+[error occurred during error reporting (printing registers, top of stack, instructions near pc), id 0xe0000000]
+
+Stack: [0x00007f9b6ef80000,0x00007f9b6f081000],  sp=0x00007f9b6f07f720,  free space=1021k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [libjvm.so+0x41fb4b]
+V  [libjvm.so+0x44d3c9]
+
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+  0x000000004206e800 JavaThread "Hibernate Search: Directory writer-1" daemon [_thread_blocked, id=3911, stack(0x00007f9b6da99000,0x00007f9b6db9a000)]
+  0x0000000042d9d800 JavaThread "Restlet-2115942479" daemon [_thread_blocked, id=3909, stack(0x00007f9b6dc9b000,0x00007f9b6dd9c000)]
+  0x0000000042063000 JavaThread "DestroyJavaVM" [_thread_blocked, id=3861, stack(0x00007f9b7477e000,0x00007f9b7487f000)]
+  0x0000000042732000 JavaThread "Thread-1" [_thread_blocked, id=3902, stack(0x00007f9b6d897000,0x00007f9b6d998000)]
+  0x00007f9b687f9800 JavaThread "com.mchange.v2.async.ThreadPoolAsynchronousRunner$PoolThread-#2" daemon [_thread_blocked, id=3887, stack(0x00007f9b6dea4000,0x00007f9b6dfa5000)]
+  0x0000000042391800 JavaThread "com.mchange.v2.async.ThreadPoolAsynchronousRunner$PoolThread-#1" daemon [_thread_blocked, id=3886, stack(0x00007f9b6dfa5000,0x00007f9b6e0a6000)]
+  0x0000000042890800 JavaThread "com.mchange.v2.async.ThreadPoolAsynchronousRunner$PoolThread-#0" daemon [_thread_blocked, id=3885, stack(0x00007f9b6e0a6000,0x00007f9b6e1a7000)]
+  0x000000004288f800 JavaThread "Timer-0" daemon [_thread_blocked, id=3884, stack(0x00007f9b6e1a7000,0x00007f9b6e2a8000)]
+  0x00007f9b68916000 JavaThread "Restlet-603629076" [_thread_in_native, id=3883, stack(0x00007f9b6e3b7000,0x00007f9b6e4b8000)]
+  0x0000000042fc0800 JavaThread "Restlet-297900313" daemon [_thread_blocked, id=3882, stack(0x00007f9b6e5cf000,0x00007f9b6e6d0000)]
+  0x0000000042411800 JavaThread "com.google.inject.internal.util.$Finalizer" daemon [_thread_blocked, id=3881, stack(0x00007f9b6e6d3000,0x00007f9b6e7d4000)]
+  0x0000000042108000 JavaThread "Low Memory Detector" daemon [_thread_blocked, id=3879, stack(0x00007f9b6ea7b000,0x00007f9b6eb7c000)]
+  0x0000000042106000 JavaThread "CompilerThread1" daemon [_thread_blocked, id=3878, stack(0x00007f9b6eb7c000,0x00007f9b6ec7d000)]
+  0x0000000042103000 JavaThread "CompilerThread0" daemon [_thread_blocked, id=3877, stack(0x00007f9b6ec7d000,0x00007f9b6ed7e000)]
+  0x00000000420fe000 JavaThread "JDWP Command Reader" daemon [_thread_in_native, id=3873, stack(0x00007f9b6ed7e000,0x00007f9b6ee7f000)]
+  0x00000000420fb800 JavaThread "JDWP Event Helper Thread" daemon [_thread_blocked, id=3872, stack(0x00007f9b6ee7f000,0x00007f9b6ef80000)]
+=>0x00000000420f8000 JavaThread "JDWP Transport Listener: dt_socket" daemon [_thread_in_vm, id=3871, stack(0x00007f9b6ef80000,0x00007f9b6f081000)]
+  0x00000000420ea800 JavaThread "Signal Dispatcher" daemon [_thread_blocked, id=3869, stack(0x00007f9b6f185000,0x00007f9b6f286000)]
+  0x00000000420cf000 JavaThread "Finalizer" daemon [_thread_blocked, id=3868, stack(0x00007f9b6f286000,0x00007f9b6f387000)]
+  0x00000000420c7800 JavaThread "Reference Handler" daemon [_thread_blocked, id=3867, stack(0x00007f9b6f387000,0x00007f9b6f488000)]
+
+Other Threads:
+  0x00000000420c1000 VMThread [stack: 0x00007f9b6f488000,0x00007f9b6f589000] [id=3866]
+  0x00007f9b68027800 WatcherThread [stack: 0x00007f9b6e97a000,0x00007f9b6ea7b000] [id=3880]
+
+VM state:not at safepoint (normal execution)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+Heap
+ PSYoungGen      total 17664K, used 6079K [0x00000000ec0b0000, 0x00000000ed600000, 0x0000000100000000)
+  eden space 14272K, 25% used [0x00000000ec0b0000,0x00000000ec436c40,0x00000000ecea0000)
+  from space 3392K, 72% used [0x00000000ed2b0000,0x00000000ed519170,0x00000000ed600000)
+  to   space 3776K, 0% used [0x00000000ecea0000,0x00000000ecea0000,0x00000000ed250000)
+ PSOldGen        total 40832K, used 3867K [0x00000000c4200000, 0x00000000c69e0000, 0x00000000ec0b0000)
+  object space 40832K, 9% used [0x00000000c4200000,0x00000000c45c6cd8,0x00000000c69e0000)
+ PSPermGen       total 36608K, used 36420K [0x00000000bf000000, 0x00000000c13c0000, 0x00000000c4200000)
+  object space 36608K, 99% used [0x00000000bf000000,0x00000000c1391188,0x00000000c13c0000)
+
+Dynamic libraries:
+40000000-40009000 r-xp 00000000 08:01 6950455                            /usr/lib/jvm/java-6-sun-1.6.0.24/jre/bin/java
+40108000-4010a000 rwxp 00008000 08:01 6950455                            /usr/lib/jvm/java-6-sun-1.6.0.24/jre/bin/java
+42054000-43140000 rwxp 00000000 00:00 0                                  [heap]
+bf000000-c13c0000 rwxp 00000000 00:00 0 
+c13c0000-c4200000 rwxp 00000000 00:00 0 
+c4200000-c69e0000 rwxp 00000000 00:00 0 
+c69e0000-ec0b0000 rwxp 00000000 00:00 0 
+ec0b0000-ed600000 rwxp 00000000 00:00 0 
+ed600000-ee590000 ---p 00000000 00:00 0 
+ee590000-100000000 rwxp 00000000 00:00 0 
+7f9b60000000-7f9b60022000 rwxp 00000000 00:00 0 
+7f9b60022000-7f9b64000000 ---p 00000000 00:00 0 
+7f9b68000000-7f9b68d21000 rwxp 00000000 00:00 0 
+7f9b68d21000-7f9b6c000000 ---p 00000000 00:00 0 
+7f9b6d594000-7f9b6d597000 ---p 00000000 00:00 0 
+7f9b6d597000-7f9b6d695000 rwxp 00000000 00:00 0 
+7f9b6d695000-7f9b6d698000 ---p 00000000 00:00 0 
+7f9b6d698000-7f9b6d796000 rwxp 00000000 00:00 0 
+7f9b6d796000-7f9b6d799000 ---p 00000000 00:00 0 
+7f9b6d799000-7f9b6d897000 rwxp 00000000 00:00 0 
+7f9b6d897000-7f9b6d89a000 ---p 00000000 00:00 0 
+7f9b6d89a000-7f9b6d998000 rwxp 00000000 00:00 0 
+7f9b6d998000-7f9b6d99b000 ---p 00000000 00:00 0 
+7f9b6d99b000-7f9b6da99000 rwxp 00000000 00:00 0 
+7f9b6da99000-7f9b6da9c000 ---p 00000000 00:00 0 
+7f9b6da9c000-7f9b6db9a000 rwxp 00000000 00:00 0 
+7f9b6db9a000-7f9b6db9d000 ---p 00000000 00:00 0 
+7f9b6db9d000-7f9b6dc9b000 rwxp 00000000 00:00 0 
+7f9b6dc9b000-7f9b6dc9e000 ---p 00000000 00:00 0 
+7f9b6dc9e000-7f9b6dd9c000 rwxp 00000000 00:00 0 
+7f9b6dd9c000-7f9b6dda3000 r-xp 00000000 08:01 7081515                    /usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/amd64/libnio.so
+7f9b6dda3000-7f9b6dea2000 ---p 00007000 08:01 7081515                    /usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/amd64/libnio.so
+7f9b6dea2000-7f9b6dea4000 rwxp 00006000 08:01 7081515                    /usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/amd64/libnio.so
+7f9b6dea4000-7f9b6dea7000 ---p 00000000 00:00 0 
+7f9b6dea7000-7f9b6dfa5000 rwxp 00000000 00:00 0 
+7f9b6dfa5000-7f9b6dfa8000 ---p 00000000 00:00 0 
+7f9b6dfa8000-7f9b6e0a6000 rwxp 00000000 00:00 0 
+7f9b6e0a6000-7f9b6e0a9000 ---p 00000000 00:00 0 
+7f9b6e0a9000-7f9b6e1a7000 rwxp 00000000 00:00 0 
+7f9b6e1a7000-7f9b6e1aa000 ---p 00000000 00:00 0 
+7f9b6e1aa000-7f9b6e2a8000 rwxp 00000000 00:00 0 
+7f9b6e2a8000-7f9b6e2ae000 r-xp 00000000 08:01 7081563                    /usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/amd64/libmanagement.so
+7f9b6e2ae000-7f9b6e3ad000 ---p 00006000 08:01 7081563                    /usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/amd64/libmanagement.so
+7f9b6e3ad000-7f9b6e3af000 rwxp 00005000 08:01 7081563                    /usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/amd64/libmanagement.so
+7f9b6e3af000-7f9b6e3b7000 r-xs 00115000 08:01 6950565                    /usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/resources.jar
+7f9b6e3b7000-7f9b6e3ba000 ---p 00000000 00:00 0 
+7f9b6e3ba000-7f9b6e4b8000 rwxp 00000000 00:00 0 
+7f9b6e4b8000-7f9b6e4cb000 r-xp 00000000 08:01 7081528                    /usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/amd64/libnet.so
+7f9b6e4cb000-7f9b6e5cc000 ---p 00013000 08:01 7081528                    /usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/amd64/libnet.so
+7f9b6e5cc000-7f9b6e5cf000 rwxp 00014000 08:01 7081528                    /usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/amd64/libnet.so
+7f9b6e5cf000-7f9b6e5d2000 ---p 00000000 00:00 0 
+7f9b6e5d2000-7f9b6e6d0000 rwxp 00000000 00:00 0 
+7f9b6e6d0000-7f9b6e6d3000 r-xs 000cb000 08:01 6950426                    /usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/ext/localedata.jar
+7f9b6e6d3000-7f9b6e6d6000 ---p 00000000 00:00 0 
+7f9b6e6d6000-7f9b6e7d4000 rwxp 00000000 00:00 0 
+7f9b6e7d4000-7f9b6e7db000 r-xs 00094000 08:01 6949916                    /usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/jsse.jar
+7f9b6e7db000-7f9b6e7dd000 r-xs 00005000 08:01 24249131                   /home/finbarr/.m2/repository/stax/stax-api/1.0.1/stax-api-1.0.1.jar
+7f9b6e7dd000-7f9b6e7df000 r-xs 0000e000 08:01 27000929                   /home/finbarr/.m2/repository/javax/activation/activation/1.1/activation-1.1.jar
+7f9b6e7df000-7f9b6e7e6000 r-xs 00064000 08:01 27134587                   /home/finbarr/.m2/repository/javax/mail/mail/1.4.2/mail-1.4.2.jar
+7f9b6e7e6000-7f9b6e7e8000 r-xs 0000a000 08:01 27263359                   /home/finbarr/.m2/repository/commons-codec/commons-codec/1.3/commons-codec-1.3.jar
+7f9b6e7e8000-7f9b6e7ed000 r-xs 00032000 08:01 27263356                   /home/finbarr/.m2/repository/commons-httpclient/commons-httpclient/3.1-jbossorg-1/commons-httpclient-3.1-jbossorg-1.jar
+7f9b6e7ed000-7f9b6e7ef000 r-xs 0000d000 08:01 27263358                   /home/finbarr/.m2/repository/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar
+7f9b6e7ef000-7f9b6e834000 r-xs 00246000 08:01 27263369                   /home/finbarr/.m2/repository/com/amazonaws/aws-java-sdk/1.1.7/aws-java-sdk-1.1.7.jar
+7f9b6e834000-7f9b6e837000 r-xs 00009000 08:01 25692527                   /home/finbarr/.m2/repository/javax/validation/validation-api/1.0.0.GA/validation-api-1.0.0.GA.jar
+7f9b6e837000-7f9b6e83e000 r-xs 00040000 08:01 25954984                   /home/finbarr/.m2/repository/org/hibernate/hibernate-validator/4.1.0.Final/hibernate-validator-4.1.0.Final.jar
+7f9b6e83e000-7f9b6e840000 r-xs 00001000 08:01 26743366                   /home/finbarr/.m2/repository/net/sf/jsr107cache/jsr107cache/1.0/jsr107cache-1.0.jar
+7f9b6e840000-7f9b6e848000 r-xs 00049000 08:01 25953553                   /home/finbarr/.m2/repository/backport-util-concurrent/backport-util-concurrent/3.1/backport-util-concurrent-3.1.jar
+7f9b6e848000-7f9b6e84d000 r-xs 0003c000 08:01 26743365                   /home/finbarr/.m2/repository/net/sf/ehcache/ehcache/1.5.0/ehcache-1.5.0.jar
+7f9b6e84d000-7f9b6e84f000 r-xs 00001000 08:01 26611825                   /home/finbarr/.m2/repository/org/hibernate/hibernate-ehcache/3.6.0.CR2/hibernate-ehcache-3.6.0.CR2.jar
+7f9b6e84f000-7f9b6e852000 r-xs 00013000 08:01 25955648                   /home/finbarr/.m2/repository/org/apache/commons/commons-io/1.3.2/commons-io-1.3.2.jar
+7f9b6e852000-7f9b6e854000 r-xs 00007000 08:01 27133758                   /home/finbarr/.m2/repository/com/google/inject/extensions/guice-multibindings/3.0-rc3/guice-multibindings-3.0-rc3.jar
+7f9b6e854000-7f9b6e85f000 r-xs 0008a000 08:01 24512237                   /home/finbarr/.m2/repository/c3p0/c3p0/0.9.1/c3p0-0.9.1.jar
+7f9b6e85f000-7f9b6e860000 r-xs 00001000 08:01 27133821                   /home/finbarr/.m2/repository/org/hibernate/hibernate-c3p0/3.6.0.CR2/hibernate-c3p0-3.6.0.CR2.jar
+7f9b6e860000-7f9b6e861000 r-xs 00006000 08:01 27133756                   /home/finbarr/.m2/repository/com/google/inject/extensions/guice-persist/3.0-rc3/guice-persist-3.0-rc3.jar
+7f9b6e861000-7f9b6e863000 r-xs 0000e000 08:01 27133757                   /home/finbarr/.m2/repository/com/google/inject/extensions/guice-servlet/3.0-rc3/guice-servlet-3.0-rc3.jar
+7f9b6e863000-7f9b6e865000 r-xs 00000000 08:01 25559979                   /home/finbarr/.m2/repository/aopalliance/aopalliance/1.0/aopalliance-1.0.jar
+7f9b6e865000-7f9b6e866000 r-xs 00000000 08:01 27133755                   /home/finbarr/.m2/repository/javax/inject/javax.inject/1/javax.inject-1.jar
+7f9b6e866000-7f9b6e875000 r-xs 0009e000 08:01 27133754                   /home/finbarr/.m2/repository/com/google/inject/guice/3.0-rc3/guice-3.0-rc3.jar
+7f9b6e875000-7f9b6e878000 r-xs 0000c000 08:01 24773606                   /home/finbarr/.m2/repository/commons-fileupload/commons-fileupload/1.2.1/commons-fileupload-1.2.1.jar
+7f9b6e878000-7f9b6e879000 r-xs 00000000 08:01 26220371                   /home/finbarr/.m2/repository/org/restlet/jee/org.restlet.ext.fileupload/2.0.5/org.restlet.ext.fileupload-2.0.5.jar
+7f9b6e879000-7f9b6e87a000 r-xs 00005000 08:01 26089133                   /home/finbarr/.m2/repository/org/restlet/jee/org.restlet.ext.servlet/2.0.5/org.restlet.ext.servlet-2.0.5.jar
+7f9b6e87a000-7f9b6e882000 r-xs 00057000 08:01 25561110                   /home/finbarr/.m2/repository/org/codehaus/jackson/jackson-mapper-asl/1.4.3/jackson-mapper-asl-1.4.3.jar
+7f9b6e882000-7f9b6e885000 r-xs 00022000 08:01 25560673                   /home/finbarr/.m2/repository/org/codehaus/jackson/jackson-core-asl/1.4.3/jackson-core-asl-1.4.3.jar
+7f9b6e885000-7f9b6e886000 r-xs 00001000 08:01 26089126                   /home/finbarr/.m2/repository/org/restlet/jee/org.restlet.ext.jackson/2.0.5/org.restlet.ext.jackson-2.0.5.jar
+7f9b6e886000-7f9b6e893000 r-xs 00096000 08:01 26085193                   /home/finbarr/.m2/repository/net/sf/ehcache/ehcache-core/2.3.0/ehcache-core-2.3.0.jar
+7f9b6e893000-7f9b6e89a000 r-xs 000b5000 08:01 25954987                   /home/finbarr/.m2/repository/mysql/mysql-connector-java/5.1.13/mysql-connector-java-5.1.13.jar
+7f9b6e89a000-7f9b6e89f000 r-xs 00014000 08:01 25827933                   /home/finbarr/.m2/repository/org/hibernate/javax/persistence/hibernate-jpa-2.0-api/1.0.0.Final/hibernate-jpa-2.0-api-1.0.0.Final.jar
+7f9b6e89f000-7f9b6e8a8000 r-xs 00092000 08:01 27001884                   /home/finbarr/.m2/repository/javassist/javassist/3.12.0.GA/javassist-3.12.0.GA.jar
+7f9b6e8a8000-7f9b6e8a9000 r-xs 0000a000 08:01 25561127                   /home/finbarr/.m2/repository/asm/asm/3.1/asm-3.1.jar
+7f9b6e8a9000-7f9b6e8b0000 r-xs 0003e000 08:01 25827942                   /home/finbarr/.m2/repository/cglib/cglib/2.2/cglib-2.2.jar
+7f9b6e8b0000-7f9b6e8b9000 r-xs 0005d000 08:01 27001886                   /home/finbarr/.m2/repository/org/hibernate/hibernate-entitymanager/3.6.0.Final/hibernate-entitymanager-3.6.0.Final.jar
+7f9b6e8b9000-7f9b6e8cb000 r-xs 000eb000 08:01 27001891                   /home/finbarr/.m2/repository/org/apache/lucene/lucene-core/3.0.3/lucene-core-3.0.3.jar
+7f9b6e8cb000-7f9b6e8ce000 r-xs 0000f000 08:01 25827932                   /home/finbarr/.m2/repository/org/hibernate/hibernate-commons-annotations/3.2.0.Final/hibernate-commons-annotations-3.2.0.Final.jar
+7f9b6e8ce000-7f9b6e8cf000 r-xs 00003000 08:01 25559969                   /home/finbarr/.m2/repository/javax/transaction/jta/1.1/jta-1.1.jar
+7f9b6e8cf000-7f9b6e8d4000 r-xs 00048000 08:01 25692533                   /home/finbarr/.m2/repository/dom4j/dom4j/1.6.1/dom4j-1.6.1.jar
+7f9b6e8d4000-7f9b6e8e1000 r-xs 0007c000 08:01 25692532                   /home/finbarr/.m2/repository/commons-collections/commons-collections/3.1/commons-collections-3.1.jar
+7f9b6e8e1000-7f9b6e8e7000 r-xs 00067000 08:01 25429207                   /home/finbarr/.m2/repository/antlr/antlr/2.7.6/antlr-2.7.6.jar
+7f9b6e8e7000-7f9b6e918000 r-xs 002c0000 08:01 27001895                   /home/finbarr/.m2/repository/org/hibernate/hibernate-core/3.6.0.Final/hibernate-core-3.6.0.Final.jar
+7f9b6e918000-7f9b6e91e000 r-xs 0002c000 08:01 27001890                   /home/finbarr/.m2/repository/org/apache/lucene/lucene-analyzers/3.0.3/lucene-analyzers-3.0.3.jar
+7f9b6e91e000-7f9b6e922000 r-xs 0001f000 08:01 27001883                   /home/finbarr/.m2/repository/org/hibernate/hibernate-search-analyzers/3.3.0.Final/hibernate-search-analyzers-3.3.0.Final.jar
+7f9b6e922000-7f9b6e92f000 r-xs 0007d000 08:01 27001882                   /home/finbarr/.m2/repository/org/hibernate/hibernate-search/3.3.0.Final/hibernate-search-3.3.0.Final.jar
+7f9b6e92f000-7f9b6e931000 r-xs 00005000 08:01 25559972                   /home/finbarr/.m2/repository/org/slf4j/slf4j-api/1.6.1/slf4j-api-1.6.1.jar
+7f9b6e931000-7f9b6e935000 r-xs 00069000 08:01 25560660                   /home/finbarr/.m2/repository/org/osgi/org.osgi.core/4.0.0/org.osgi.core-4.0.0.jar
+7f9b6e935000-7f9b6e97a000 r-xs 00275000 08:01 25167747                   /home/finbarr/workspace/.metadata/.plugins/com.amazonaws.eclipse.sdk/SDK/1.1.7/lib/aws-java-sdk-1.1.7.jar
+7f9b6e97a000-7f9b6e97b000 ---p 00000000 00:00 0 
+7f9b6e97b000-7f9b6ea7b000 rwxp 00000000 00:00 0 
+7f9b6ea7b000-7f9b6ea7e000 ---p 00000000 00:00 0 
+7f9b6ea7e000-7f9b6eb7c000 rwxp 00000000 00:00 0 
+7f9b6eb7c000-7f9b6eb7f000 ---p 00000000 00:00 0 
+7f9b6eb7f000-7f9b6ec7d000 rwxp 00000000 00:00 0 
+7f9b6ec7d000-7f9b6ec80000 ---p 00000000 00:00 0 
+7f9b6ec80000-7f9b6ed7e000 rwxp 00000000 00:00 0 
+7f9b6ed7e000-7f9b6ed81000 ---p 00000000 00:00 0 
+7f9b6ed81000-7f9b6ee7f000 rwxp 00000000 00:00 0 
+7f9b6ee7f000-7f9b6ee82000 ---p 00000000 00:00 0 
+7f9b6ee82000-7f9b6ef80000 rwxp 00000000 00:00 0 
+7f9b6ef80000-7f9b6ef83000 ---p 00000000 00:00 0 
+7f9b6ef83000-7f9b6f081000 rwxp 00000000 00:00 0 
+7f9b6f081000-7f9b6f084000 r-xp 00000000 08:01 7081513                    /usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/amd64/libdt_socket.so
+7f9b6f084000-7f9b6f183000 ---p 00003000 08:01 7081513                    /usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/amd64/libdt_socket.so
+7f9b6f183000-7f9b6f185000 rwxp 00002000 08:01 7081513                    /usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/amd64/libdt_socket.so
+7f9b6f185000-7f9b6f188000 ---p 00000000 00:00 0 
+7f9b6f188000-7f9b6f286000 rwxp 00000000 00:00 0 
+7f9b6f286000-7f9b6f289000 ---p 00000000 00:00 0 
+7f9b6f289000-7f9b6f387000 rwxp 00000000 00:00 0 
+7f9b6f387000-7f9b6f38a000 ---p 00000000 00:00 0 
+7f9b6f38a000-7f9b6f488000 rwxp 00000000 00:00 0 
+7f9b6f488000-7f9b6f489000 ---p 00000000 00:00 0 
+7f9b6f489000-7f9b6fac2000 rwxp 00000000 00:00 0 
+7f9b6fac2000-7f9b6fc5a000 r-xs 03027000 08:01 6950568                    /usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/rt.jar
+7f9b6fc5a000-7f9b6fc82000 rwxp 00000000 00:00 0 
+7f9b6fc82000-7f9b6fc83000 ---p 00000000 00:00 0 
+7f9b6fc83000-7f9b6fd83000 rwxp 00000000 00:00 0 
+7f9b6fd83000-7f9b6fd84000 ---p 00000000 00:00 0 
+7f9b6fd84000-7f9b6fe84000 rwxp 00000000 00:00 0 
+7f9b6fe84000-7f9b6fe85000 ---p 00000000 00:00 0 
+7f9b6fe85000-7f9b6ff85000 rwxp 00000000 00:00 0 
+7f9b6ff85000-7f9b6ff86000 ---p 00000000 00:00 0 
+7f9b6ff86000-7f9b70098000 rwxp 00000000 00:00 0 
+7f9b70098000-7f9b700af000 rwxp 00000000 00:00 0 
+7f9b700af000-7f9b700c3000 rwxp 00000000 00:00 0 
+7f9b700c3000-7f9b701ef000 rwxp 00000000 00:00 0 
+7f9b701ef000-7f9b70201000 rwxp 00000000 00:00 0 
+7f9b70201000-7f9b70218000 rwxp 00000000 00:00 0 
+7f9b70218000-7f9b7022c000 rwxp 00000000 00:00 0 
+7f9b7022c000-7f9b70357000 rwxp 00000000 00:00 0 
+7f9b70357000-7f9b70362000 rwxp 00000000 00:00 0 
+7f9b70362000-7f9b7036a000 ---p 00000000 00:00 0 
+7f9b7036a000-7f9b703f7000 rwxp 00000000 00:00 0 
+7f9b703f7000-7f9b70668000 rwxp 00000000 00:00 0 
+7f9b70668000-7f9b733f8000 rwxp 00000000 00:00 0 
+7f9b733f8000-7f9b73406000 r-xp 00000000 08:01 7081550                    /usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/amd64/libzip.so
+7f9b73406000-7f9b73508000 ---p 0000e000 08:01 7081550                    /usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/amd64/libzip.so
+7f9b73508000-7f9b7350b000 rwxp 00010000 08:01 7081550                    /usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/amd64/libzip.so
+7f9b7350b000-7f9b7350c000 rwxp 00000000 00:00 0 
+7f9b7350c000-7f9b73518000 r-xp 00000000 08:01 28315285                   /lib/libnss_files-2.12.1.so
+7f9b73518000-7f9b73717000 ---p 0000c000 08:01 28315285                   /lib/libnss_files-2.12.1.so
+7f9b73717000-7f9b73718000 r-xp 0000b000 08:01 28315285                   /lib/libnss_files-2.12.1.so
+7f9b73718000-7f9b73719000 rwxp 0000c000 08:01 28315285                   /lib/libnss_files-2.12.1.so
+7f9b73719000-7f9b73723000 r-xp 00000000 08:01 28315280                   /lib/libnss_nis-2.12.1.so
+7f9b73723000-7f9b73922000 ---p 0000a000 08:01 28315280                   /lib/libnss_nis-2.12.1.so
+7f9b73922000-7f9b73923000 r-xp 00009000 08:01 28315280                   /lib/libnss_nis-2.12.1.so
+7f9b73923000-7f9b73924000 rwxp 0000a000 08:01 28315280                   /lib/libnss_nis-2.12.1.so
+7f9b73924000-7f9b7392c000 r-xp 00000000 08:01 28315282                   /lib/libnss_compat-2.12.1.so
+7f9b7392c000-7f9b73b2b000 ---p 00008000 08:01 28315282                   /lib/libnss_compat-2.12.1.so
+7f9b73b2b000-7f9b73b2c000 r-xp 00007000 08:01 28315282                   /lib/libnss_compat-2.12.1.so
+7f9b73b2c000-7f9b73b2d000 rwxp 00008000 08:01 28315282                   /lib/libnss_compat-2.12.1.so
+7f9b73b2d000-7f9b73dd1000 r-xp 00000000 08:01 3803487                    /usr/lib/locale/locale-archive
+7f9b73dd1000-7f9b73dd4000 r-xp 00000000 08:01 7081538                    /usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/amd64/libnpt.so
+7f9b73dd4000-7f9b73ed3000 ---p 00003000 08:01 7081538                    /usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/amd64/libnpt.so
+7f9b73ed3000-7f9b73ed4000 rwxp 00002000 08:01 7081538                    /usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/amd64/libnpt.so
+7f9b73ed4000-7f9b73f0a000 r-xp 00000000 08:01 7081537                    /usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/amd64/libjdwp.so
+7f9b73f0a000-7f9b74009000 ---p 00036000 08:01 7081537                    /usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/amd64/libjdwp.so
+7f9b74009000-7f9b74013000 rwxp 00035000 08:01 7081537                    /usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/amd64/libjdwp.so
+7f9b74013000-7f9b7401a000 r-xp 00000000 08:01 7081562                    /usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/amd64/native_threads/libhpi.so
+7f9b7401a000-7f9b7411b000 ---p 00007000 08:01 7081562                    /usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/amd64/native_threads/libhpi.so
+7f9b7411b000-7f9b7411d000 rwxp 00008000 08:01 7081562                    /usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/amd64/native_threads/libhpi.so
+7f9b7411d000-7f9b7411e000 rwxp 00000000 00:00 0 
+7f9b7411e000-7f9b74135000 r-xp 00000000 08:01 28315284                   /lib/libnsl-2.12.1.so
+7f9b74135000-7f9b74334000 ---p 00017000 08:01 28315284                   /lib/libnsl-2.12.1.so
+7f9b74334000-7f9b74335000 r-xp 00016000 08:01 28315284                   /lib/libnsl-2.12.1.so
+7f9b74335000-7f9b74336000 rwxp 00017000 08:01 28315284                   /lib/libnsl-2.12.1.so
+7f9b74336000-7f9b74338000 rwxp 00000000 00:00 0 
+7f9b74338000-7f9b74361000 r-xp 00000000 08:01 7081549                    /usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/amd64/libjava.so
+7f9b74361000-7f9b74460000 ---p 00029000 08:01 7081549                    /usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/amd64/libjava.so
+7f9b74460000-7f9b74467000 rwxp 00028000 08:01 7081549                    /usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/amd64/libjava.so
+7f9b74467000-7f9b74474000 r-xp 00000000 08:01 7081527                    /usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/amd64/libverify.so
+7f9b74474000-7f9b74573000 ---p 0000d000 08:01 7081527                    /usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/amd64/libverify.so
+7f9b74573000-7f9b74576000 rwxp 0000c000 08:01 7081527                    /usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/amd64/libverify.so
+7f9b74576000-7f9b7457d000 r-xp 00000000 08:01 28315269                   /lib/librt-2.12.1.so
+7f9b7457d000-7f9b7477c000 ---p 00007000 08:01 28315269                   /lib/librt-2.12.1.so
+7f9b7477c000-7f9b7477d000 r-xp 00006000 08:01 28315269                   /lib/librt-2.12.1.so
+7f9b7477d000-7f9b7477e000 rwxp 00007000 08:01 28315269                   /lib/librt-2.12.1.so
+7f9b7477e000-7f9b74781000 ---p 00000000 00:00 0 
+7f9b74781000-7f9b7487f000 rwxp 00000000 00:00 0 
+7f9b7487f000-7f9b74901000 r-xp 00000000 08:01 28315278                   /lib/libm-2.12.1.so
+7f9b74901000-7f9b74b00000 ---p 00082000 08:01 28315278                   /lib/libm-2.12.1.so
+7f9b74b00000-7f9b74b01000 r-xp 00081000 08:01 28315278                   /lib/libm-2.12.1.so
+7f9b74b01000-7f9b74b02000 rwxp 00082000 08:01 28315278                   /lib/libm-2.12.1.so
+7f9b74b02000-7f9b75340000 r-xp 00000000 08:01 7081553                    /usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/amd64/server/libjvm.so
+7f9b75340000-7f9b7543f000 ---p 0083e000 08:01 7081553                    /usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/amd64/server/libjvm.so
+7f9b7543f000-7f9b755d3000 rwxp 0083d000 08:01 7081553                    /usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/amd64/server/libjvm.so
+7f9b755d3000-7f9b7560c000 rwxp 00000000 00:00 0 
+7f9b7560c000-7f9b75786000 r-xp 00000000 08:01 28315271                   /lib/libc-2.12.1.so
+7f9b75786000-7f9b75985000 ---p 0017a000 08:01 28315271                   /lib/libc-2.12.1.so
+7f9b75985000-7f9b75989000 r-xp 00179000 08:01 28315271                   /lib/libc-2.12.1.so
+7f9b75989000-7f9b7598a000 rwxp 0017d000 08:01 28315271                   /lib/libc-2.12.1.so
+7f9b7598a000-7f9b7598f000 rwxp 00000000 00:00 0 
+7f9b7598f000-7f9b75991000 r-xp 00000000 08:01 28315287                   /lib/libdl-2.12.1.so
+7f9b75991000-7f9b75b91000 ---p 00002000 08:01 28315287                   /lib/libdl-2.12.1.so
+7f9b75b91000-7f9b75b92000 r-xp 00002000 08:01 28315287                   /lib/libdl-2.12.1.so
+7f9b75b92000-7f9b75b93000 rwxp 00003000 08:01 28315287                   /lib/libdl-2.12.1.so
+7f9b75b93000-7f9b75bab000 r-xp 00000000 08:01 28315273                   /lib/libpthread-2.12.1.so
+7f9b75bab000-7f9b75daa000 ---p 00018000 08:01 28315273                   /lib/libpthread-2.12.1.so
+7f9b75daa000-7f9b75dab000 r-xp 00017000 08:01 28315273                   /lib/libpthread-2.12.1.so
+7f9b75dab000-7f9b75dac000 rwxp 00018000 08:01 28315273                   /lib/libpthread-2.12.1.so
+7f9b75dac000-7f9b75db0000 rwxp 00000000 00:00 0 
+7f9b75db0000-7f9b75dd0000 r-xp 00000000 08:01 28315279                   /lib/ld-2.12.1.so
+7f9b75dd2000-7f9b75ddb000 r-xs 00099000 08:01 26089119                   /home/finbarr/.m2/repository/org/restlet/jee/org.restlet/2.0.5/org.restlet-2.0.5.jar
+7f9b75ddb000-7f9b75ddd000 r-xs 0000f000 08:01 25167742                   /home/finbarr/workspace/.metadata/.plugins/com.amazonaws.eclipse.sdk/SDK/1.1.7/third-party/commons-logging-1.1.1/commons-logging-1.1.1.jar
+7f9b75ddd000-7f9b75de4000 r-xs 00070000 08:01 25167738                   /home/finbarr/workspace/.metadata/.plugins/com.amazonaws.eclipse.sdk/SDK/1.1.7/third-party/java-mail-1.4.3/mail-1.4.3.jar
+7f9b75de4000-7f9b75dee000 rwxp 00000000 00:00 0 
+7f9b75dee000-7f9b75ea4000 rwxp 00000000 00:00 0 
+7f9b75ea4000-7f9b75ea7000 rwxp 00000000 00:00 0 
+7f9b75ea7000-7f9b75eae000 r-xp 00000000 08:01 7081524                    /usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/amd64/jli/libjli.so
+7f9b75eae000-7f9b75faf000 ---p 00007000 08:01 7081524                    /usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/amd64/jli/libjli.so
+7f9b75faf000-7f9b75fb1000 rwxp 00008000 08:01 7081524                    /usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/amd64/jli/libjli.so
+7f9b75fb1000-7f9b75fb2000 rwxp 00000000 00:00 0 
+7f9b75fb2000-7f9b75fb3000 r-xs 00001000 08:01 25954986                   /home/finbarr/.m2/repository/org/slf4j/slf4j-simple/1.6.1/slf4j-simple-1.6.1.jar
+7f9b75fb3000-7f9b75fb5000 r-xs 00006000 08:01 25167735                   /home/finbarr/workspace/.metadata/.plugins/com.amazonaws.eclipse.sdk/SDK/1.1.7/third-party/stax-api-1.0.1/stax-api-1.0.1.jar
+7f9b75fb5000-7f9b75fba000 r-xs 00043000 08:01 25167732                   /home/finbarr/workspace/.metadata/.plugins/com.amazonaws.eclipse.sdk/SDK/1.1.7/third-party/commons-httpclient-3.0.1/commons-httpclient-3.0.1.jar
+7f9b75fba000-7f9b75fbd000 r-xs 00024000 08:01 25167729                   /home/finbarr/workspace/.metadata/.plugins/com.amazonaws.eclipse.sdk/SDK/1.1.7/third-party/jackson-1.4/jackson-core-asl-1.4.3.jar
+7f9b75fbd000-7f9b75fbf000 r-xs 0000b000 08:01 25167726                   /home/finbarr/workspace/.metadata/.plugins/com.amazonaws.eclipse.sdk/SDK/1.1.7/third-party/commons-codec-1.3/commons-codec-1.3.jar
+7f9b75fbf000-7f9b75fc2000 r-xs 0002c000 08:01 25167723                   /home/finbarr/workspace/.metadata/.plugins/com.amazonaws.eclipse.sdk/SDK/1.1.7/third-party/stax-ri-1.2.0/stax-1.2.0.jar
+7f9b75fc2000-7f9b75fc4000 r-xs 00014000 08:01 23856344                   /home/finbarr/tomcat/lib/servlet-api.jar
+7f9b75fc4000-7f9b75fcc000 rwxs 00000000 08:01 5772373                    /tmp/hsperfdata_finbarr/3855
+7f9b75fcc000-7f9b75fcd000 rwxp 00000000 00:00 0 
+7f9b75fcd000-7f9b75fce000 r-xp 00000000 00:00 0 
+7f9b75fce000-7f9b75fd0000 rwxp 00000000 00:00 0 
+7f9b75fd0000-7f9b75fd1000 r-xp 00020000 08:01 28315279                   /lib/ld-2.12.1.so
+7f9b75fd1000-7f9b75fd2000 rwxp 00021000 08:01 28315279                   /lib/ld-2.12.1.so
+7f9b75fd2000-7f9b75fd3000 rwxp 00000000 00:00 0 
+7fff96aab000-7fff96acd000 rwxp 00000000 00:00 0                          [stack]
+7fff96b4f000-7fff96b50000 r-xp 00000000 00:00 0                          [vdso]
+ffffffffff600000-ffffffffff601000 r-xp 00000000 00:00 0                  [vsyscall]
+
+VM Arguments:
+jvm_args: -agentlib:jdwp=transport=dt_socket,suspend=y,address=localhost:39730 -Dfile.encoding=UTF-8 
+java_command: com.belongingsfinder.api.BelongingsFinder
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/home/finbarr/scala/bin
+USERNAME=finbarr
+LD_LIBRARY_PATH=/usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/amd64/server:/usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/amd64:/usr/lib/jvm/java-6-sun-1.6.0.24/jre/../lib/amd64:/usr/lib64/xulrunner-addons
+SHELL=/bin/bash
+DISPLAY=:0.0
+
+Signal Handlers:
+SIGSEGV: [libjvm.so+0x791b30], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGBUS: [libjvm.so+0x791b30], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGFPE: [libjvm.so+0x640ba0], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGPIPE: [libjvm.so+0x640ba0], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGXFSZ: [libjvm.so+0x640ba0], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGILL: [libjvm.so+0x640ba0], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGUSR1: SIG_DFL, sa_mask[0]=0x00000000, sa_flags=0x00000000
+SIGUSR2: [libjvm.so+0x643780], sa_mask[0]=0x00000004, sa_flags=0x10000004
+SIGHUP: [libjvm.so+0x643380], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGINT: [libjvm.so+0x643380], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGTERM: [libjvm.so+0x643380], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGQUIT: [libjvm.so+0x643380], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+
+
+---------------  S Y S T E M  ---------------
+
+OS:squeeze/sid
+
+uname:Linux 2.6.35-28-generic #49-Ubuntu SMP Tue Mar 1 14:39:03 UTC 2011 x86_64
+libc:glibc 2.12.1 NPTL 2.12.1 
+rlimit: STACK 8192k, CORE 0k, NPROC infinity, NOFILE 1024, AS infinity
+load average:1.08 1.09 1.11
+
+/proc/meminfo:
+MemTotal:        3916968 kB
+MemFree:          351944 kB
+Buffers:          130864 kB
+Cached:          1312628 kB
+SwapCached:            0 kB
+Active:          2056676 kB
+Inactive:        1038276 kB
+Active(anon):    1656444 kB
+Inactive(anon):     6976 kB
+Active(file):     400232 kB
+Inactive(file):  1031300 kB
+Unevictable:           0 kB
+Mlocked:               0 kB
+SwapTotal:      11471868 kB
+SwapFree:       11471868 kB
+Dirty:                68 kB
+Writeback:             0 kB
+AnonPages:       1651456 kB
+Mapped:           223516 kB
+Shmem:             11964 kB
+Slab:             131196 kB
+SReclaimable:     106812 kB
+SUnreclaim:        24384 kB
+KernelStack:        4016 kB
+PageTables:        31928 kB
+NFS_Unstable:          0 kB
+Bounce:                0 kB
+WritebackTmp:          0 kB
+CommitLimit:    13430352 kB
+Committed_AS:    4671792 kB
+VmallocTotal:   34359738367 kB
+VmallocUsed:      319124 kB
+VmallocChunk:   34359416668 kB
+HardwareCorrupted:     0 kB
+HugePages_Total:       0
+HugePages_Free:        0
+HugePages_Rsvd:        0
+HugePages_Surp:        0
+Hugepagesize:       2048 kB
+DirectMap4k:       63488 kB
+DirectMap2M:     3991552 kB
+
+
+CPU:total 4 (2 cores per cpu, 2 threads per core) family 6 model 37 stepping 2, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, ht
+
+Memory: 4k page, physical 3916968k(351944k free), swap 11471868k(11471868k free)
+
+vm_info: Java HotSpot(TM) 64-Bit Server VM (19.1-b02) for linux-amd64 JRE (1.6.0_24-b07), built on Feb  2 2011 16:55:54 by "java_re" with gcc 3.2.2 (SuSE Linux)
+
+time: Tue Mar 29 21:06:22 2011
+elapsed time: 293 seconds
+

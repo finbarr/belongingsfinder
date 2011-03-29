@@ -6,6 +6,7 @@ import org.hibernate.search.bridge.LuceneOptions;
 
 import com.belongingsfinder.api.i18n.HasLanguage;
 import com.belongingsfinder.api.i18n.Language;
+import com.belongingsfinder.api.model.BelongingModel;
 
 public class LanguageBridge implements FieldBridge {
 
@@ -14,7 +15,7 @@ public class LanguageBridge implements FieldBridge {
 		if (value instanceof HasLanguage) {
 			Language language = ((HasLanguage) value).getLanguage();
 			String fieldName = new StringBuilder(name).append("_").append(language.toString()).toString();
-			luceneOptions.addFieldToDocument(fieldName, value.toString(), document);
+			luceneOptions.addFieldToDocument(fieldName, ((BelongingModel) value).getDescription(), document);
 		} else {
 			throw new IllegalStateException("LanguageBridge can only be used on HasLanguage instances!");
 		}

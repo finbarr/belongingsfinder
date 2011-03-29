@@ -6,6 +6,7 @@ import com.belongingsfinder.api.form.BelongingCategoryFieldFileItemHandler;
 import com.belongingsfinder.api.form.BelongingDescriptionFieldFileItemHandler;
 import com.belongingsfinder.api.form.BelongingEmailFieldFileItemHandler;
 import com.belongingsfinder.api.form.BelongingImageFileItemHandler;
+import com.belongingsfinder.api.form.BelongingLanguageFieldFileItemHandler;
 import com.belongingsfinder.api.form.BelongingLocationFieldFileItemHandler;
 import com.belongingsfinder.api.form.BelongingTypeFieldFileItemHandler;
 import com.belongingsfinder.api.form.FileItemHandler;
@@ -30,6 +31,7 @@ public class FileItemHandlerModule extends AbstractModule {
 		binder.addBinding(BelongingField.CATEGORY.toString()).to(BelongingCategoryFieldFileItemHandler.class);
 		binder.addBinding(BelongingField.IMAGE.toString()).to(BelongingImageFileItemHandler.class);
 		binder.addBinding(BelongingField.TYPE.toString()).to(BelongingTypeFieldFileItemHandler.class);
+		binder.addBinding(BelongingField.LANGUAGE.toString()).to(BelongingLanguageFieldFileItemHandler.class);
 		MapBinder<String, MediaType> imageTypes = MapBinder.newMapBinder(binder(), String.class, MediaType.class,
 				Names.named("images"));
 		mediaType(imageTypes, MediaType.IMAGE_JPEG);

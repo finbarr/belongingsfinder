@@ -40,7 +40,7 @@ public class BelongingModelSearch {
 		}
 		QueryBuilder qb = context.get();
 		BooleanJunction<BooleanJunction> junc = qb.bool();
-		junc.should(qb.keyword().onField("description_" + request.getLanguage().toString())
+		junc.should(qb.keyword().onField("description_" + request.getLanguage().toString()).ignoreFieldBridge()
 				.matching(request.getTerms()).createQuery());
 		if (request.getType() != null) {
 			junc.must(qb.keyword().onField("type").matching(request.getType()).createQuery());

@@ -13,21 +13,16 @@ import javax.persistence.OneToMany;
 import javax.validation.Valid;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
-import org.hibernate.validator.constraints.NotEmpty;
-
-import com.sun.istack.internal.NotNull;
+import org.hibernate.search.annotations.Store;
 
 /**
  * @author finbarr
  * 
  */
 @Entity
-@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 public class CategoryModel implements Model<CategoryModel>, Serializable {
 
 	private static final long serialVersionUID = -4520507504770029807L;
@@ -35,10 +30,8 @@ public class CategoryModel implements Model<CategoryModel>, Serializable {
 	@Id
 	@GeneratedValue(generator = "bf-uuid")
 	@GenericGenerator(name = "bf-uuid", strategy = "com.belongingsfinder.api.dao.jpa.UUIDIdentifierGenerator")
-	@Field(index = Index.UN_TOKENIZED)
+	@Field(index = Index.UN_TOKENIZED, store = Store.YES)
 	private String id;
-	@NotNull
-	@NotEmpty
 	private String name;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "parent", fetch = FetchType.EAGER)
 	@Valid

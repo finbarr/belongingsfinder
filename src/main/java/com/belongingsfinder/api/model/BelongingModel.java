@@ -57,7 +57,7 @@ import com.belongingsfinder.api.search.LanguageDiscriminator;
 				@TokenFilterDef(factory = PorterStemFilterFactory.class) }),
 		@AnalyzerDef(name = "jp", tokenizer = @TokenizerDef(factory = CJKTokenizerFactory.class)) })
 @AnalyzerDiscriminator(impl = LanguageDiscriminator.class)
-@ClassBridge(name = "description", index = Index.TOKENIZED, store = Store.NO, impl = LanguageBridge.class)
+@ClassBridge(name = "description", index = Index.TOKENIZED, store = Store.YES, impl = LanguageBridge.class)
 @ValidBelonging
 public class BelongingModel implements Model<BelongingModel>, HasLanguage, Serializable {
 
@@ -76,7 +76,7 @@ public class BelongingModel implements Model<BelongingModel>, HasLanguage, Seria
 	@Embedded
 	@Valid
 	private LatLon location;
-	@Field(index = Index.UN_TOKENIZED)
+	@Field(index = Index.UN_TOKENIZED, store = Store.YES)
 	@Enumerated(EnumType.STRING)
 	@NotNull
 	private BelongingType type;
@@ -182,7 +182,7 @@ public class BelongingModel implements Model<BelongingModel>, HasLanguage, Seria
 	public enum BelongingField {
 
 		DESCRIPTION("description"), LOCATION("location"), TYPE("type"), EMAIL("email"), IMAGE("image"), CATEGORY(
-				"category");
+				"category"), LANGUAGE("language");
 
 		private final String name;
 
