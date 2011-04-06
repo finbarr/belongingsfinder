@@ -52,7 +52,7 @@ public class CategoryModelsServerResource extends ValidatedServerResource {
 				.get()
 				.createQuery(
 						"select category from CategoryModel as category where category.parent is null order by category.name asc")
-				.getResultList();
+				.setHint("org.hibernate.cacheable", true).getResultList();
 	}
 
 }

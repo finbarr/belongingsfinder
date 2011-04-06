@@ -1,0 +1,5 @@
+#surefire
+#Tue Mar 29 23:41:08 BST 2011
+user.dir=/home/finbarr/workspace/belongingsfinder.com
+localRepository=/home/finbarr/.m2/repository
+basedir=/home/finbarr/workspace/belongingsfinder.com

@@ -14,7 +14,7 @@
 		<class>com.belongingsfinder.api.model.CategoryModel</class>
 		<properties>
 			<!-- basic -->
-			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect"/>
 			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
 			<property name="hibernate.connection.username" value="root"/>
 			<property name="hibernate.connection.password" value="root"/>
@@ -25,14 +25,14 @@
 			<property name="hibernate.search.default.indexBase" value="/var/lucene/indexes"/>
 			<property name="hibernate.search.default.exclusive_index_use" value="true"/>
 			<property name="hibernate.search.default.locking_strategy" value="single"/>
-      		<!-- c3p0 -->
+      		<!-- connection pool -->
       		<property name="hibernate.c3p0.acquire_increment" value="3"/>
       		<property name="hibernate.c3p0.min_size" value="3"/>
       		<property name="hibernate.c3p0.max_size" value="15"/>
       		<property name="hibernate.c3p0.timeout" value="0"/>
       		<property name="hibernate.c3p0.max_statements" value="0"/>
       		<property name="hibernate.c3p0.idle_test_period" value="0"/>
-      		<!--  ehcache -->
+      		<!--  cache -->
       		<!-- miscellaneous -->
 			<property name="hibernate.show_sql" value="true"/>
       		<property name="hibernate.format_sql" value="true"/>
@@ -40,7 +40,7 @@
 			<!-- 
       		<property name="hibernate.cache.region.factory_class" value="net.sf.ehcache.hibernate.EhCacheRegionFactory"/>
       		<property name="hibernate.cache.use_second_level_cache" value="true"/>
-      		<property name="hibernate.cache.use_query_cache" value="true">
+      		<property name="hibernate.cache.use_query_cache" value="true"/>
 			hibernate.jdbc.batch_size 20
 			
 			hibernate.search.worker.execution	sync: synchronous execution (default)
@@ -62,7 +62,7 @@
 		<class>com.belongingsfinder.api.model.CategoryModel</class>
 		<properties>
 			<!-- basic -->
-			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect"/>
 			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
 			<property name="hibernate.connection.username" value="root"/>
 			<property name="hibernate.connection.password" value="root"/>
@@ -73,21 +73,21 @@
 			<property name="hibernate.search.default.indexBase" value="/var/lucene/indexes"/>
 			<property name="hibernate.search.default.exclusive_index_use" value="true"/>
 			<property name="hibernate.search.default.locking_strategy" value="single"/>
-      		<!-- c3p0 -->
+      		<!-- connection pool -->
       		<property name="hibernate.c3p0.acquire_increment" value="3"/>
       		<property name="hibernate.c3p0.min_size" value="3"/>
       		<property name="hibernate.c3p0.max_size" value="15"/>
       		<property name="hibernate.c3p0.timeout" value="0"/>
       		<property name="hibernate.c3p0.max_statements" value="0"/>
       		<property name="hibernate.c3p0.idle_test_period" value="0"/>
-      		<!--  ehcache -->
+      		<!--  cache -->
       		<!-- miscellaneous -->
-      		<property name="hibernate.show_sql" value="true"/>
-      		<property name="hibernate.format_sql" value="true"/>
 			<property name="hibernate.hbm2ddl.auto" value="create-drop"/>
 			<!-- 
       		<property name="hibernate.cache.region.factory_class" value="net.sf.ehcache.hibernate.EhCacheRegionFactory"/>
       		<property name="hibernate.cache.use_second_level_cache" value="true"/>
+      		<property name="hibernate.show_sql" value="true"/>
+      		<property name="hibernate.format_sql" value="true"/>
 			 -->
 		</properties>	
 	</persistence-unit>

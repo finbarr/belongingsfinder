@@ -1,8 +1,5 @@
 package com.belongingsfinder.api.resource;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -60,12 +57,12 @@ public class StuffServerResource extends ValidatedServerResource {
 			cdao.create(c);
 		}
 
-		File file = new File("/home/finbarr/bd.txt");
-		BufferedReader br = new BufferedReader(new FileReader(file));
-		String line;
-		while ((line = br.readLine()) != null) {
-			createBelonging(line, createImage(), categories);
-		}
+		// File file = new File("/home/finbarr/bd.txt");
+		// BufferedReader br = new BufferedReader(new FileReader(file));
+		// String line;
+		// while ((line = br.readLine()) != null) {
+		// createBelonging(line, createImage(), categories);
+		// }
 		getResponse().setStatus(Status.SUCCESS_NO_CONTENT);
 	}
 
